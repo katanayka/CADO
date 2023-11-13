@@ -1,3 +1,4 @@
+import Graph from "@/components/discipline/graph";
 import Image from "next/image";
 import {FC} from "react";
 
@@ -33,7 +34,9 @@ const Page: FC<pageProps> = ({params}) => {
 							/>
 						</a>
 						<div className="bg-hero-graph-paper h-full w-full flex items-center place-content-center border rounded-l -mt-6">
-							НАШ БЛОК
+							<Graph 
+								discipline={params.discipline}
+							/>
 						</div>
 					</div>
 					<div className="big-tile h-72 stripes bg-hero-diagonal-lines"></div>
