@@ -91,7 +91,10 @@ export default function Page({ params }: { params: paramProps }) {
 				</div>
 				<div className="about bg-orange-700 h-screen w-full">
 					<div className="ourBlock h-full">
-						<GraphRedactor nodes={nodes} edges={edges} />
+						<GraphRedactor
+							nodes_i={nodes}
+							edges_i={edges}
+						/>
 					</div>
 				</div>
 			</div>
