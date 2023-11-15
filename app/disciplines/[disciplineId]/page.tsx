@@ -1,12 +1,11 @@
 import Graph from "@/components/discipline/graph";
 import Image from "next/image";
-import {FC} from "react";
 
-interface pageProps {
-	params: {discipline: string}
+interface paramProps {
+	disciplineId: string;
 }
 
-const Page: FC<pageProps> = ({params}) => {
+export default function Page({ params }: { params: paramProps }) {
 	return (
 		<div>
 			<div className="content flex h-full">
@@ -21,7 +20,9 @@ const Page: FC<pageProps> = ({params}) => {
 						</a>
 						{" >"} Карточка МУП
 					</h2>
-					<h1 className="font-bold text-2xl">{decodeURIComponent(params.discipline)}</h1>
+					<h1 className="font-bold text-2xl">
+						{decodeURIComponent(params.disciplineId)}
+					</h1>
 					<div className="ourBlock big-tile h-96 p-24">
 						<a href={"/"} className="">
 							<Image
@@ -34,9 +35,7 @@ const Page: FC<pageProps> = ({params}) => {
 							/>
 						</a>
 						<div className="bg-hero-graph-paper h-full w-full flex items-center place-content-center border rounded-l -mt-6">
-							<Graph 
-								discipline={params.discipline}
-							/>
+							<Graph discipline={params.disciplineId} />
 						</div>
 					</div>
 					<div className="big-tile h-72 stripes bg-hero-diagonal-lines"></div>
@@ -46,5 +45,3 @@ const Page: FC<pageProps> = ({params}) => {
 		</div>
 	);
 }
-
-export default Page;

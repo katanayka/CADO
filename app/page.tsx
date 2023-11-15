@@ -13,8 +13,8 @@ export default function Home() {
 							<div className="big-tile h-48 w-full" key={key}>
 								<h2>Дисциплина: {key}</h2>
 								<Link
-									href="/[discipline]"
-									as={`/${Discipline[key]}`}
+									href="/disciplines/[disciplineId]"
+									as={`/disciplines/${Discipline[key]}`}
 									className="text-blue-500 underline"
 								>
 									{key}
