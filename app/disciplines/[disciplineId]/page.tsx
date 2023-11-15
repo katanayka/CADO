@@ -24,17 +24,18 @@ export default function Page({ params }: { params: paramProps }) {
 						{decodeURIComponent(params.disciplineId)}
 					</h1>
 					<div className="ourBlock big-tile h-96 p-24">
-						<a href={"/"} className="">
+						<a href={"/disciplines/" + params.disciplineId + "/redactor"}>
 							<Image
 								src="/open_link.svg"
 								alt="Open link"
 								width={24}
 								height={24}
-								priority
-								className="p-0.5"
+								priority={true}
+								quality={100}
+								className="p-0.5 bg-white rounded-full xl:-ml-5 xl:-mt-5"
 							/>
 						</a>
-						<div className="bg-hero-graph-paper h-full w-full flex items-center place-content-center border rounded-l -mt-6">
+						<div className="bg-hero-graph-paper h-full w-full flex items-center place-content-center border rounded-l -mt-1">
 							<Graph discipline={params.disciplineId} />
 						</div>
 					</div>

@@ -16,6 +16,7 @@ const config: Config = {
 		},
 	},
 	plugins: [
+		require("daisyui"),
 		require("tailwind-heropatterns")({
 			variants: [],
 			patterns: ["diagonal-lines", "graph-paper"],
