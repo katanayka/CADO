@@ -1,3 +1,4 @@
+// GraphRedactor.tsx
 import React, { useCallback, useState } from "react";
 import ReactFlow, {
   Controls,
@@ -8,11 +9,12 @@ import ReactFlow, {
   NodeChange,
   EdgeChange,
   Edge,
+  useNodesState
 } from "reactflow";
 import { FC } from "react";
-
-import "reactflow/dist/style.css";
 import RewritableNode from "./customNodes/Rewritablenode";
+import { randomInt } from "crypto";
+
 
 interface ReactFlowInstance {
   screenToFlowPosition: (position: { x: number; y: number }) => {
@@ -21,26 +23,46 @@ interface ReactFlowInstance {
   };
 }
 
-interface GraphRedactorProps {
-  nodes_i: Node[];
-  edges_i: Edge[];
-}
 
 const nodeTypes = {
-	Rewritable: RewritableNode,
+  Rewritable: RewritableNode, 
 };
 
-const GraphRedactor: FC<GraphRedactorProps> = ({ nodes_i, edges_i }) => {
-  const [nodes, setNodes] = useState(nodes_i);
-  const [edges, setEdges] = useState(edges_i);
+const GraphRedactor = () => {
+  const handleAddNode = () => {
+    console.log("Add Node clicked");
+
+    const newNode = {
+      id: getId(),
+      type: 'Rewritable', // тип вашей ноды
+      data: { 
+        label: 'New Node', 
+        onAddNode: handleAddNode
+      },
+      position: { x: 0, y: 0 },
+    };
+    
+    setNodes((nds) => nds.concat(newNode));
+  };
+
+  const initialNodes = [
+    {
+      id: "1",
+      type: "Rewritable",
+      data: { 
+        label: "First node",
+        onAddNode: handleAddNode
+       },
+      position: { x: 250, y: 5 },
+    },
+  ];
+
+  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [edges, setEdges] = useState<Edge<any>[]>([]);
   let id = 0;
   const getId = () => `dndnode_${id++}`;
+  const [elements, setElements] = useState([...nodes, ...edges]);
 
-  const onNodesChange = useCallback(
-    (changes: NodeChange[]) =>
-      setNodes((nds: Node<any>[]) => applyNodeChanges(changes, nds)),
-    []
-  );
   const onEdgesChange = useCallback(
     (changes: EdgeChange[]) =>
       setEdges((eds: Edge<any>[]) => applyEdgeChanges(changes, eds)),
@@ -59,6 +81,9 @@ const GraphRedactor: FC<GraphRedactorProps> = ({ nodes_i, edges_i }) => {
     },
     []
   );
+
+    
+
 
   const onDrop = useCallback(
     (event: {
@@ -83,7 +108,10 @@ const GraphRedactor: FC<GraphRedactorProps> = ({ nodes_i, edges_i }) => {
         id: getId(),
         type,
         position,
-        data: { label: `${type} node` },
+        data: { 
+          label: `${type} __node`,
+          onAddNode: handleAddNode
+        },
       };
 
       console.log(position);
@@ -95,18 +123,18 @@ const GraphRedactor: FC<GraphRedactorProps> = ({ nodes_i, edges_i }) => {
   );
   return (
     <ReactFlow
-      nodes={nodes}
-      onNodesChange={onNodesChange}
-      edges={edges}
-      onEdgesChange={onEdgesChange}
-      className="z-10"
-      snapToGrid={true}
-      snapGrid={[32, 32]}
-      onDrop={onDrop}
-      onDragOver={onDragOver}
-      onInit={setReactFlowInstance}
-	  nodeTypes={nodeTypes}
-    >
+    nodes={nodes}
+    onNodesChange={onNodesChange}
+    edges={edges}
+    onEdgesChange={onEdgesChange}
+    className="z-10"
+    snapToGrid={true}
+    snapGrid={[32, 32]}
+    onDrop={onDrop}
+    onDragOver={onDragOver}
+    onInit={setReactFlowInstance}
+    nodeTypes={nodeTypes}
+  >
       <Background />
       <Controls />
     </ReactFlow>
