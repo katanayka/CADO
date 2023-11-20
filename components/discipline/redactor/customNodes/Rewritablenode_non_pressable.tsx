@@ -35,32 +35,6 @@ const RewritableNode: React.FC<Props> = memo(({ data }) => {
         defaultValue={data.text}
         className="nodrag input input-bordered w-full max-w-xs"
       />
-      <div
-        className="absolute -bottom-3 z-20 left-1/2 transform -translate-x-1/2 w-6 h-6"
-      >
-        <button
-          onClick={() => { 
-            handleAddNode(0, 192); 
-            setBottomPressed(prevState => !prevState); 
-          }}
-          className={BottomPressed ? "hidden" : ""}
-        >
-          <MySvg />
-        </button>
-      </div>
-      <div
-        className="absolute top-1/2 -right-3 z-20 transform -translate-y-1/2"
-      >
-        <button
-          onClick={() => { 
-            handleAddNode(512, 0); 
-            setRightPressed(prevState => !prevState); 
-          }}
-          className={RightPressed ? "hidden" : ""}
-        >
-          <MySvg />
-        </button>
-      </div>
       <Handle id="top" type="target" position={Position.Top} className="" />
       <Handle id="left" type="target" position={Position.Left} className="" />
       <Handle id="right" type="source" position={Position.Right} className="" />

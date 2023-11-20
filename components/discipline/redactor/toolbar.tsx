@@ -1,4 +1,8 @@
-export default function Toolbar({}: {}) {
+export default function Toolbar({
+
+}: {
+
+}) {
 
   const onDragStart = (
     event: {
