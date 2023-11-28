@@ -43,7 +43,7 @@ const RewritableNode: React.FC<Props> = memo(({ data }) => {
             handleAddNode(0, 192); 
             setBottomPressed(prevState => !prevState); 
           }}
-          className={BottomPressed ? "hidden" : ""}
+          className="" 
         >
           <MySvg />
         </button>

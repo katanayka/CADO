@@ -34,6 +34,7 @@ const RewritableNode: React.FC<Props> = memo(({ data }) => {
         onChange={data.onChange}
         defaultValue={data.text}
         className="nodrag input input-bordered w-full max-w-xs"
+        disabled={true}
       />
       <Handle id="top" type="target" position={Position.Top} className="" />
       <Handle id="left" type="target" position={Position.Left} className="" />
