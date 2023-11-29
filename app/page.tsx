@@ -1,11 +1,17 @@
 import Link from "next/link";
 import Discipline from "../data/Disciplines";
+import DropdownType from "@/components/discipline/dropdown-user-type";
+import Icon from "@/components/Icon";
 
 export default function Home() {
+
 	return (
 		<div>
 			<div className="content flex h-full">
-				<div className="user h-full w-1/6"></div>
+				<div className="user h-full w-1/6">
+					<Icon/>
+					<DropdownType />
+				</div>
 				<div className="about bg-orange-700 h-full w-5/6 px-6 py-2 min-h-screen">
 					<h1> Предметные дисциплины </h1>
 					<div className="flex flex-wrap">

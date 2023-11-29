@@ -1,4 +1,6 @@
+"use client"
 import Graph from "@/components/discipline/graph";
+import { getCookie } from "cookies-next";
 import Image from "next/image";
 
 interface paramProps {
@@ -32,8 +34,8 @@ export default function Page({ params }: { params: paramProps }) {
 					<h1 className="font-bold text-2xl">
 						{decodeURIComponent(params.disciplineId)}
 					</h1>
-					<div className="ourBlock big-tile h-96 p-24">
-						<a href={"/disciplines/" + params.disciplineId + "/redactor"}>
+					<div className="ourBlock big-tile h-96 w-full">
+						<a href={"/disciplines/" + params.disciplineId + "/redactor"} style={getCookie("userType") == "Преподаватель" ? {} : {visibility:"hidden"}}>
 							<Image
 								src="/open_link.svg"
 								alt="Open link"
