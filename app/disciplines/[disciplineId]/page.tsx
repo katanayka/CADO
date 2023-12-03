@@ -35,7 +35,18 @@ export default function Page({ params }: { params: paramProps }) {
 						{decodeURIComponent(params.disciplineId)}
 					</h1>
 					<div className="ourBlock big-tile h-96 w-full">
-						<a href={"/disciplines/" + params.disciplineId + "/redactor"} style={getCookie("userType") == "Преподаватель" ? {} : {visibility:"hidden"}}>
+						
+						<a href={"/disciplines/" + params.disciplineId + "/redactor"} style={ 
+								typeof getCookie("userType") === "string" 
+								? 
+									getCookie("userType") == "Преподаватель" 
+									?  
+										{} 
+										: 
+										{visibility:"hidden"} 
+									: 
+									{}
+								}>
 							<Image
 								src="/open_link.svg"
 								alt="Open link"
