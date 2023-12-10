@@ -17,7 +17,7 @@ export default function Page({ params }: { params: paramProps }) {
   return (
     <div>
       <div className="content flex h-full w-screen">
-        <Toolbar />
+        <Toolbar disciplineId={params.disciplineId} />
         <div className="about bg-orange-700 h-screen w-full">
           <div className="ourBlock h-full">
             <div style={{ height: "4%" }}>

@@ -1,10 +1,11 @@
 import { Tabs } from "react-daisyui";
+import { usePathname } from "next/navigation";
 
 export default function Toolbar({
-
+  disciplineId,
 }: {
-
-  }) {
+  disciplineId: string;
+}) {
 
   const onDragStart = (
     event: {
@@ -29,12 +30,16 @@ export default function Toolbar({
     nodeType: any
   ) => {
   };
+  const router = usePathname();
+  const isOnElementsPage = router.includes("/elements");
+
+  let history = [];
 
   return (
     <div className="h-11/12 w-96 flex flex-col">
-      <Tabs variant="bordered" size="md" className="w-full grid grid-cols-2">
-        <Tabs.RadioTab name="my_tabs_1" label="Базовые" defaultChecked={true}>
-          <ul className="menu rounded-box gap-2 items-center flex h-[calc(100vh-5rem)]">
+      <Tabs variant="bordered" size="md" className="w-full grid grid-cols-2 ">
+        <Tabs.RadioTab name="my_tabs_1" label="Базовые" defaultChecked={true} className="checked:bg-base-100 border">
+          <ul className="menu rounded-box gap-2 items-center flex h-[calc(100vh-5rem)] [&>*>a]:border-2 [&>*>a]:border-dashed [&>*>a]:border-gray-100 px-0 [&>*>a]:hover:border-gray-300">
             <li className="w-full">
               <a
                 className=" justify-center"
@@ -75,8 +80,8 @@ export default function Toolbar({
 
           </ul>
         </Tabs.RadioTab>
-        <Tabs.RadioTab name="my_tabs_1" label="Расширенные">
-          <ul className="menu rounded-box gap-2 items-center flex h-[calc(100vh-5rem)]">
+        <Tabs.RadioTab name="my_tabs_1" label="Расширенные" className="checked:bg-base-100 border">
+          <ul className="menu rounded-box gap-2 items-center flex h-[calc(100vh-5rem)] [&>*>a]:border-2 [&>*>a]:border-dashed [&>*>a]:border-gray-100 px-0 [&>*>a]:hover:border-gray-300">
             <li className="w-full">
               <a
                 className=" justify-center">
@@ -90,12 +95,13 @@ export default function Toolbar({
               </a>
             </li>
           </ul>
-          <div className="items-center flex w-full sticky bottom-0">
-            <a className="text-center w-full">
-              Редактор элементов
-            </a>
+          <div className="h-10/12 w-full flex flex-col">
+            {!isOnElementsPage && (
+              <a className="text-center w-full h-8" href={`/disciplines/${disciplineId}/redactor/elements`}>
+                Редактор элементов
+              </a>
+            )}
           </div>
-
         </Tabs.RadioTab>
       </Tabs>
     </div>

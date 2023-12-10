@@ -8,7 +8,7 @@ export async function middleware(request: NextRequest) {
   if (
     (typeof userType !== "string" || 
     decodeURI(userType) !== 'Преподаватель') &&
-    pathname.endsWith("/redactor")
+    (pathname.endsWith("/redactor") || pathname.endsWith("/redactor/elements"))
     ) {
     return NextResponse.redirect(new URL('http://localhost:3000/not-permitted', request.url))
   }
