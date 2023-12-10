@@ -10,7 +10,9 @@ const nextConfig = {
   },
   images: {
     domains: ['placehold.co']
-  }
+  },
+  transpilePackages: ['react-daisyui'],
+  reactStrictMode: true,
 }
 
 module.exports = nextConfig

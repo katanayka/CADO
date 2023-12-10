@@ -2,6 +2,7 @@
 import MySvg from "@/public/plus";
 import React, { memo, useCallback, useState } from "react";
 import { Handle, Position } from "reactflow";
+import sizes_nodes from "@/public/sizes";
 
 type Props = {
   data: {
@@ -25,7 +26,7 @@ const RewritableNode: React.FC<Props> = memo(({ data }) => {
   }, [data]);
 
   return (
-    <div className="border-solid border-2 rounded border-black p-4 column text-center bg-white">
+    <div className="border-solid border-2 rounded border-black p-4 column text-center bg-white" style={{ width: sizes_nodes.Rewritable.width, height: sizes_nodes.Rewritable.height }}>
       <div>
         Custom Rewritable Node: <strong>{data.text}</strong>
       </div>

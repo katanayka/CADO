@@ -17,6 +17,7 @@ import RewritableNode from "./customNodes/Rewritablenode";
 import { randomInt } from "crypto";
 import axios from "axios";
 import { DisciplineContext } from "@/app/disciplines/[disciplineId]/redactor/page";
+import sizes_nodes from "@/public/sizes";
 
 
 interface ReactFlowInstance {
@@ -31,6 +32,14 @@ const nodeTypes = {
 };
 
 const GraphRedactor = () => {
+  const getBrothers = (node: Node<any>, nodesL: Node<any>[]) => {
+    console.log("NODE - ", node);
+    const parentId = node.data.parentId;
+    console.log("PARENT",parentId);
+    console.log("NODES", nodes)
+    const brothers = nodes.filter(nd => nd.data.parentId == parentId);
+    return brothers;
+  }
   const handleAddNode = (position: { x: number; y: number }, parentId: string, posEdge: Boolean) => {
     const id = getId();
     console.log(id, parentId);
@@ -40,11 +49,13 @@ const GraphRedactor = () => {
       data: {
         id: id,
         label: 'new node',
+        parentId: parentId,
         onAddNode: handleAddNode,
         position
       },
       position: position,
     };
+    console.log("BROTHERS", getBrothers(newNode, nodes));
     setNodes((nds) => nds.concat(newNode));
     let newEdge = {
       id: `${parentId}-${id}`,
@@ -77,6 +88,7 @@ const GraphRedactor = () => {
       data: {
         id: "0_0",
         label: "First node",
+        parentId: "0_0",
         onAddNode: handleAddNode,
         position: position
       },
@@ -89,7 +101,6 @@ const GraphRedactor = () => {
   const disciplineId = useContext(DisciplineContext);
   let id = 0;
   const getId = () => `dndnode_${id++}`;
-  const [elements, setElements] = useState([...nodes, ...edges]);
 
   const onEdgesChange = useCallback(
     (changes: EdgeChange[]) =>
@@ -160,6 +171,12 @@ const GraphRedactor = () => {
     } catch (error) {
       console.log(error)
     }
+  }
+
+  const format_nodes = (nodes: Node<any>[], edges: Edge<any>[]) => {
+    // Iterate over tree and get width of each level - then get max width
+    let max_width = 0;
+    let cur_nodes = nodes.filter(node => node.position.y == 0);
   }
 
   
