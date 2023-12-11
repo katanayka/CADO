@@ -63,7 +63,7 @@ const NodeVideo: React.FC<Props> = memo(({ data }) => {
     return (
         <>
             <NodeResizer isVisible={true} minWidth={sizes_nodes.VideoNode.width} minHeight={sizes_nodes.VideoNode.height} onResize={resizeHandler} keepAspectRatio={true} />
-            <div className="border-solid border-2 rounded border-black p-2 column text-center bg-white" style={{ width: size.width, height: size.height }}>
+            <div className="border-solid border-2 rounded border-black p-2 column text-center bg-white" style={{ width: 192, height: 192 }}>
                 {selectedVideo === null ? (
                     <FileInput className="w-full h-full" bordered={true} onChange={videoHandler} />
                 ) : (

@@ -1,6 +1,9 @@
 // GraphRedactor.tsx
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 import ReactFlow, {
+  useEdgesState,
+  updateEdge,
+  addEdge,
   Controls,
   Background,
   applyNodeChanges,
@@ -11,7 +14,8 @@ import ReactFlow, {
   Edge,
   useNodesState,
   Position,
-  useReactFlow
+  useReactFlow,
+  Connection
 } from "reactflow";
 import { FC } from "react";
 import RewritableNode from "./customNodes/redact/Rewritablenode";
@@ -162,46 +166,59 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
   // }, [reactFlow.getNodes()])
 
   const position = { x: 0, y: 0 };
-  const initialNodes = [
-    {
-      id: "0_0",
-      type: "Rewritable",
-      data: {
-        id: "0_0",
-        label: "First node",
-        parentId: "",
-        onAddNode: handleAddNode,
-        position: position
-      },
-      position: position,
-    },
-    {
-      id: "1_0",
-      type: "VideoN",
-      data: {
-        id: "1_0",
-        label: "Second node",
-        parentId: "",
-        onAddNode: handleAddNode,
-        position: { x: position.x + 200, y: position.y * 2 }
-      },
-      position: { x: position.x + 400, y: position.y * 2 },
-    },
+  const initialNodes: Node<any, string | undefined>[] = [
+    // {
+    //   id: "0_0",
+    //   type: "Rewritable",
+    //   data: {
+    //     id: "0_0",
+    //     label: "First node",
+    //     parentId: "",
+    //     onAddNode: handleAddNode,
+    //     position: position
+    //   },
+    //   position: position,
+      
+    // },
+    // {
+    //   id: "1_0",
+    //   type: "VideoN",
+    //   data: {
+    //     id: "1_0",
+    //     label: "Second node",
+    //     parentId: "",
+    //     onAddNode: handleAddNode,
+    //     position: { x: position.x + 200, y: position.y * 2 }
+    //   },
+    //   position: { x: position.x + 400, y: position.y * 2 },
+    // },
   ];
-
+  const initialEdges: Edge<any>[] = [
+  //   {
+  //   id: '0_0-1_0',
+  //   source: '0_0',
+  //   target: '1_0',
+  // },
+];
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges] = useState<Edge<any>[]>([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+
+  const onEdgeUpdate = useCallback(
+    (oldEdge: Edge, newConnection: Connection) => setEdges((els) => updateEdge(oldEdge, newConnection, els)),
+    []
+  );
+  const onConnect = useCallback((params: Connection | Edge) => setEdges((els) => addEdge(params, els)), []);
   const router = usePathname();
   const isOnElementsPage = router.includes("/elements");
   const disciplineId = useContext(DisciplineContext);
   let id = 0;
   const getId = () => `dndnode_${id++}`;
 
-  const onEdgesChange = useCallback(
-    (changes: EdgeChange[]) =>
-      setEdges((eds: Edge<any>[]) => applyEdgeChanges(changes, eds)),
-    []
-  );
+  // const onEdgesChange = useCallback(
+  //   (changes: EdgeChange[]) =>
+  //     setEdges((eds: Edge<any>[]) => applyEdgeChanges(changes, eds)),
+  //   []
+  // );
 
 
   const onDragOver = useCallback(
@@ -232,81 +249,79 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
     type: string;
   }
   const tree: TreeNode = {
-    name: "Node 1",
+    name: "циклы",
     description: "Description for Node 1",
     isHard: true,
     type: "Rewritable",
     children: [
       {
-        name: "Subnode 1.1",
+        name: "for",
         description: "Description for Subnode 1.1",
         isHard: false,
         type: "Rewritable",
         children: [
           {
-            name: "Leaf 1.1.1",
+            name: "описание for",
             description: "Description for Leaf 1.1.1",
             isHard: false,
             type: "Rewritable",
           },
-          {
-            name: "Leaf 1.1.2",
-            description: "Description for Leaf 1.1.2",
-            isHard: false,
-            type: "Rewritable",
-            children: [
-              {
-                name: "Leaf 1.1.2.1",
-                description: "Description for Leaf 1.1.1",
-                isHard: false,
-                type: "Rewritable",
-              },
-              {
-                name: "Leaf  1.1.2.1",
-                description: "Description for Leaf 1.1.2",
-                isHard: false,
-                type: "VideoN",
-              },
-            ]
-          },
         ],
       },
       {
-        name: "Subnode 1.2",
+        name: "while",
         description: "Description for Subnode 1.2",
         isHard: false,
         type: "Rewritable",
         children: [
           {
-            name: "Leaf 1.2.1",
+            name: "описание while",
             description: "Description for Leaf 1.2.1",
-            isHard: false,
-            type: "Rewritable",
-          },
-          {
-            name: "Leaf 1.2.2",
-            description: "Description for Leaf 1.2.2",
             isHard: false,
             type: "Rewritable",
           },
         ],
       }, {
-        name: "Subnode 1.3",
+        name: "операторы",
         description: "Description for Subnode 1.3",
         isHard: false,
         type: "Rewritable",
         children: [
           {
-            name: "Leaf 1.3.1",
+            name: "break",
             description: "Description for Leaf 1.3.1",
             isHard: false,
             type: "Rewritable",
+            children: [
+              {
+                name: "описание break",
+                description: "Description for Leaf 1.2.1",
+                isHard: false,
+                type: "Rewritable",
+              },
+            ]
           },
           {
-            name: "Leaf 1.3.2",
+            name: "continue",
             description: "Description for Leaf 1.3.2",
             isHard: false,
             type: "Rewritable",
+            children: [
+              {
+                name: "описание continue",
+                description: "Description for Leaf 1.2.1",
+                isHard: false,
+                type: "Rewritable",
+                children: [
+                  {
+                    name: "видик",
+                    description: "Description for Leaf 1.2.23",
+                    isHard: false,
+                    type: "VideoN",
+                  },
+                ]
+              },
+            ]
           },
         ],
       },
@@ -353,7 +368,7 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
         return;
       }
       let indent = 0;
-
+      let maxDepth = 0;
       interface Papa {
         name: string;
         nodeId: string;
@@ -366,6 +381,36 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
       }
       let papas: Papa[] = [];
       treeInfoArray.forEach(function (treeInfo, index) {
+        if (treeInfo.depth > maxDepth) 
+        {
+          maxDepth = treeInfo.depth;
+        }
+        if (treeInfo.depth >= 0) {
+          if (index > 0) if (treeInfoArray[index - 1].depth >= treeInfo.depth) indent += 256;
+        }
+      });
+      if (treeInfoArray[0].depth == 0 && treeInfoArray[0].isHard == false) maxDepth++;
+      const pos = reactFlowInstance.screenToFlowPosition({
+        x: event.clientX,
+        y: event.clientY
+      });
+      const newNode = {
+        id: getId(),
+        position: pos,
+        data: {
+          onAddNode: handleAddNode
+        },
+        style: {
+          backgroundColor: 'rgba(255, 0, 255, 0.2)',
+          height: maxDepth * 256,
+          width: indent + 256,
+        },
+      };
+      indent = 0
+      let daddy = newNode.id;
+      setNodes((nds) => nds.concat(newNode));
+      treeInfoArray.forEach(function (treeInfo, index) {
+        if (treeInfo.depth > maxDepth) maxDepth = treeInfo.depth;
         if (treeInfo.isHard && treeInfo.depth == 0) {
           treeInfoArray.forEach((temp) => {
             temp.depth -= 1;
@@ -373,20 +418,21 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
           return;
         }
         if (treeInfo.depth >= 0) {
-          if (index > 0) if (treeInfoArray[index - 1].depth >= treeInfo.depth) indent += 480;
-          const position = reactFlowInstance.screenToFlowPosition({
-            x: event.clientX + indent,
-            y: event.clientY + treeInfo.depth * 480
+          if (index > 0) if (treeInfoArray[index - 1].depth >= treeInfo.depth) indent += 256;
+          const position = ({
+            x: 32 + indent,
+            y: 32 + treeInfo.depth * 256
           });
           const newNode = {
             id: getId(),
             type: treeInfo.type,
             position,
             data: {
-              label: treeInfo.description,
-              text: treeInfo.description,
+              label: treeInfo.node,
+              text: treeInfo.node,
               onAddNode: handleAddNode
             },
+            parentNode: daddy,
           };
           setNodes((nds) => nds.concat(newNode));
           papa = {
@@ -440,7 +486,14 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
           console.log(treeInfo);
         }
       });
-
+      treeInfoArray.forEach(function (treeInfo, index) {
+        if (treeInfo.isHard && treeInfo.depth == -1) {
+          treeInfoArray.forEach((temp) => {
+            temp.depth += 1;
+          });
+          return;
+        }
+      });
     },
     [reactFlowInstance]
   );
@@ -476,6 +529,7 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
     console.log(treeInfoArray, "TREE INFO ARRAY")
   }, [])
 
+
   return (
     <ReactFlow
       nodes={nodes}
@@ -489,6 +543,8 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
       onDragOver={onDragOver}
       onInit={setReactFlowInstance}
       nodeTypes={nodeTypes}
+      onEdgeUpdate={onEdgeUpdate}
+      onConnect={onConnect}
     >
       <Background />
       <Controls />
@@ -496,7 +552,7 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
         className="absolute bottom-3 z-20 left-1/2 transform -translate-x-1/2 px-12 py-1 border-solid border-2 border-sky-500 rounded-lg cursor-pointer"
         onClick={isOnElementsPage ? save_complex : save}
       >
-        
+
         Save
       </a>
     </ReactFlow>

@@ -41,6 +41,12 @@ export default function Toolbar({
   // sharedData.map((item: any) => {
   //   console.log(item);
   // });
+  console.log(sharedData);
+  const newArr = Array.isArray(sharedData) ? sharedData.map((item: { depth: number; node: string; }) => {
+    return `${' • '.repeat(item.depth)}${item.node}`;
+  }) : [];
+  
+  console.log(newArr);
   const buttons = ["input", "Rewritable", "input", "input", "VideoN"];
 
   return (
@@ -51,10 +57,10 @@ export default function Toolbar({
             <li className="w-full">
               <Input className="w-full"/>
             </li>
-            {buttons.map(button => (
+            {newArr.map(button => (
               <li className="w-full" key={button+Math.random()}>
                 <a
-                  className=" justify-center"
+                  className=""
                   onDragStart={(event) => onDragStart(event, button)}
                   onDragEnd={(event) => onDragEnd(event, button)}
                   draggable

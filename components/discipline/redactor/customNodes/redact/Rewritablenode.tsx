@@ -34,7 +34,7 @@ const RewritableNode: React.FC<Props> = memo(({ data }) => {
   }
 
   return (
-    <div className="border-solid border-2 rounded border-black p-4 column text-center bg-white" style={{ width: 320, height: 320 }}>
+    <div className="border-solid border-2 rounded border-black p-4 column text-center bg-white" style={{ width: 192, height: 192 }}>
       <div>
         <strong>{data.text}</strong>
       </div>
