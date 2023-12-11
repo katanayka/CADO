@@ -1,10 +1,13 @@
-import { Tabs } from "react-daisyui";
+import { Input, Tabs } from "react-daisyui";
 import { usePathname } from "next/navigation";
+import { useContext } from "react";
 
 export default function Toolbar({
   disciplineId,
+  sharedData,
 }: {
   disciplineId: string;
+  sharedData: any;
 }) {
 
   const onDragStart = (
@@ -34,53 +37,35 @@ export default function Toolbar({
   const isOnElementsPage = router.includes("/elements");
 
   let history = [];
+ // Get treeInfoArrayContext from context
+  // sharedData.map((item: any) => {
+  //   console.log(item);
+  // });
+  const buttons = ["input", "Rewritable", "input", "input", "VideoN"];
 
   return (
     <div className="h-11/12 w-96 flex flex-col">
       <Tabs variant="bordered" size="md" className="w-full grid grid-cols-2 ">
-        <Tabs.RadioTab name="my_tabs_1" label="Базовые" defaultChecked={true} className="checked:bg-base-100 border">
+        <Tabs.RadioTab name="my_tabs_1" label="Базовые" defaultChecked={true} className="checked:bg-base-100 border wrap">
           <ul className="menu rounded-box gap-2 items-center flex h-[calc(100vh-5rem)] [&>*>a]:border-2 [&>*>a]:border-dashed [&>*>a]:border-gray-100 px-0 [&>*>a]:hover:border-gray-300">
             <li className="w-full">
-              <a
-                className=" justify-center"
-                onDragStart={(event) => onDragStart(event, "input")}
-                onDragEnd={(event) => onDragEnd(event, "input")}
-                draggable
-              >
-                TODO
-              </a>
+              <Input className="w-full"/>
             </li>
-            <li className="w-full">
-              <a
-                className=" justify-center"
-                onDragStart={(event) => onDragStart(event, "Rewritable")}
-                onDragEnd={(event) => onDragEnd(event, "Rewritable")}
-                draggable>
-                Rewritable
-              </a>
-            </li>
-            <li className="w-full">
-              <a
-                className=" justify-center"
-                onDragStart={(event) => onDragStart(event, "input")}
-                onDragEnd={(event) => onDragEnd(event, "input")}
-                draggable>
-                TODO
-              </a>
-            </li>
-            <li className="w-full">
-              <a
-                className=" justify-center"
-                onDragStart={(event) => onDragStart(event, "input")}
-                onDragEnd={(event) => onDragEnd(event, "input")}
-                draggable>
-                TODO
-              </a>
-            </li>
-
+            {buttons.map(button => (
+              <li className="w-full" key={button+Math.random()}>
+                <a
+                  className=" justify-center"
+                  onDragStart={(event) => onDragStart(event, button)}
+                  onDragEnd={(event) => onDragEnd(event, button)}
+                  draggable
+                >
+                  {button}
+                </a>
+              </li>
+            ))}
           </ul>
         </Tabs.RadioTab>
-        <Tabs.RadioTab name="my_tabs_1" label="Расширенные" className="checked:bg-base-100 border">
+        <Tabs.RadioTab name="my_tabs_1" label="Расширенные" className="checked:bg-base-100 border wrap">
           <ul className="menu rounded-box gap-2 items-center flex h-[calc(100vh-5rem)] [&>*>a]:border-2 [&>*>a]:border-dashed [&>*>a]:border-gray-100 px-0 [&>*>a]:hover:border-gray-300">
             <li className="w-full">
               <a

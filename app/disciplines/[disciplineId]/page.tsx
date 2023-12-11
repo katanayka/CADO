@@ -2,6 +2,7 @@
 import Graph from "@/components/discipline/graph";
 import { getCookie } from "cookies-next";
 import Image from "next/image";
+import { ReactFlowProvider } from "reactflow";
 
 interface paramProps {
 	disciplineId: string;
@@ -35,18 +36,18 @@ export default function Page({ params }: { params: paramProps }) {
 						{decodeURIComponent(params.disciplineId)}
 					</h1>
 					<div className="ourBlock big-tile h-96 w-full">
-						
-						<a href={"/disciplines/" + params.disciplineId + "/redactor"} style={ 
-								typeof getCookie("userType") === "string" 
-								? 
-									getCookie("userType") == "Преподаватель" 
-									?  
-										{} 
-										: 
-										{visibility:"hidden"} 
-									: 
+
+						<a href={"/disciplines/" + params.disciplineId + "/redactor"} style={
+							typeof getCookie("userType") === "string"
+								?
+								getCookie("userType") == "Преподаватель"
+									?
 									{}
-								}>
+									:
+									{ visibility: "hidden" }
+								:
+								{}
+						}>
 							<Image
 								src="/open_link.svg"
 								alt="Open link"
@@ -58,7 +59,10 @@ export default function Page({ params }: { params: paramProps }) {
 							/>
 						</a>
 						<div className="bg-hero-graph-paper h-full w-full flex items-center place-content-center border rounded-l -mt-1">
-							<Graph discipline={params.disciplineId} />
+
+							<ReactFlowProvider>
+								<Graph discipline={params.disciplineId} />
+							</ReactFlowProvider>
 						</div>
 					</div>
 					<div className="big-tile h-72 stripes bg-hero-diagonal-lines"></div>

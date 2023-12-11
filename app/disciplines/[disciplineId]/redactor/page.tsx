@@ -12,12 +12,12 @@ interface paramProps {
 export const DisciplineContext = createContext("0");
 
 export default function Page({ params }: { params: paramProps }) {
-
+  const [sharedData, setSharedData] = useState(null); // Define your state here
   //
   return (
     <div>
       <div className="content flex h-full w-screen">
-        <Toolbar disciplineId={params.disciplineId} />
+        <Toolbar disciplineId={params.disciplineId} sharedData={sharedData}/>
         <div className="about bg-orange-700 h-screen w-full">
           <div className="ourBlock h-full">
             <div style={{ height: "4%" }}>
@@ -46,7 +46,9 @@ export default function Page({ params }: { params: paramProps }) {
             </div>
             <div style={{ height: "96%" }}>
               <DisciplineContext.Provider value={params.disciplineId}>
-                <GraphRedactor />
+                <ReactFlowProvider>
+                  <GraphRedactor setSharedData={setSharedData}/>
+                </ReactFlowProvider>
               </DisciplineContext.Provider>
             </div>
           </div>

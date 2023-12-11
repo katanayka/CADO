@@ -4,7 +4,6 @@ import type { NextRequest } from 'next/server'
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const userType = request.cookies.get("userType")?.value;
-  console.log(userType)
   if (
     (typeof userType !== "string" || 
     decodeURI(userType) !== 'Преподаватель') &&

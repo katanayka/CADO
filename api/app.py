@@ -8,8 +8,6 @@ from urllib.parse import unquote
 
 app = Flask(__name__)
 
-uri = os.environ.get("MONGO_CONNECTION_URI")
-
 DATA_FILE_PATH = 'saved_data.json'
 
 def open_json():
@@ -47,8 +45,9 @@ def save_data():
     print(discipline_id)
     json_file = open_json()
     json_file[discipline_id] = data
+    print(json_file)
     save_json(json_file)
-    return {'message': 'Data saved successfully'}
+    return {'message': 'Data saved successfully', 'data': data}, 200
 
 
 if __name__ == "__main__":
