@@ -28,7 +28,7 @@ const allowedTypes = [
 ]
 
 const NodeVideo: React.FC<Props> = memo(({ data }) => {
-    const [selectedVideo, setSelectedVideo] = useState<File | null>(null);
+    const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
     const [selectedVideoName, setSelectedVideoName] = useState<string>("");
     const [size, setSize] = useState({
         width: sizes_nodes.VideoNode.width,
@@ -36,22 +36,26 @@ const NodeVideo: React.FC<Props> = memo(({ data }) => {
     });
 
     const videoHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (!e.target.files) return;
-        const fileType = String(e.target.files[0]?.type);
+        const files = e.target.files;
+        if (!files || files.length === 0) return;
+    
+        const fileType = String(files[0]?.type);
         console.log(fileType);
+    
         if (allowedTypes.includes(fileType)) {
             // Convert video to base64 and apply to data video
             const reader = new FileReader();
-            reader.readAsDataURL(e.target.files[0]);
+            reader.readAsDataURL(files[0]);
             reader.onload = () => {
                 setSelectedVideo(reader.result as string);
-                setSelectedVideoName(e.target.files[0].name);
+                setSelectedVideoName(files[0].name);
                 data.video = reader.result as string;
-                data.videoName = e.target.files[0].name;
-            }
-
+                data.videoName = files[0].name;
+            };
         }
-    }
+    };
+    
+
 
     const resizeHandler = (event: React.DragEvent<HTMLDivElement>, params: ResizeParams & { direction: number[]; }) => {
         setSize({

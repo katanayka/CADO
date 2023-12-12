@@ -22,7 +22,7 @@ const NodeVideo: React.FC<Props> = memo(({ data }) => {
     const videoName = data.videoName;
     return (
         <>
-            <div className="border-solid border-2 rounded border-black p-2 column text-center bg-white">
+            <div className="border-solid border-2 rounded border-black p-2 column text-center bg-white"  style={{ width: 192, height: 192 }}>
                 <>
                     <span className=" h-2/6 text-center text-sm">
                         {videoName}

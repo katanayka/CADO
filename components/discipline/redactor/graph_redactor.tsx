@@ -1,5 +1,5 @@
 // GraphRedactor.tsx
-import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 import ReactFlow, {
   useEdgesState,
   updateEdge,
@@ -15,7 +15,8 @@ import ReactFlow, {
   useNodesState,
   Position,
   useReactFlow,
-  Connection
+  Connection,
+  useStoreApi,
 } from "reactflow";
 import { FC } from "react";
 import RewritableNode from "./customNodes/redact/Rewritablenode";
@@ -25,6 +26,8 @@ import axios from "axios";
 import { DisciplineContext } from "@/app/disciplines/[disciplineId]/redactor/page";
 import sizes_nodes from "@/public/sizes";
 import { usePathname } from "next/navigation";
+import { Breadcrumbs } from "react-daisyui";
+import { Console } from "console";
 
 
 interface ReactFlowInstance {
@@ -39,17 +42,61 @@ const nodeTypes = {
   VideoN: NodeVideo,
 };
 
+const MIN_DISTANCE = 256
+
 
 const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
   const [reactFlowInstance, setReactFlowInstance] =
     useState<ReactFlowInstance | null>(null);
 
   const [reactFlow, setReactFlow] = useState(useReactFlow());
+  const edgeUpdateSuccessful = useRef(true);
+  const store = useStoreApi();
+
+  const getClosestEdge = useCallback((node: { id: string; positionAbsolute: { x: number; y: number; }; }) => {
+    const { nodeInternals } = store.getState();
+    const storeNodes = Array.from(nodeInternals.values());
+
+    const closestNode = storeNodes.reduce(
+      (res, n) => {
+        if (n.id !== node.id) {
+          const dx = n.positionAbsolute.x - node.positionAbsolute.x;
+          const dy = n.positionAbsolute.y - node.positionAbsolute.y;
+          const d = Math.sqrt(dx * dx + dy * dy);
+
+          if (d < res.distance && d < MIN_DISTANCE) {
+            res.distance = d;
+            res.node = n;
+          }
+        }
+
+        return res;
+      },
+      {
+        distance: Number.MAX_VALUE,
+        node: null,
+      },
+    );
+
+    if (!closestNode.node) {
+      return null;
+    }
+
+    const closeNodeIsSource =
+      closestNode.node.positionAbsolute.x < node.positionAbsolute.x;
+
+    return {
+      id: closeNodeIsSource
+        ? `${closestNode.node.id}-${node.id}`
+        : `${node.id}-${closestNode.node.id}`,
+      source: closeNodeIsSource ? closestNode.node.id : node.id,
+      target: closeNodeIsSource ? node.id : closestNode.node.id,
+    };
+  }, []);
 
   const getBrothers = (parentId: string) => {
     const allNodes = reactFlow.getNodes()
     const brothers = allNodes.filter(node => node.data.parentId == parentId)
-    console.log(brothers)
     return brothers
   }
   const handleAddNode = (position: { x: number; y: number }, parentId: string, posEdge: Boolean) => {
@@ -178,7 +225,7 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
     //     position: position
     //   },
     //   position: position,
-      
+
     // },
     // {
     //   id: "1_0",
@@ -194,25 +241,86 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
     // },
   ];
   const initialEdges: Edge<any>[] = [
-  //   {
-  //   id: '0_0-1_0',
-  //   source: '0_0',
-  //   target: '1_0',
-  // },
-];
+    //   {
+    //   id: '0_0-1_0',
+    //   source: '0_0',
+    //   target: '1_0',
+    // },
+  ];
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
+  const onEdgeUpdateStart = useCallback(() => {
+    edgeUpdateSuccessful.current = false;
+  }, []);
+
   const onEdgeUpdate = useCallback(
-    (oldEdge: Edge, newConnection: Connection) => setEdges((els) => updateEdge(oldEdge, newConnection, els)),
+    (oldEdge: Edge, newConnection: Connection) => { edgeUpdateSuccessful.current = true; setEdges((els) => updateEdge(oldEdge, newConnection, els)) },
     []
   );
+
+  const onEdgeUpdateEnd = useCallback((_: any, edge: { id: string; }) => {
+    if (!edgeUpdateSuccessful.current) {
+      setEdges((eds) => eds.filter((e) => e.id !== edge.id));
+    }
+    edgeUpdateSuccessful.current = true;
+  }, [])
+
   const onConnect = useCallback((params: Connection | Edge) => setEdges((els) => addEdge(params, els)), []);
+
   const router = usePathname();
   const isOnElementsPage = router.includes("/elements");
   const disciplineId = useContext(DisciplineContext);
   let id = 0;
   const getId = () => `dndnode_${id++}`;
+
+  const onNodeDrag = useCallback(
+    (_: any, node: any) => {
+      console.log(getClosestEdge(node), "ASD")
+      const closeEdge = getClosestEdge(node);
+
+      setEdges((es) => {
+        const nextEdges = es.filter((e) => e.className !== 'temp');
+
+        if (
+          closeEdge &&
+          !nextEdges.find(
+            (ne) =>
+              ne.source === closeEdge.source && ne.target === closeEdge.target,
+          )
+        ) {
+          closeEdge.className = 'temp';
+          nextEdges.push(closeEdge);
+        }
+
+        return nextEdges;
+      });
+    },
+    [getClosestEdge, setEdges],
+  );
+
+  const onNodeDragStop = useCallback(
+    (_, node) => {
+      const closeEdge = getClosestEdge(node);
+
+      setEdges((es) => {
+        const nextEdges = es.filter((e) => e.className !== 'temp');
+
+        if (
+          closeEdge &&
+          !nextEdges.find(
+            (ne) =>
+              ne.source === closeEdge.source && ne.target === closeEdge.target,
+          )
+        ) {
+          nextEdges.push(closeEdge);
+        }
+
+        return nextEdges;
+      });
+    },
+    [getClosestEdge],
+  );
 
   // const onEdgesChange = useCallback(
   //   (changes: EdgeChange[]) =>
@@ -226,6 +334,7 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
       preventDefault: () => void;
       dataTransfer: { dropEffect: string };
     }) => {
+      console.log("ELEMENT HOLD")
       event.preventDefault();
       event.dataTransfer.dropEffect = "move";
     },
@@ -348,9 +457,8 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
 
     return result;
   }
-  const treeInfoArray: TreeInfo[] = traverseTree(tree);
-
-  console.log(treeInfoArray)
+  const fullTreeInfoArray: TreeInfo[] = traverseTree(tree);
+  let treeInfoArray = JSON.parse(JSON.stringify(fullTreeInfoArray));
 
   const onDrop = useCallback(
     (event: {
@@ -360,69 +468,100 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
       clientY: any;
     }) => {
       event.preventDefault();
+
       const type = event.dataTransfer.getData("application/reactflow");
-      if (typeof type === "undefined" || !type || reactFlowInstance === null) {
-        console.log("RETURN");
-        console.log(typeof type);
-        console.log(reactFlowInstance);
+
+      if (!type || reactFlowInstance === null) {
         return;
       }
+
+      treeInfoArray.length = 0;
+
+      const treeElement = JSON.parse(type);
+      treeInfoArray.push(treeElement);
+
+      const firstElement = fullTreeInfoArray.findIndex(x => x.node === treeInfoArray[0].node);
+
+      if (treeElement.depth !== -1) {
+        for (let i = firstElement + 1; i < fullTreeInfoArray.length; i++) {
+          if (fullTreeInfoArray[firstElement].depth >= fullTreeInfoArray[i].depth) break;
+          treeInfoArray.push(JSON.parse(JSON.stringify(fullTreeInfoArray[i])));
+        }
+      }
+
+      const minValue = Math.min(...treeInfoArray.map((item: { depth: any }) => item.depth));
+      treeInfoArray.forEach((item: { depth: number }) => {
+        item.depth -= minValue;
+      });
+
       let indent = 0;
       let maxDepth = 0;
+
       interface Papa {
-        name: string;
-        nodeId: string;
-        depth: number;
+        name?: string;
+        nodeId?: string;
+        depth?: number;
       }
-      let papa: Papa = {
-        name: '',
-        nodeId: '',
-        depth: 0
-      }
+
+      let papa: Papa = {};
       let papas: Papa[] = [];
-      treeInfoArray.forEach(function (treeInfo, index) {
-        if (treeInfo.depth > maxDepth) 
-        {
+
+      treeInfoArray.forEach(function (treeInfo: { depth: number; }, index: number) {
+        if (treeInfo.depth > maxDepth) {
           maxDepth = treeInfo.depth;
         }
+
         if (treeInfo.depth >= 0) {
-          if (index > 0) if (treeInfoArray[index - 1].depth >= treeInfo.depth) indent += 256;
+          if (index > 0 && treeInfoArray[index - 1].depth >= treeInfo.depth) indent += 256;
         }
       });
-      if (treeInfoArray[0].depth == 0 && treeInfoArray[0].isHard == false) maxDepth++;
+
+      if (treeInfoArray[0].depth === 0 && !treeInfoArray[0].isHard || treeInfoArray.length === 1) {
+        maxDepth++;
+      }
+
       const pos = reactFlowInstance.screenToFlowPosition({
         x: event.clientX,
         y: event.clientY
       });
+
       const newNode = {
         id: getId(),
         position: pos,
         data: {
           onAddNode: handleAddNode
         },
+        sourcePosition: Position.Right,
+        targetPosition: Position.Left,
         style: {
           backgroundColor: 'rgba(255, 0, 255, 0.2)',
           height: maxDepth * 256,
           width: indent + 256,
         },
       };
-      indent = 0
+
+      indent = 0;
       let daddy = newNode.id;
       setNodes((nds) => nds.concat(newNode));
-      treeInfoArray.forEach(function (treeInfo, index) {
+
+      treeInfoArray.forEach(function (treeInfo: { depth: number; isHard: any; type: any; node: string | undefined; parent: string | undefined; }, index: number) {
         if (treeInfo.depth > maxDepth) maxDepth = treeInfo.depth;
-        if (treeInfo.isHard && treeInfo.depth == 0) {
-          treeInfoArray.forEach((temp) => {
+
+        if (treeInfo.isHard && treeInfo.depth === 0) {
+          treeInfoArray.forEach((temp: { depth: number; }) => {
             temp.depth -= 1;
           });
           return;
         }
+
         if (treeInfo.depth >= 0) {
-          if (index > 0) if (treeInfoArray[index - 1].depth >= treeInfo.depth) indent += 256;
+          if (index > 0 && treeInfoArray[index - 1].depth >= treeInfo.depth) indent += 256;
+
           const position = ({
             x: 32 + indent,
             y: 32 + treeInfo.depth * 256
           });
+
           const newNode = {
             id: getId(),
             type: treeInfo.type,
@@ -434,15 +573,21 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
             },
             parentNode: daddy,
           };
+
           setNodes((nds) => nds.concat(newNode));
+
           papa = {
             name: treeInfo.node,
             nodeId: newNode.id,
             depth: treeInfo.depth
-          }
+          };
+
           papas.push(papa);
+
+
           if (index > 0) {
             let foundPapa = papas.find(papa => papa.name === treeInfo.parent);
+
             let newEdge = {
               id: `${foundPapa?.nodeId}-${newNode.id}`,
               source: String(foundPapa?.nodeId),
@@ -454,19 +599,21 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
                 strokeWidth: 3,
                 stroke: 'black',
               },
-            }
+            };
+
             setEdges((eds) => eds.concat(newEdge));
           }
-          if (treeInfo.depth == 0) {
+
+          if (treeInfo.depth === 0) {
             let foundPapa = null;
-            console.log(index);
+
             for (let i = index - 1; i >= 0; i--) {
-              if (papas[i].depth == 0 && papas[i].name != treeInfo.node) {
-                console.log(papas[i].name, treeInfo.node);
+              if (papas[i].depth === 0 && papas[i].name !== treeInfo.node) {
                 foundPapa = papas[i];
                 break;
               }
             }
+
             if (foundPapa) {
               let newEdge = {
                 id: `${foundPapa?.nodeId}-${newNode.id}`,
@@ -479,21 +626,24 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
                   strokeWidth: 3,
                   stroke: 'black',
                 },
-              }
+              };
+
               setEdges((eds) => eds.concat(newEdge));
             }
           }
-          console.log(treeInfo);
         }
       });
-      treeInfoArray.forEach(function (treeInfo, index) {
-        if (treeInfo.isHard && treeInfo.depth == -1) {
-          treeInfoArray.forEach((temp) => {
+
+      treeInfoArray.forEach(function (treeInfo: { isHard: any; depth: number; }, index: any) {
+        if (treeInfo.isHard && treeInfo.depth === -1) {
+          treeInfoArray.forEach((temp: { depth: number; }) => {
             temp.depth += 1;
           });
           return;
         }
       });
+
+      treeInfoArray = JSON.parse(JSON.stringify(fullTreeInfoArray));
     },
     [reactFlowInstance]
   );
@@ -504,13 +654,9 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
       nodes: nodes,
       edges: edges
     }
-    console.log(data, "SIMPLE")
     try {
-      console.log(data)
       const response = await axios.post(`/api/discipline/save`, data)
-      console.log(response.data)
     } catch (error) {
-      console.log(error)
     }
   }
 
@@ -520,30 +666,34 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
       nodes: nodes,
       edges: edges
     }
-    console.log(data, "COMPLEX")
+    //console.log(data, "COMPLEX")
   }
 
   useEffect(() => {
     setSharedData(treeInfoArray)
-    console.log("SHARED DATA SET")
-    console.log(treeInfoArray, "TREE INFO ARRAY")
+    //console.log("SHARED DATA SET")
+    //console.log(treeInfoArray, "TREE INFO ARRAY")
   }, [])
 
 
   return (
     <ReactFlow
       nodes={nodes}
+      nodeTypes={nodeTypes}
       onNodesChange={onNodesChange}
+      onNodeDrag={onNodeDrag}
+      onNodeDragStop={onNodeDragStop}
       edges={edges}
       onEdgesChange={onEdgesChange}
+      onEdgeUpdate={onEdgeUpdate}
+      onEdgeUpdateStart={onEdgeUpdateStart}
+      onEdgeUpdateEnd={onEdgeUpdateEnd}
       className="z-10"
       snapToGrid={true}
       snapGrid={[32, 32]}
       onDrop={onDrop}
       onDragOver={onDragOver}
       onInit={setReactFlowInstance}
-      nodeTypes={nodeTypes}
-      onEdgeUpdate={onEdgeUpdate}
       onConnect={onConnect}
     >
       <Background />

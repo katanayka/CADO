@@ -27,13 +27,13 @@ const RewritableNode: React.FC<Props> = memo(({ data }) => {
   }, [data]);
   {/*<div className="border-solid border-2 rounded border-black p-2 column text-center bg-white">*/}
     return (
-      <div className="border-solid border-2 rounded border-black p-4 column text-center bg-white" style={{ width: 320, height: 320 }}>
+      <div className="border-solid border-2 rounded border-black p-4 column text-center bg-white" style={{ width: 192, height: 192 }}>
         <div>
           <strong>{data.text}</strong>
         </div>
         <Textarea
           defaultValue={data.inside}
-          className="nodrag input input-bordered w-full max-w-xs mt-2 h-60 overflow-y-auto resize-none"
+          className="nodrag input input-bordered w-full max-w-xs mt-2 h-60 overflow-y-auto resize-none" style={{height:120}}
           readOnly={true}
         />
 

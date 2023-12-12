@@ -23,7 +23,7 @@ const RewritableNode: React.FC<Props> = memo(({ data }) => {
     const newPosition = { x: data.position.x + offsetX, y: data.position.y + offsetY };
     data.onAddNode(newPosition, data.id, offsetX > offsetY);
   }, [data]);
-  const handleTextChange = (e) => {
+  const handleTextChange = (e: { target: { value: any; }; }) => {
     const newText = e.target.value;
     data.text = newText;
   }
