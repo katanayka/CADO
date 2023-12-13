@@ -45,4 +45,6 @@ const RewritableNode: React.FC<Props> = memo(({ data }) => {
     );
 });
 
+RewritableNode.displayName = "RewritableNode";
+
 export default RewritableNode;

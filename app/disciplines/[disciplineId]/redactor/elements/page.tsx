@@ -1,6 +1,5 @@
 "use client"
-import React from 'react';
-import { DisciplineContext } from '../page';
+import React, { useState } from 'react';
 import GraphRedactor from '@/components/discipline/redactor/graph_redactor';
 import Toolbar from '@/components/discipline/redactor/toolbar';
 
@@ -9,10 +8,11 @@ interface paramProps {
 }
 
 const Page: React.FC<{ params: paramProps }> = ({ params }) => {
+    const [sharedData, setSharedData] = useState(null); // Define your state here
     return (
         <>
             <div className="content flex h-full w-screen">
-                <Toolbar disciplineId={params.disciplineId} />
+                <Toolbar disciplineId={params.disciplineId} sharedData={sharedData} />
                 <div className="about bg-orange-700 h-screen w-full">
                     <div className="ourBlock h-full">
                         <div style={{ height: "4%" }}>
@@ -46,9 +46,7 @@ const Page: React.FC<{ params: paramProps }> = ({ params }) => {
                             </div>
                         </div>
                         <div style={{ height: "96%" }}>
-                            <DisciplineContext.Provider value={params.disciplineId}>
-                                <GraphRedactor />
-                            </DisciplineContext.Provider>
+                            <GraphRedactor setSharedData={setSharedData} />
                         </div>
                     </div>
                 </div>

@@ -113,7 +113,7 @@ export default function Toolbar({
                 <Input className="w-full no-animation" />
               </li>
             )}
-            {nodes.map(node => (
+            {nodes.map((node: any) => (
               <li className="w-full" key={node + Math.random()}>
                 <a
                   className=""

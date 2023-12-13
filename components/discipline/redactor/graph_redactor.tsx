@@ -23,7 +23,6 @@ import RewritableNode from "./customNodes/redact/Rewritablenode";
 import NodeVideo from "./customNodes/redact/NodeVideo";
 import { randomInt } from "crypto";
 import axios from "axios";
-import { DisciplineContext } from "@/app/disciplines/[disciplineId]/redactor/page";
 import sizes_nodes from "@/public/sizes";
 import { usePathname } from "next/navigation";
 import { Breadcrumbs } from "react-daisyui";
@@ -59,24 +58,26 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
 
     const closestNode = storeNodes.reduce(
       (res, n) => {
-        if (n.id !== node.id) {
-          const dx = n.positionAbsolute.x - node.positionAbsolute.x;
-          const dy = n.positionAbsolute.y - node.positionAbsolute.y;
+        if (n.id !== node.id && n.positionAbsolute) {
+          const dx = (n.positionAbsolute.x ?? 0) - (node.positionAbsolute?.x ?? 0);
+          const dy = (n.positionAbsolute.y ?? 0) - (node.positionAbsolute?.y ?? 0);
           const d = Math.sqrt(dx * dx + dy * dy);
-
+    
           if (d < res.distance && d < MIN_DISTANCE) {
             res.distance = d;
-            res.node = n;
+            res.node = n as { id: string; positionAbsolute: { x: number; y: number } };
           }
         }
-
+    
         return res;
       },
       {
         distance: Number.MAX_VALUE,
-        node: null,
+        node: { id: "", positionAbsolute: { x: 0, y: 0 } }, // Set a default value for node
       },
     );
+    
+    
 
     if (!closestNode.node) {
       return null;
@@ -91,6 +92,7 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
         : `${node.id}-${closestNode.node.id}`,
       source: closeNodeIsSource ? closestNode.node.id : node.id,
       target: closeNodeIsSource ? node.id : closestNode.node.id,
+      className: 'temp',
     };
   }, []);
 
@@ -212,7 +214,6 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
   //   console.log(sortedParents)
   // }, [reactFlow.getNodes()])
 
-  const position = { x: 0, y: 0 };
   const initialNodes: Node<any, string | undefined>[] = [
     // {
     //   id: "0_0",
@@ -270,7 +271,8 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
 
   const router = usePathname();
   const isOnElementsPage = router.includes("/elements");
-  const disciplineId = useContext(DisciplineContext);
+  const disciplineId = router.split("/")[2];
+  console.log("DISCIPLINE ID", disciplineId)
   let id = 0;
   const getId = () => `dndnode_${id++}`;
 
@@ -300,7 +302,7 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
   );
 
   const onNodeDragStop = useCallback(
-    (_, node) => {
+    (_:any, node:any) => {
       const closeEdge = getClosestEdge(node);
 
       setEdges((es) => {

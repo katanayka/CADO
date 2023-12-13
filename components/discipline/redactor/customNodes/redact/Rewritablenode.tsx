@@ -1,7 +1,5 @@
-import MySvg from "@/public/plus";
-import React, { memo, useCallback, useState } from "react";
+import React, { memo } from "react";
 import { Handle, Position } from "reactflow";
-import sizes_nodes from "@/public/sizes";
 import { Textarea } from "react-daisyui";
 
 type Props = {
@@ -18,17 +16,12 @@ type Props = {
 
 
 const RewritableNode: React.FC<Props> = memo(({ data }) => {
-  const handleAddNode = useCallback((offsetX: number, offsetY: number) => {
-    console.log(data);
-    const newPosition = { x: data.position.x + offsetX, y: data.position.y + offsetY };
-    data.onAddNode(newPosition, data.id, offsetX > offsetY);
-  }, [data]);
-  const handleTextChange = (e: { target: { value: any; }; }) => {
+  const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newText = e.target.value;
     data.text = newText;
   }
 
-  const handleInsideChange = (e) => {
+  const handleInsideChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newText = e.target.value;
     data.inside = newText;
   }
@@ -62,5 +55,7 @@ const RewritableNode: React.FC<Props> = memo(({ data }) => {
     </div>
   );
 });
+
+RewritableNode.displayName = "RewritableNodeRedact";
 
 export default RewritableNode;
