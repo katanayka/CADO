@@ -80,8 +80,8 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
 
     return {
       id: closeNodeIsSource
-        ? `${closestNode.node.id}-${node.id}`
-        : `${node.id}-${closestNode.node.id}`,
+        ? `${closestNode.node.id}-${node.id}`+ getId()
+        : `${node.id}-${closestNode.node.id}` + getId(),
       source: closeNodeIsSource ? closestNode.node.id : node.id,
       target: closeNodeIsSource ? node.id : closestNode.node.id,
       sourceHandle: dx > dy
@@ -575,7 +575,7 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
         sourcePosition: Position.Right,
         targetPosition: Position.Left,
         style: {
-          backgroundColor: 'rgba(255, 0, 255, 0.2)',
+          backgroundColor: 'rgba(0, 0, 0, 0.1)',
           height: maxDepth * 256,
           width: indent + 256,
         },

@@ -18,7 +18,7 @@ export default function Toolbar({
   const isOnElementsPage = router.includes("/elements");
   let draggedNodeId: string | null = null;
 
-  useEffect(()=> {
+  useEffect(() => {
     async function fetchData() {
       try {
         const res = await axios.get(
@@ -31,9 +31,9 @@ export default function Toolbar({
       } catch (error) {
         console.log(error)
       }
-		}
+    }
     fetchData()
-  },[])
+  }, [])
 
   const onDragStart = (
     event: any,
@@ -96,18 +96,23 @@ export default function Toolbar({
 
   const menuItems = generateMenu(sharedData);
   const buttons = ["input", "Rewritable", "VideoN"];
-  let nodes = JSON.parse(JSON.stringify(sharedData)); 
+  let nodes = JSON.parse(JSON.stringify(sharedData));
   nodes = [
-    {parent: null, node: 'Rewritable', description: 'Description for Rewritable', depth: -1, type: 'Rewritable'},
-    {parent: null, node: 'VideoN', description: 'Description for VideoN', depth: -1, type: 'VideoN'}
+    { parent: null, node: 'Rewritable', description: 'Description for Rewritable', depth: -1, type: 'Rewritable' },
+    { parent: null, node: 'VideoN', description: 'Description for VideoN', depth: -1, type: 'VideoN' }
   ]
-  
+
   const baseItems = generateMenu(nodes);
   return (
     <div className="h-11/12 w-96 flex flex-col">
       <Tabs variant="bordered" size="md" className="w-full grid grid-cols-2 ">
         <Tabs.RadioTab name="my_tabs_1" label="Базовые" defaultChecked={true} className="checked:bg-base-100 border wrap">
           <ul className="menu rounded-box gap-2 items-center  flex h-[calc(100vh-5rem)] [&>*>a]:border-2 [&>*>a]:border-dashed [&>*>a]:border-gray-100 [&>*>a]:hover:border-gray-300">
+            <div>
+              <Input placeholder="Импортировать из...">
+
+              </Input>
+            </div>
             {isOnElementsPage && (
               <li className="w-full">
                 <Input className="w-full no-animation" />
@@ -126,6 +131,7 @@ export default function Toolbar({
               </li>
             ))}
           </ul>
+
         </Tabs.RadioTab>
         <Tabs.RadioTab name="my_tabs_1" label="Расширенные" className="checked:bg-base-100 border wrap">
           <Menu size="md" className="menu gap-2 flex h-[calc(100vh-5rem)] no-animation w-full max-w-xs">
