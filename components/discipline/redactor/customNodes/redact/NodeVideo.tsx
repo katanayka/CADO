@@ -11,7 +11,7 @@ type Props = {
         onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
         onAddNode: (position: { x: number; y: number }, id: string, posEdge: Boolean) => void;
         position: { x: number; y: number };
-        video: ArrayBuffer | null;
+        video?: string;
         videoName: string;
     };
 };
@@ -54,19 +54,10 @@ const NodeVideo: React.FC<Props> = memo(({ data }) => {
             };
         }
     };
-    
-
-
-    const resizeHandler = (event: React.DragEvent<HTMLDivElement>, params: ResizeParams & { direction: number[]; }) => {
-        setSize({
-            width: params.width,
-            height: params.height
-        });
-    }
 
     return (
         <>
-            <NodeResizer isVisible={true} minWidth={sizes_nodes.VideoNode.width} minHeight={sizes_nodes.VideoNode.height} onResize={resizeHandler} keepAspectRatio={true} />
+            <NodeResizer isVisible={true} minWidth={sizes_nodes.VideoNode.width} minHeight={sizes_nodes.VideoNode.height} keepAspectRatio={true} />
             <div className="border-solid border-2 rounded border-black p-2 column text-center bg-white" style={{ width: 192, height: 192 }}>
                 {selectedVideo === null ? (
                     <FileInput className="w-full h-full" bordered={true} onChange={videoHandler} />
@@ -90,5 +81,7 @@ const NodeVideo: React.FC<Props> = memo(({ data }) => {
         </>
     )
 });
+
+NodeVideo.displayName = 'NodeVideoRedact';
 
 export default NodeVideo;

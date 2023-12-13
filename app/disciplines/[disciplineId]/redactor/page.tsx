@@ -1,15 +1,13 @@
 "use client";
 import GraphRedactor from "@/components/discipline/redactor/graph_redactor";
 import Toolbar from "@/components/discipline/redactor/toolbar";
-import { createContext, useCallback, useState } from "react";
+import { useState } from "react";
 import "reactflow/dist/style.css";
-import { ReactFlowProvider, useNodesState } from "reactflow";
+import { ReactFlowProvider } from "reactflow";
 
 interface paramProps {
   disciplineId: string;
 }
-
-export const DisciplineContext = createContext("0");
 
 export default function Page({ params }: { params: paramProps }) {
   const [sharedData, setSharedData] = useState(null); // Define your state here
@@ -17,7 +15,7 @@ export default function Page({ params }: { params: paramProps }) {
   return (
     <div>
       <div className="content flex h-full w-screen">
-        <Toolbar disciplineId={params.disciplineId} sharedData={sharedData}/>
+        <Toolbar disciplineId={params.disciplineId} sharedData={sharedData} />
         <div className="about bg-orange-700 h-screen w-full">
           <div className="ourBlock h-full">
             <div style={{ height: "4%" }}>
@@ -45,11 +43,9 @@ export default function Page({ params }: { params: paramProps }) {
               </div>
             </div>
             <div style={{ height: "96%" }}>
-              <DisciplineContext.Provider value={params.disciplineId}>
-                <ReactFlowProvider>
-                  <GraphRedactor setSharedData={setSharedData}/>
-                </ReactFlowProvider>
-              </DisciplineContext.Provider>
+              <ReactFlowProvider>
+                <GraphRedactor setSharedData={setSharedData} />
+              </ReactFlowProvider>
             </div>
           </div>
         </div>

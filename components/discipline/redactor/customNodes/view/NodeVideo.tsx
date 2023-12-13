@@ -11,7 +11,7 @@ type Props = {
         onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
         onAddNode: (position: { x: number; y: number }, id: string, posEdge: Boolean) => void;
         position: { x: number; y: number };
-        video: File | null;
+        video?: File | null;
         videoName: string;
     };
 };
@@ -29,12 +29,14 @@ const NodeVideo: React.FC<Props> = memo(({ data }) => {
                     </span>
 
                     <video className="w-full border" controls>
-                        <source type={videoType} src={video} />
+                        <source type={videoType} src={String(video)} />
                     </video>
                 </>
             </div>
         </>
     )
 });
+
+NodeVideo.displayName = "NodeVideo";
 
 export default NodeVideo;
