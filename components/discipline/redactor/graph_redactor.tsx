@@ -1,13 +1,11 @@
 // GraphRedactor.tsx
-import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import ReactFlow, {
   useEdgesState,
   updateEdge,
   addEdge,
   Controls,
   Background,
-  applyNodeChanges,
-  applyEdgeChanges,
   Node,
   NodeChange,
   EdgeChange,
@@ -18,15 +16,10 @@ import ReactFlow, {
   Connection,
   useStoreApi,
 } from "reactflow";
-import { FC } from "react";
 import RewritableNode from "./customNodes/redact/Rewritablenode";
 import NodeVideo from "./customNodes/redact/NodeVideo";
-import { randomInt } from "crypto";
 import axios from "axios";
-import sizes_nodes from "@/public/sizes";
 import { usePathname } from "next/navigation";
-import { Breadcrumbs } from "react-daisyui";
-import { Console } from "console";
 
 
 interface ReactFlowInstance {
@@ -41,7 +34,7 @@ const nodeTypes = {
   VideoN: NodeVideo,
 };
 
-const MIN_DISTANCE = 256
+const MIN_DISTANCE = 384
 
 
 const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
@@ -52,39 +45,38 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
   const edgeUpdateSuccessful = useRef(true);
   const store = useStoreApi();
 
-  const getClosestEdge = useCallback((node: { id: string; positionAbsolute: { x: number; y: number; }; }) => {
+  const getClosestEdge = useCallback((node: { id: string; parentNode: string; positionAbsolute: { x: number; y: number; }; }) => {
     const { nodeInternals } = store.getState();
     const storeNodes = Array.from(nodeInternals.values());
-
+    let dy = 0;
+    let dx = 0;
     const closestNode = storeNodes.reduce(
       (res, n) => {
         if (n.id !== node.id && n.positionAbsolute) {
-          const dx = (n.positionAbsolute.x ?? 0) - (node.positionAbsolute?.x ?? 0);
-          const dy = (n.positionAbsolute.y ?? 0) - (node.positionAbsolute?.y ?? 0);
+          dx = (n.positionAbsolute.x ?? 0) - (node.positionAbsolute?.x ?? 0);
+          dy = (n.positionAbsolute.y ?? 0) - (node.positionAbsolute?.y ?? 0);
           const d = Math.sqrt(dx * dx + dy * dy);
-    
+
           if (d < res.distance && d < MIN_DISTANCE) {
             res.distance = d;
-            res.node = n as { id: string; positionAbsolute: { x: number; y: number } };
+            res.node = n as { id: string; parentNode: string; positionAbsolute: { x: number; y: number } };
           }
         }
-    
         return res;
       },
       {
         distance: Number.MAX_VALUE,
-        node: { id: "", positionAbsolute: { x: 0, y: 0 } }, // Set a default value for node
+        node: { id: "", parentNode: "",positionAbsolute: { x: 0, y: 0 } },
       },
     );
-    
-    
 
-    if (!closestNode.node) {
+    if (!closestNode.node || closestNode.node.parentNode == node.parentNode || closestNode.node.id.includes("Group") || node.id.includes("Group") ) {
       return null;
     }
-
-    const closeNodeIsSource =
-      closestNode.node.positionAbsolute.x < node.positionAbsolute.x;
+    let closeNodeIsSource = true;
+    dx = Math.abs(closestNode.node.positionAbsolute.x - node.positionAbsolute.x);
+    dy = Math.abs(closestNode.node.positionAbsolute.y - node.positionAbsolute.y);
+    closeNodeIsSource = (dx > dy ? (closestNode.node.positionAbsolute.x < node.positionAbsolute.x) : (closestNode.node.positionAbsolute.y < node.positionAbsolute.y));
 
     return {
       id: closeNodeIsSource
@@ -92,7 +84,18 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
         : `${node.id}-${closestNode.node.id}`,
       source: closeNodeIsSource ? closestNode.node.id : node.id,
       target: closeNodeIsSource ? node.id : closestNode.node.id,
+      sourceHandle: dx > dy
+      ? 'right'
+      : 'bottom',
+      targetHandle: dx > dy
+      ? 'left'
+      : 'top',
       className: 'temp',
+      type: "step",
+      style: {
+        strokeWidth: 3,
+        stroke: 'black',
+      },
     };
   }, []);
 
@@ -101,7 +104,7 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
     const brothers = allNodes.filter(node => node.data.parentId == parentId)
     return brothers
   }
-  const handleAddNode = (position: { x: number; y: number }, parentId: string, posEdge: Boolean) => {
+  const handleAddNode = (_position: { x: number; y: number }, _parentId: string, _posEdge: Boolean) => {
     // const id = getId();
     // console.log(id, parentId);
     // const newNode = {
@@ -280,7 +283,7 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
     (_: any, node: any) => {
       console.log(getClosestEdge(node), "ASD")
       const closeEdge = getClosestEdge(node);
-
+      if (!node.data.isGroup)
       setEdges((es) => {
         const nextEdges = es.filter((e) => e.className !== 'temp');
 
@@ -302,9 +305,9 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
   );
 
   const onNodeDragStop = useCallback(
-    (_:any, node:any) => {
+    (_: any, node: any) => {
       const closeEdge = getClosestEdge(node);
-
+      if (!node.data.isGroup)
       setEdges((es) => {
         const nextEdges = es.filter((e) => e.className !== 'temp');
 
@@ -360,79 +363,114 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
     type: string;
   }
   const tree: TreeNode = {
-    name: "циклы",
-    description: "Description for Node 1",
+    name: "Python",
+    description: "Описание по Python",
     isHard: true,
     type: "Rewritable",
     children: [
       {
-        name: "for",
-        description: "Description for Subnode 1.1",
+        name: "Синтаксис",
+        description: "Описание синтаксиса Python",
         isHard: false,
         type: "Rewritable",
         children: [
           {
-            name: "описание for",
-            description: "Description for Leaf 1.1.1",
+            name: "Условные операторы",
+            description: "Описание условных операторов",
+            isHard: false,
+            type: "Rewritable",
+            children: [
+              {
+                name: "if",
+                description: "Описание if-оператора",
+                isHard: false,
+                type: "Rewritable",
+              },
+              {
+                name: "else",
+                description: "Описание else-оператора",
+                isHard: false,
+                type: "Rewritable",
+              },
+              {
+                name: "elif",
+                description: "Описание elif-оператора",
+                isHard: false,
+                type: "Rewritable",
+              },
+            ],
+          },
+          {
+            name: "Циклы",
+            description: "Описание циклов",
+            isHard: false,
+            type: "Rewritable",
+            children: [
+              {
+                name: "for",
+                description: "Описание for-цикла",
+                isHard: false,
+                type: "Rewritable",
+              },
+              {
+                name: "while",
+                description: "Описание while-цикла",
+                isHard: false,
+                type: "Rewritable",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        name: "Классы",
+        description: "Описание классов в Python",
+        isHard: false,
+        type: "Rewritable",
+        children: [
+          {
+            name: "Определение класса",
+            description: "Описание определения класса",
+            isHard: false,
+            type: "Rewritable",
+          },
+          {
+            name: "Методы",
+            description: "Описание методов класса",
+            isHard: false,
+            type: "Rewritable",
+          },
+          {
+            name: "Наследование",
+            description: "Описание наследования классов",
             isHard: false,
             type: "Rewritable",
           },
         ],
       },
       {
-        name: "while",
-        description: "Description for Subnode 1.2",
+        name: "Функции",
+        description: "Описание функций в Python",
         isHard: false,
         type: "Rewritable",
         children: [
           {
-            name: "описание while",
-            description: "Description for Leaf 1.2.1",
+            name: "Определение функции",
+            description: "Описание определения функции",
             isHard: false,
             type: "Rewritable",
           },
-        ],
-      }, {
-        name: "операторы",
-        description: "Description for Subnode 1.3",
-        isHard: false,
-        type: "Rewritable",
-        children: [
           {
-            name: "break",
-            description: "Description for Leaf 1.3.1",
+            name: "Аргументы функции",
+            description: "Описание аргументов функции",
             isHard: false,
             type: "Rewritable",
-            children: [
-              {
-                name: "описание break",
-                description: "Description for Leaf 1.2.1",
-                isHard: false,
-                type: "Rewritable",
-              },
-            ]
           },
           {
-            name: "continue",
-            description: "Description for Leaf 1.3.2",
+            name: "Возвращаемые значения",
+            description: "Описание возвращаемых значений функции",
             isHard: false,
             type: "Rewritable",
-            children: [
-              {
-                name: "описание continue",
-                description: "Description for Leaf 1.2.1",
-                isHard: false,
-                type: "Rewritable",
-                children: [
-                  {
-                    name: "видик",
-                    description: "Description for Leaf 1.2.23",
-                    isHard: false,
-                    type: "VideoN",
-                  },
-                ]
-              },
-            ]
           },
         ],
       },
@@ -528,9 +566,10 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
       });
 
       const newNode = {
-        id: getId(),
+        id: getId() + "Group",
         position: pos,
         data: {
+          isGroup: true,
           onAddNode: handleAddNode
         },
         sourcePosition: Position.Right,
@@ -636,7 +675,7 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
         }
       });
 
-      treeInfoArray.forEach(function (treeInfo: { isHard: any; depth: number; }, index: any) {
+      treeInfoArray.forEach(function (treeInfo: { isHard: any; depth: number; }, _index: any) {
         if (treeInfo.isHard && treeInfo.depth === -1) {
           treeInfoArray.forEach((temp: { depth: number; }) => {
             temp.depth += 1;
