@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState } from "react";
-import { NodeResizer, ResizeParams } from "reactflow";
+import { Handle, Position, NodeResizer, ResizeParams } from "reactflow";
 import sizes_nodes from "@/public/sizes";
 import { FileInput } from "react-daisyui";
 
@@ -32,6 +32,11 @@ const NodeVideo: React.FC<Props> = memo(({ data }) => {
                         <source type={videoType} src={video} />
                     </video>
                 </>
+                
+                <Handle id="top" type="target" position={Position.Top} className="" />
+                <Handle id="left" type="target" position={Position.Left} className="" />
+                <Handle id="right" type="source" position={Position.Right} className="" />
+                <Handle id="bottom" type="source" position={Position.Bottom} className="" />
             </div>
         </>
     )
