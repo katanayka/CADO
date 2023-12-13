@@ -52,7 +52,7 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
     let dx = 0;
     const closestNode = storeNodes.reduce(
       (res, n) => {
-        if (n.id !== node.id && n.positionAbsolute) {
+        if (n.id !== node.id && n.positionAbsolute && n.parentNode != node.parentNode && !n.id.includes("Group") && !node.id.includes("Group") ) {
           dx = (n.positionAbsolute.x ?? 0) - (node.positionAbsolute?.x ?? 0);
           dy = (n.positionAbsolute.y ?? 0) - (node.positionAbsolute?.y ?? 0);
           const d = Math.sqrt(dx * dx + dy * dy);
@@ -70,7 +70,7 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
       },
     );
 
-    if (!closestNode.node || closestNode.node.parentNode == node.parentNode || closestNode.node.id.includes("Group") || node.id.includes("Group") ) {
+    if (!closestNode.node) {
       return null;
     }
     let closeNodeIsSource = true;
