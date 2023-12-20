@@ -55,8 +55,8 @@ const RewritableNode: React.FC<Props> = memo(({ data }) => {
         className="absolute top-1/2 -right-3 z-20 transform -translate-y-1/2"
       >
       </div>
-      <Button onClick={handleShow}>Open Modal</Button>
-      <Modal ref={ref}>
+      {/* <Button onClick={handleShow}>Open Modal</Button> */}
+      {/* <Modal ref={ref}>
         <Modal.Header className="font-bold">Hello!</Modal.Header>
         <Modal.Body>
           Press ESC key or click the button below to close
@@ -66,7 +66,7 @@ const RewritableNode: React.FC<Props> = memo(({ data }) => {
             <Button>Close</Button>
           </form>
         </Modal.Actions>
-      </Modal>
+      </Modal> */}
       <Handle id="top" type="target" position={Position.Top} className="" />
       <Handle id="left" type="target" position={Position.Left} className="" />
       <Handle id="right" type="source" position={Position.Right} className="" />

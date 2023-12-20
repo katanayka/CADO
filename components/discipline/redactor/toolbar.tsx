@@ -40,7 +40,6 @@ export default function Toolbar({
     nodeType: any
   ) => {
     draggedNodeId = nodeType;
-    console.log("DRAG NODE IS - ", draggedNodeId);
     dragStart.push(draggedNodeId)
     event.dataTransfer.setData("application/reactflow", dragStart[0]);
     event.dataTransfer.effectAllowed = "move";
@@ -55,12 +54,6 @@ export default function Toolbar({
     draggedNodeId = null;
     dragStart = []
   };
-
-  let history = [];
-
-  const newArr = Array.isArray(sharedData) ? sharedData.map((item: { depth: number; node: string; }) => {
-    return item.node;
-  }) : [];
 
   const generateMenu = (data: any[], parent = null) => {
     if (!data) {
@@ -77,7 +70,7 @@ export default function Toolbar({
       return (
         <Menu.Item
           key={item.node}
-          className={hasChildren ? 'pt-2 w-full' : ''}  // Adjust the class based on your styling needs
+          className={hasChildren ? 'pt-2 w-full text-white' : ''}  // Adjust the class based on your styling needs
           onDragStart={(event) => onDragStart(event, JSON.stringify(item))}
           onDragEnd={(event) => onDragEnd(event, JSON.stringify(item))}
           draggable
@@ -95,24 +88,17 @@ export default function Toolbar({
   };
 
   const menuItems = generateMenu(sharedData);
-  const buttons = ["input", "Rewritable", "VideoN"];
   let nodes = JSON.parse(JSON.stringify(sharedData));
   nodes = [
     { parent: null, node: 'Rewritable', description: 'Description for Rewritable', depth: -1, type: 'Rewritable' },
     { parent: null, node: 'VideoN', description: 'Description for VideoN', depth: -1, type: 'VideoN' }
   ]
-
-  const baseItems = generateMenu(nodes);
   return (
     <div className="h-11/12 w-96 flex flex-col">
       <Tabs variant="bordered" size="md" className="w-full grid grid-cols-2 ">
         <Tabs.RadioTab name="my_tabs_1" label="Базовые" defaultChecked={true} className="checked:bg-base-100 border wrap">
           <ul className="menu rounded-box gap-2 items-center  flex h-[calc(100vh-5rem)] [&>*>a]:border-2 [&>*>a]:border-dashed [&>*>a]:border-gray-100 [&>*>a]:hover:border-gray-300">
-            <div>
-              <Input placeholder="Импортировать из...">
 
-              </Input>
-            </div>
             {isOnElementsPage && (
               <li className="w-full">
                 <Input className="w-full no-animation" />
@@ -121,7 +107,7 @@ export default function Toolbar({
             {nodes.map((node: any) => (
               <li className="w-full" key={node + Math.random()}>
                 <a
-                  className=""
+                  className="text-white"
                   onDragStart={(event) => onDragStart(event, JSON.stringify(node))}
                   onDragEnd={(event) => onDragEnd(event, JSON.stringify(node))}
                   draggable

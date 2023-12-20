@@ -25,7 +25,6 @@ const RewritableNode: React.FC<Props> = memo(({ data }) => {
     const newPosition = { x: data.position.x + offsetX, y: data.position.y + offsetY };
     data.onAddNode(newPosition, data.id, offsetX > offsetY);
   }, [data]);
-  {/*<div className="border-solid border-2 rounded border-black p-2 column text-center bg-white">*/}
     return (
       <div className="border-solid border-2 rounded border-black p-4 column text-center bg-white" style={{ width: 192, height: 192 }}>
         <div>

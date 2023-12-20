@@ -1,7 +1,6 @@
 import React, { memo, useEffect, useState } from "react";
 import { Handle, Position, NodeResizer, ResizeParams } from "reactflow";
 import sizes_nodes from "@/public/sizes";
-import { FileInput } from "react-daisyui";
 
 type Props = {
     data: {

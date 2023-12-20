@@ -21,7 +21,6 @@ import NodeVideo from "./customNodes/redact/NodeVideo";
 import axios from "axios";
 import { usePathname } from "next/navigation";
 
-
 interface ReactFlowInstance {
   screenToFlowPosition: (position: { x: number; y: number }) => {
     x: number;
@@ -34,8 +33,7 @@ const nodeTypes = {
   VideoN: NodeVideo,
 };
 
-const MIN_DISTANCE = 384
-
+const MIN_DISTANCE = 392
 
 const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
   const [reactFlowInstance, setReactFlowInstance] =
@@ -52,7 +50,7 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
     let dx = 0;
     const closestNode = storeNodes.reduce(
       (res, n) => {
-        if (n.id !== node.id && n.positionAbsolute && n.parentNode != node.parentNode && !n.id.includes("Group") && !node.id.includes("Group") ) {
+        if (n.id !== node.id && n.positionAbsolute && n.parentNode != node.parentNode && !n.id.includes("Group") && !node.id.includes("Group")) {
           dx = (n.positionAbsolute.x ?? 0) - (node.positionAbsolute?.x ?? 0);
           dy = (n.positionAbsolute.y ?? 0) - (node.positionAbsolute?.y ?? 0);
           const d = Math.sqrt(dx * dx + dy * dy);
@@ -66,7 +64,7 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
       },
       {
         distance: Number.MAX_VALUE,
-        node: { id: "", parentNode: "",positionAbsolute: { x: 0, y: 0 } },
+        node: { id: "", parentNode: "", positionAbsolute: { x: 0, y: 0 } },
       },
     );
 
@@ -80,16 +78,16 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
 
     return {
       id: closeNodeIsSource
-        ? `${closestNode.node.id}-${node.id}`+ getId()
+        ? `${closestNode.node.id}-${node.id}` + getId()
         : `${node.id}-${closestNode.node.id}` + getId(),
       source: closeNodeIsSource ? closestNode.node.id : node.id,
       target: closeNodeIsSource ? node.id : closestNode.node.id,
       sourceHandle: dx > dy
-      ? 'right'
-      : 'bottom',
+        ? 'right'
+        : 'bottom',
       targetHandle: dx > dy
-      ? 'left'
-      : 'top',
+        ? 'left'
+        : 'top',
       className: 'temp',
       type: "step",
       style: {
@@ -99,158 +97,8 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
     };
   }, []);
 
-  const getBrothers = (parentId: string) => {
-    const allNodes = reactFlow.getNodes()
-    const brothers = allNodes.filter(node => node.data.parentId == parentId)
-    return brothers
-  }
-  const handleAddNode = (_position: { x: number; y: number }, _parentId: string, _posEdge: Boolean) => {
-    // const id = getId();
-    // console.log(id, parentId);
-    // const newNode = {
-    //   id: id,
-    //   type: 'Rewritable',
-    //   data: {
-    //     id: id,
-    //     label: 'new node',
-    //     parentId: parentId,
-    //     onAddNode: handleAddNode,
-    //     position
-    //   },
-    //   position: position,
-    // };
-    // setNodes((nds) => nds.concat(newNode));
-    // let newEdge = {
-    //   id: `${parentId}-${id}`,
-    //   source: parentId,
-    //   target: id,
-    //   sourceHandle: '',
-    //   targetHandle: '',
-    //   type: "step",
-    //   style: {
-    //     strokeWidth: 3,
-    //     stroke: 'black',
-    //   },
-    // }
-    // if (posEdge) {
-    //   newEdge.sourceHandle = 'right'
-    //   newEdge.targetHandle = 'left'
-    // } else {
-    //   newEdge.sourceHandle = 'bottom'
-    //   newEdge.targetHandle = 'top'
-    // }
-    // console.log(newEdge);
-    // setEdges((eds) => eds.concat(newEdge));
-  };
-
-  // useEffect(() => {
-  //   // Format nodes positions
-  //   if (reactFlow.getNodes().length == 1) {
-  //     return
-  //   }
-  //   console.log("START FORMAT")
-  //   const rfNodes = reactFlow.getNodes()
-  //   console.log(rfNodes)
-  //   let sortedParents: string[] = [];
-  //   rfNodes.forEach(node => {
-  //     const parentId = node['data']['parentId']
-  //     if (parentId == "") {
-
-  //     } else {
-  //       if (!sortedParents.includes(parentId)) {
-  //         sortedParents.push(parentId)
-  //         const brothers = getBrothers(parentId)
-  //         let start_x = 99999999.0
-  //         let start_y = 99999999.0
-  //         let width: number[] = []
-  //         let height: number[] = []
-  //         brothers.forEach((brother) => {
-  //           const size = {
-  //             width: brother?.width,
-  //             height: brother?.height,
-  //           };
-  //           const position = {
-  //             x: brother?.position?.x,
-  //             y: brother?.position?.y,
-  //           };
-  //           if (size?.width && size?.height && position?.x && position?.y) {
-  //             if (position.x < start_x) {
-  //               start_x = position.x;
-  //             }
-  //             if (position.y < start_y) {
-  //               start_y = position.y;
-  //             }
-  //             width.push(size.width);
-  //             height.push(size.height);
-  //           }
-  //         });
-  //         let startPos = reactFlow.flowToScreenPosition({ x: start_x, y: start_y })
-  //         console.log(startPos, "START POS")
-  //         console.log(width, "WIDTH")
-  //         console.log(height, "HEIGHT")
-  //         // Sort brothers via position x
-  //         brothers.sort((a, b) => a.position.x - b.position.x);
-  //         console.log(brothers)
-  //         // Start position fit
-  //         for (let i = 0; i < brothers.length; i++) {
-  //           console.log(i)
-  //           let new_node = brothers[i]
-  //           let new_x = reactFlow.getNode(parentId)?.position.x || 0
-  //           console.log(new_x, "NEW X VALUE START")
-  //           for (let j = 0; j < i; j++) {
-  //             let prev_node = brothers[j]
-  //             new_x += (prev_node?.width || 0) + 32
-  //           }
-  //           console.log(new_x, "NEW X VALUE")
-  //           if (!(brothers[i].position.y == reactFlow.getNode(parentId)?.position.y)) {
-  //             console.log(i, "Changed pos")
-  //             brothers[i].position.x = new_x
-  //           }
-  //           // reactFlow.getNode(new_node.id)?.position?.x = new_x;
-  //           // reactFlow.getNode(new_node.id)?.position?.y = new_y;
-  //         }
-  //         console.log(brothers)
-  //         console.log("Sorted parents: ", sortedParents)
-  //       }
-  //     }
-  //   })
-  //   console.log(sortedParents)
-  // }, [reactFlow.getNodes()])
-
-  const initialNodes: Node<any, string | undefined>[] = [
-    // {
-    //   id: "0_0",
-    //   type: "Rewritable",
-    //   data: {
-    //     id: "0_0",
-    //     label: "First node",
-    //     parentId: "",
-    //     onAddNode: handleAddNode,
-    //     position: position
-    //   },
-    //   position: position,
-
-    // },
-    // {
-    //   id: "1_0",
-    //   type: "VideoN",
-    //   data: {
-    //     id: "1_0",
-    //     label: "Second node",
-    //     parentId: "",
-    //     onAddNode: handleAddNode,
-    //     position: { x: position.x + 200, y: position.y * 2 }
-    //   },
-    //   position: { x: position.x + 400, y: position.y * 2 },
-    // },
-  ];
-  const initialEdges: Edge<any>[] = [
-    //   {
-    //   id: '0_0-1_0',
-    //   source: '0_0',
-    //   target: '1_0',
-    // },
-  ];
+  const initialNodes: Node<any, string | undefined>[] = [];
+  const initialEdges: Edge<any>[] = [];
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
@@ -284,22 +132,22 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
       console.log(getClosestEdge(node), "ASD")
       const closeEdge = getClosestEdge(node);
       if (!node.data.isGroup)
-      setEdges((es) => {
-        const nextEdges = es.filter((e) => e.className !== 'temp');
+        setEdges((es) => {
+          const nextEdges = es.filter((e) => e.className !== 'temp');
 
-        if (
-          closeEdge &&
-          !nextEdges.find(
-            (ne) =>
-              ne.source === closeEdge.source && ne.target === closeEdge.target,
-          )
-        ) {
-          closeEdge.className = 'temp';
-          nextEdges.push(closeEdge);
-        }
+          if (
+            closeEdge &&
+            !nextEdges.find(
+              (ne) =>
+                ne.source === closeEdge.source && ne.target === closeEdge.target,
+            )
+          ) {
+            closeEdge.className = 'temp';
+            nextEdges.push(closeEdge);
+          }
 
-        return nextEdges;
-      });
+          return nextEdges;
+        });
     },
     [getClosestEdge, setEdges],
   );
@@ -308,31 +156,24 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
     (_: any, node: any) => {
       const closeEdge = getClosestEdge(node);
       if (!node.data.isGroup)
-      setEdges((es) => {
-        const nextEdges = es.filter((e) => e.className !== 'temp');
+        setEdges((es) => {
+          const nextEdges = es.filter((e) => e.className !== 'temp');
 
-        if (
-          closeEdge &&
-          !nextEdges.find(
-            (ne) =>
-              ne.source === closeEdge.source && ne.target === closeEdge.target,
-          )
-        ) {
-          nextEdges.push(closeEdge);
-        }
+          if (
+            closeEdge &&
+            !nextEdges.find(
+              (ne) =>
+                ne.source === closeEdge.source && ne.target === closeEdge.target,
+            )
+          ) {
+            nextEdges.push(closeEdge);
+          }
 
-        return nextEdges;
-      });
+          return nextEdges;
+        });
     },
     [getClosestEdge],
   );
-
-  // const onEdgesChange = useCallback(
-  //   (changes: EdgeChange[]) =>
-  //     setEdges((eds: Edge<any>[]) => applyEdgeChanges(changes, eds)),
-  //   []
-  // );
-
 
   const onDragOver = useCallback(
     (event: {
@@ -362,6 +203,7 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
     isHard: boolean;
     type: string;
   }
+
   const tree: TreeNode = {
     name: "Python",
     description: "Описание по Python",
@@ -498,8 +340,9 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
     return result;
   }
   const fullTreeInfoArray: TreeInfo[] = traverseTree(tree);
-  let treeInfoArray = JSON.parse(JSON.stringify(fullTreeInfoArray));
 
+  let treeInfoArray = JSON.parse(JSON.stringify(fullTreeInfoArray));
+  console.log(treeInfoArray);
   const onDrop = useCallback(
     (event: {
       preventDefault: () => void;
@@ -534,25 +377,15 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
         item.depth -= minValue;
       });
 
-      let indent = 0;
+      let indent = 1;
       let maxDepth = 0;
-
-      interface Papa {
-        name?: string;
-        nodeId?: string;
-        depth?: number;
-      }
-
-      let papa: Papa = {};
-      let papas: Papa[] = [];
 
       treeInfoArray.forEach(function (treeInfo: { depth: number; }, index: number) {
         if (treeInfo.depth > maxDepth) {
           maxDepth = treeInfo.depth;
         }
-
         if (treeInfo.depth >= 0) {
-          if (index > 0 && treeInfoArray[index - 1].depth >= treeInfo.depth) indent += 256;
+          if (index > 0 && treeInfoArray[index - 1].depth >= treeInfo.depth) indent++;
         }
       });
 
@@ -569,21 +402,29 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
         id: getId() + "Group",
         position: pos,
         data: {
-          isGroup: true,
-          onAddNode: handleAddNode
+          isGroup: true
         },
         sourcePosition: Position.Right,
         targetPosition: Position.Left,
         style: {
           backgroundColor: 'rgba(0, 0, 0, 0.1)',
           height: maxDepth * 256,
-          width: indent + 256,
+          width: indent * 256,
         },
       };
 
       indent = 0;
-      let daddy = newNode.id;
+      let group = newNode.id;
       setNodes((nds) => nds.concat(newNode));
+
+      interface Parent {
+        name?: string;
+        nodeId?: string;
+        depth?: number;
+      }
+
+      let parent: Parent = {};
+      let parents: Parent[] = [];
 
       treeInfoArray.forEach(function (treeInfo: { depth: number; isHard: any; type: any; node: string | undefined; parent: string | undefined; }, index: number) {
         if (treeInfo.depth > maxDepth) maxDepth = treeInfo.depth;
@@ -596,10 +437,10 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
         }
 
         if (treeInfo.depth >= 0) {
-          if (index > 0 && treeInfoArray[index - 1].depth >= treeInfo.depth) indent += 256;
+          if (index > 0 && treeInfoArray[index - 1].depth >= treeInfo.depth) indent ++;
 
           const position = ({
-            x: 32 + indent,
+            x: 32 + indent * 256,
             y: 32 + treeInfo.depth * 256
           });
 
@@ -609,29 +450,27 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
             position,
             data: {
               label: treeInfo.node,
-              text: treeInfo.node,
-              onAddNode: handleAddNode
+              text: treeInfo.node
             },
-            parentNode: daddy,
+            parentNode: group,
           };
 
           setNodes((nds) => nds.concat(newNode));
 
-          papa = {
+          parent = {
             name: treeInfo.node,
             nodeId: newNode.id,
             depth: treeInfo.depth
           };
 
-          papas.push(papa);
-
+          parents.push(parent);
 
           if (index > 0) {
-            let foundPapa = papas.find(papa => papa.name === treeInfo.parent);
+            let foundParent = parents.find(parent => parent.name === treeInfo.parent);
 
             let newEdge = {
-              id: `${foundPapa?.nodeId}-${newNode.id}`,
-              source: String(foundPapa?.nodeId),
+              id: `${foundParent?.nodeId}-${newNode.id}`,
+              source: String(foundParent?.nodeId),
               target: newNode.id,
               sourceHandle: 'bottom',
               targetHandle: 'top',
@@ -646,19 +485,19 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
           }
 
           if (treeInfo.depth === 0) {
-            let foundPapa = null;
+            let foundParent = null;
 
             for (let i = index - 1; i >= 0; i--) {
-              if (papas[i].depth === 0 && papas[i].name !== treeInfo.node) {
-                foundPapa = papas[i];
+              if (parents[i].depth === 0 && parents[i].name !== treeInfo.node) {
+                foundParent = parents[i];
                 break;
               }
             }
 
-            if (foundPapa) {
+            if (foundParent) {
               let newEdge = {
-                id: `${foundPapa?.nodeId}-${newNode.id}`,
-                source: String(foundPapa?.nodeId),
+                id: `${foundParent?.nodeId}-${newNode.id}`,
+                source: String(foundParent?.nodeId),
                 target: newNode.id,
                 sourceHandle: 'right',
                 targetHandle: 'left',
@@ -698,6 +537,7 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
     try {
       const response = await axios.post(`/api/discipline/save`, data)
     } catch (error) {
+      console.log(`Ошибка сохранения ${error}`);
     }
   }
 
@@ -707,15 +547,16 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
       nodes: nodes,
       edges: edges
     }
-    //console.log(data, "COMPLEX")
+    try {
+      const response = await axios.post(`/api/discipline/saveComplex`, data)
+    } catch (error) {
+      console.log(`Ошибка сохранения ${error}`);
+    }
   }
 
   useEffect(() => {
     setSharedData(treeInfoArray)
-    //console.log("SHARED DATA SET")
-    //console.log(treeInfoArray, "TREE INFO ARRAY")
   }, [])
-
 
   return (
     <ReactFlow
@@ -731,7 +572,7 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
       onEdgeUpdateEnd={onEdgeUpdateEnd}
       className="z-10"
       snapToGrid={true}
-      snapGrid={[32, 32]}
+      snapGrid={[256, 256]}
       onDrop={onDrop}
       onDragOver={onDragOver}
       onInit={setReactFlowInstance}
@@ -743,7 +584,6 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
         className="absolute bottom-3 z-20 left-1/2 transform -translate-x-1/2 px-12 py-1 border-solid border-2 border-sky-500 rounded-lg cursor-pointer"
         onClick={isOnElementsPage ? save_complex : save}
       >
-
         Save
       </a>
     </ReactFlow>

@@ -17,6 +17,7 @@
 		"react-daisyui": "^5.0.0",
 		"react-dom": "^18",
 		"react-draggable": "^4.4.6",
+		"react-select": "^5.8.0",
 		"reactflow": "^11.10.1"
 	},
 	"devDependencies": {
