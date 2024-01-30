@@ -24,18 +24,12 @@ def save_json(data, DATA_FILE_PATH):
 
 
 @app.route("/api/discipline/data", methods=["GET"])
-def getNodes():
+def get_data():
     discipline = request.args.get("discipline", type=str)
-    json_file = open_json('saved_data.json')
+    json_file = open_json('discipline_data.json')
     discipline_dict = json_file.get(discipline, {})
     print("GETTEN DATA:",discipline_dict)
     return discipline_dict
-
-# @app.route("/api/elements/data", methods=["GET"])
-# def getNodes():
-#     json_file = open_json("elements.json")
-#     print("GETTEN DATA:",json_file)
-#     return json_file
 
 @app.route('/api/discipline/save', methods=['POST'])
 def save_data():
@@ -46,10 +40,10 @@ def save_data():
     # Search for discipline in json
     discipline_id = unquote(data.get("disciplineId", 0))
     print(discipline_id)
-    json_file = open_json("saved_data.json")
+    json_file = open_json("discipline_data.json")
     json_file[discipline_id] = data
     print(json_file)
-    save_json(json_file,"saved_data.json")
+    save_json(json_file,"discipline_data.json")
     return {'message': 'Data saved successfully', 'data': data}, 200
 
 
