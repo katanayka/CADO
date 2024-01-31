@@ -1,8 +1,7 @@
 "use client"
-import Graph from "@/components/discipline/graph";
-import { getCookie } from "cookies-next";
-import Image from "next/image";
-import { ReactFlowProvider } from "reactflow";
+import AccordionSkillsInfo from "@/components/discipline/accordionSkillsInfo";
+import GraphBlock from "@/components/discipline/graphBlock";
+
 
 interface paramProps {
 	disciplineId: string;
@@ -35,35 +34,9 @@ export default function Page({ params }: { params: paramProps }) {
 					<h1 className="font-bold text-2xl">
 						{decodeURIComponent(params.disciplineId)}
 					</h1>
-					<div className="ourBlock big-tile h-96 w-full">
-
-						<a href={"/disciplines/" + params.disciplineId + "/redactor"} style={
-							typeof getCookie("userType") === "string"
-								?
-								getCookie("userType") == "Преподаватель"
-									?
-									{}
-									:
-									{ visibility: "hidden" }
-								:
-								{}
-						}>
-							<Image
-								src="/open_link.svg"
-								alt="Open link"
-								width={24}
-								height={24}
-								priority={true}
-								quality={100}
-								className="p-0.5 bg-white rounded-full xl:-ml-5 xl:-mt-5"
-							/>
-						</a>
-						<div className="bg-hero-graph-paper h-full w-full flex items-center place-content-center border rounded-l -mt-1">
-
-							<ReactFlowProvider>
-								<Graph discipline={params.disciplineId} />
-							</ReactFlowProvider>
-						</div>
+					<GraphBlock params={params} />
+					<div className="big-tile">Здесь будет список как на том трекере
+						<AccordionSkillsInfo />
 					</div>
 					<div className="big-tile h-72 stripes bg-hero-diagonal-lines"></div>
 					<div className="big-tile h-48 bg-hero-diagonal-lines"></div>
