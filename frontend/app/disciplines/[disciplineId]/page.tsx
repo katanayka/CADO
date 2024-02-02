@@ -2,7 +2,6 @@
 import CollapseSkillsInfo from "@/components/discipline/collapseSkillsInfo";
 import GraphBlock from "@/components/discipline/graphBlock";
 
-
 interface paramProps {
 	disciplineId: string;
 }

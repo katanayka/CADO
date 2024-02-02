@@ -1,7 +1,9 @@
 import Link from "next/link";
 import Discipline from "../data/Disciplines";
-import DropdownType from "@/components/discipline/dropdown-user-type";
 import Icon from "@/components/Icon";
+import dynamic from 'next/dynamic';
+
+const DropdownType = dynamic(() => import('@/components/dropdown-user-type'), { ssr: false });
 
 export default function Home() {
 

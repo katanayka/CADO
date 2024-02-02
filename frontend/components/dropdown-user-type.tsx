@@ -11,14 +11,20 @@ export default function DropdownType() {
         if (userTypeFromLocalStorage) {
             setUserType(userTypeFromLocalStorage);
         } else {
-            setCookie("userType", "Студент");
+            setCookie('userType', "Студент", {
+                sameSite: 'none',
+                secure: true
+            });
             setUserType("Студент");
         }
     }, []);
 
     const handleTypeChange = (val: string) => {
         setUserType(val);
-        setCookie('userType', val);
+        setCookie('userType', val, {
+            sameSite: 'none',
+            secure: true
+        });
     }
 
     return (
