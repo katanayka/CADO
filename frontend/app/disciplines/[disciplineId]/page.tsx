@@ -1,5 +1,5 @@
 "use client"
-import AccordionSkillsInfo from "@/components/discipline/accordionSkillsInfo";
+import CollapseSkillsInfo from "@/components/discipline/collapseSkillsInfo";
 import GraphBlock from "@/components/discipline/graphBlock";
 
 
@@ -36,7 +36,7 @@ export default function Page({ params }: { params: paramProps }) {
 					</h1>
 					<GraphBlock params={params} />
 					<div className="big-tile">Здесь будет список как на том трекере
-						<AccordionSkillsInfo />
+						<CollapseSkillsInfo />
 					</div>
 					<div className="big-tile h-72 stripes bg-hero-diagonal-lines"></div>
 					<div className="big-tile h-48 bg-hero-diagonal-lines"></div>

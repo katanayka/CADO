@@ -6,7 +6,7 @@ import { Accordion, Collapse } from "react-daisyui";
 
 export default function GraphBlock({ params }: { params: { disciplineId: string } }) {
     return (
-        <Collapse checkbox={true} className="big-tile py-0">
+        <Collapse checkbox={true} icon={"arrow"} className="big-tile py-0">
             <Collapse.Title className="text-xl font-medium">
                 Click to open this one and close others
             </Collapse.Title>
