@@ -1,13 +1,20 @@
 import { ReactFlowProvider } from "reactflow";
-import Graph from "./graph";
 import { Collapse } from "react-daisyui";
 import { IoMap } from "react-icons/io5";
 
 import dynamic from 'next/dynamic';
+import { FC } from "react";
 
 const RedactorLink = dynamic(() => import('@/components/discipline/redactorLink'), { ssr: false });
+const Graph = dynamic(() => import('@/components/discipline/graph'));
 
-export default function GraphBlock({ params }: { params: { disciplineId: string } }) {
+interface GraphProps {
+    nodes: any;
+    edges: any;
+    disciplineId: string;
+}
+
+const GraphBlock: FC<GraphProps> = ({ nodes, edges, disciplineId }) => {
     return (
         <Collapse checkbox={true} icon={"arrow"} className="big-tile py-0">
             <Collapse.Title className="text-xl font-medium">
@@ -17,14 +24,16 @@ export default function GraphBlock({ params }: { params: { disciplineId: string 
             </Collapse.Title>
             <Collapse.Content>
                 <div className="ourBlock big-tile h-96 w-full">
-                    <RedactorLink params={params}/>
+                    <RedactorLink disciplineId={disciplineId} />
                     <div className="bg-hero-graph-paper h-full w-full flex items-center place-content-center border rounded-l -mt-1">
                         <ReactFlowProvider>
-                            <Graph discipline={params.disciplineId} />
+                            <Graph nodes={nodes} edges={edges} />
                         </ReactFlowProvider>
                     </div>
                 </div>
             </Collapse.Content>
         </Collapse>
     );
-}
+};
+
+export default GraphBlock;

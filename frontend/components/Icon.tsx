@@ -8,6 +8,7 @@ export default function Icon() {
             alt='Icon of site'
             width={140}
             height={140}
+            hidden={true}
             />
         </div>
     )

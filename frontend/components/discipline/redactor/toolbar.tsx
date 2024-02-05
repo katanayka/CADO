@@ -1,8 +1,9 @@
 import { Input, Menu, Tabs } from "react-daisyui";
 import { usePathname } from "next/navigation";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import "./style.css"
 import axios from "axios";
+import Link from "next/link";
 
 let oldValue = "";
 let dragStart: any[] = []
@@ -87,7 +88,7 @@ export default function Toolbar({
     });
   };
 
-  const menuItems = generateMenu(sharedData);
+  const menuItems = useMemo(() => generateMenu(sharedData), [sharedData]);
   let nodes = JSON.parse(JSON.stringify(sharedData));
   nodes = [
     { parent: null, node: 'Rewritable', description: 'Description for Rewritable', depth: -1, type: 'Rewritable' },
@@ -125,9 +126,9 @@ export default function Toolbar({
           </Menu>
           <div className="h-10/12 w-full flex flex-col">
             {!isOnElementsPage && (
-              <a className="text-center w-full h-8" href={`/disciplines/${disciplineId}/redactor/elements`}>
+              <Link className="text-center w-full h-8" href={`/disciplines/${disciplineId}/redactor/elements`}>
                 Редактор элементов
-              </a>
+              </Link>
             )}
           </div>
         </Tabs.RadioTab>

@@ -2,6 +2,7 @@
 import user_dict from "@/data/User-types";
 import { useEffect, useState } from "react";
 import { setCookie, getCookie } from 'cookies-next';
+import { Dropdown } from "react-daisyui";
 
 export default function DropdownType() {
     const [userType, setUserType] = useState("");
@@ -42,6 +43,5 @@ export default function DropdownType() {
                 }
             </ul>
         </details>
-
     );
 }

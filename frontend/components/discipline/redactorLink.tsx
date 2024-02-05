@@ -1,10 +1,11 @@
 "use client"
 import { getCookie } from "cookies-next";
 import Image from "next/image";
+import Link from "next/link";
 
-export default function RedactorLink({params}: { params: { disciplineId: string }}) {
+export default function RedactorLink({ disciplineId }: { disciplineId: string }) {
     return (
-        <a href={"/disciplines/" + params.disciplineId + "/redactor"} style={
+        <Link href={"/disciplines/" + disciplineId + "/redactor"} style={
             typeof getCookie("userType") === "string"
                 ?
                 getCookie("userType") == "Преподаватель"
@@ -24,6 +25,6 @@ export default function RedactorLink({params}: { params: { disciplineId: string 
                 quality={100}
                 className="p-0.5 bg-white rounded-full xl:-ml-5 xl:-mt-5"
             />
-        </a>
+        </Link>
     );
 }
