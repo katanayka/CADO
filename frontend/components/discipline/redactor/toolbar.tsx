@@ -95,7 +95,7 @@ export default function Toolbar({
     { parent: null, node: 'VideoN', description: 'Description for VideoN', depth: -1, type: 'VideoN' }
   ]
   return (
-    <div className="h-11/12 w-96 flex flex-col">
+    <div className="w-96 flex flex-col overflow-auto">
       <Tabs variant="bordered" size="md" className="w-full grid grid-cols-2 ">
         <Tabs.RadioTab name="my_tabs_1" label="Базовые" defaultChecked={true} className="checked:bg-base-100 border wrap">
           <ul className="menu rounded-box gap-2 items-center  flex h-[calc(100vh-5rem)] [&>*>a]:border-2 [&>*>a]:border-dashed [&>*>a]:border-gray-100 [&>*>a]:hover:border-gray-300">
@@ -118,7 +118,6 @@ export default function Toolbar({
               </li>
             ))}
           </ul>
-
         </Tabs.RadioTab>
         <Tabs.RadioTab name="my_tabs_1" label="Расширенные" className="checked:bg-base-100 border wrap">
           <Menu size="md" className="menu gap-2 flex h-[calc(100vh-5rem)] no-animation w-full max-w-xs">

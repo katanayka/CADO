@@ -1,48 +1,25 @@
 import { Collapse } from "react-daisyui";
+import Tree from "@/data/treeSctructure";
+import { FC } from "react";
+import CollapseMenu from "./collapseMenu";
 
-export default function CollapseSkillsInfo() {
+interface Props {
+    nodes: any;
+    edges: any;
+}
+
+export const CollapseSkillsInfo: FC<Props> = ({ nodes, edges }) => {
+    const tree = new Tree();
+    tree.convertDataToTree({
+        "nodes": nodes,
+        "edges": edges
+    });
+    console.log("Tree struct", tree);
     return (
-        <div className="Collapse">
-            <Collapse icon="arrow" checkbox={true}>
-                <Collapse.Title className="text-xl font-medium">
-                    Click to open this one and close others
-                </Collapse.Title>
-                <Collapse.Content>
-                    <p>hello</p>
-                </Collapse.Content>
-            </Collapse>
-            <Collapse icon="arrow" checkbox={true}>
-                <Collapse.Title className="text-xl font-medium">
-                    Click to open this one and close others
-                </Collapse.Title>
-                <Collapse.Content>
-                    <p>hello</p>
-                </Collapse.Content>
-            </Collapse>
-            <Collapse icon="arrow" checkbox={true}>
-                <Collapse.Title className="text-xl font-medium">
-                    Click to open this one and close others
-                </Collapse.Title>
-                <Collapse.Content>
-                    <p>hello</p>
-                </Collapse.Content>
-            </Collapse>
-            <Collapse icon="arrow" checkbox={true}>
-                <Collapse.Title className="text-xl font-medium">
-                    Click to open this one and close others
-                </Collapse.Title>
-                <Collapse.Content>
-                    <p>hello</p>
-                </Collapse.Content>
-            </Collapse>
-            <Collapse icon="arrow" checkbox={true}>
-                <Collapse.Title className="text-xl font-medium">
-                    Click to open this one and close others
-                </Collapse.Title>
-                <Collapse.Content>
-                    <p>hello</p>
-                </Collapse.Content>
-            </Collapse>
+        <div>
+            {(tree.root) ? <CollapseMenu node={tree.root.children[0]} /> : null}
         </div>
     );
 }
+
+export default CollapseSkillsInfo;

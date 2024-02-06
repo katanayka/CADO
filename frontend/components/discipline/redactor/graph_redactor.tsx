@@ -581,7 +581,7 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
       <Background />
       <Controls />
       <a
-        className="absolute bottom-3 z-20 left-1/2 transform -translate-x-1/2 px-12 py-1 border-solid border-2 border-sky-500 rounded-lg cursor-pointer"
+        className="absolute bottom-0 z-20 left-1/2 transform -translate-x-1/2 px-12 py-1 border-solid border-2 border-sky-500 rounded-lg cursor-pointer"
         onClick={isOnElementsPage ? save_complex : save}
       >
         Save
