@@ -5,11 +5,11 @@ import Toolbar from '@/components/discipline/redactor/toolbar';
 import { ReactFlowProvider } from 'reactflow';
 import Breadcrumbs from '@/components/discipline/breadcrumbs';
 
-interface paramProps {
+interface ParamProps {
     disciplineId: string;
 }
 
-const Page: React.FC<{ params: paramProps }> = ({ params }) => {
+const Page: React.FC<{ params: ParamProps }> = ({ params }) => {
     const [sharedData, setSharedData] = useState(null);
     return (
         <div className="m-0 p-0 h-full">

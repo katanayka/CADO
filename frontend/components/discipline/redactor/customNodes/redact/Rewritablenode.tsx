@@ -1,6 +1,6 @@
-import React, { memo, useCallback, useRef } from "react";
+import React, { memo } from "react";
 import { Handle, Position } from "reactflow";
-import { Button, Modal, Textarea } from "react-daisyui";
+import { Textarea } from "react-daisyui";
 
 type Props = {
   data: {
@@ -9,7 +9,7 @@ type Props = {
     text: string;
     inside: string;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    onAddNode: (position: { x: number; y: number }, id: string, posEdge: Boolean) => void;
+    onAddNode: (position: { x: number; y: number }, id: string, posEdge: boolean) => void;
     position: { x: number; y: number };
   };
 };
@@ -25,12 +25,7 @@ const RewritableNode: React.FC<Props> = memo(({ data }) => {
     const newText = e.target.value;
     data.inside = newText;
   }
-
-  const ref = useRef<HTMLDialogElement>(null);
-  const handleShow = useCallback(() => {
-    ref.current?.showModal();
-  }, [ref]);
-
+  
   return (
     <div className="border-solid border-2 rounded border-black p-4 column text-center bg-white" style={{ width: 192, height: 192 }}>
       <div>
@@ -55,18 +50,6 @@ const RewritableNode: React.FC<Props> = memo(({ data }) => {
         className="absolute top-1/2 -right-3 z-20 transform -translate-y-1/2"
       >
       </div>
-      {/* <Button onClick={handleShow}>Open Modal</Button> */}
-      {/* <Modal ref={ref}>
-        <Modal.Header className="font-bold">Hello!</Modal.Header>
-        <Modal.Body>
-          Press ESC key or click the button below to close
-        </Modal.Body>
-        <Modal.Actions>
-          <form method="dialog">
-            <Button>Close</Button>
-          </form>
-        </Modal.Actions>
-      </Modal> */}
       <Handle id="top" type="target" position={Position.Top} className="" />
       <Handle id="left" type="target" position={Position.Left} className="" />
       <Handle id="right" type="source" position={Position.Right} className="" />

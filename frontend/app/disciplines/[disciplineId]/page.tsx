@@ -1,15 +1,17 @@
 "use client"
-import CollapseSkillsInfo from "@/components/discipline/collapseSkillsInfo";
 import Breadcrumbs from "@/components/discipline/breadcrumbs";
 import GraphBlock from "@/components/discipline/graphBlock";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import dynamic from "next/dynamic";
 
-interface paramProps {
+interface ParamProps {
 	disciplineId: string;
 }
 
-export default function Page({ params }: { params: paramProps }) {
+const CollapseSkillsInfo = dynamic(() => import("@/components/discipline/collapseSkillsInfo"))
+
+export default function Page({ params }: Readonly<{ params: ParamProps }>) {
 	const [nodes, setNodes] = useState([]);
 	const [edges, setEdges] = useState([]);
 
@@ -44,9 +46,13 @@ export default function Page({ params }: { params: paramProps }) {
 						{decodeURIComponent(params.disciplineId)}
 					</h1>
 					<GraphBlock nodes={nodes} edges={edges} disciplineId={params.disciplineId} />
-					<div className="big-tile max-h-[40rem] overflow-auto">
-						<CollapseSkillsInfo nodes={nodes} edges={edges}/>
-					</div>
+					{nodes ?
+						<div className="big-tile max-h-[40rem] overflow-auto">
+							<CollapseSkillsInfo nodes={nodes} edges={edges} />
+						</div> :
+						null
+					}
+
 					<div className="big-tile h-72 stripes bg-hero-diagonal-lines"></div>
 					<div className="big-tile h-48 bg-hero-diagonal-lines"></div>
 				</div>

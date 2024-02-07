@@ -3,7 +3,7 @@ import { getCookie } from "cookies-next";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function RedactorLink({ disciplineId }: { disciplineId: string }) {
+export default function RedactorLink({ disciplineId }: Readonly<{ disciplineId: string }>) {
     return (
         <Link href={"/disciplines/" + disciplineId + "/redactor"} style={
             typeof getCookie("userType") === "string"

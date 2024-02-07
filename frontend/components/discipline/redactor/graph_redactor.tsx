@@ -7,12 +7,9 @@ import ReactFlow, {
   Controls,
   Background,
   Node,
-  NodeChange,
-  EdgeChange,
   Edge,
   useNodesState,
   Position,
-  useReactFlow,
   Connection,
   useStoreApi,
 } from "reactflow";
@@ -38,8 +35,6 @@ const MIN_DISTANCE = 392
 const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
   const [reactFlowInstance, setReactFlowInstance] =
     useState<ReactFlowInstance | null>(null);
-
-  const [reactFlow, setReactFlow] = useState(useReactFlow());
   const edgeUpdateSuccessful = useRef(true);
   const store = useStoreApi();
 
@@ -519,7 +514,6 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
           treeInfoArray.forEach((temp: { depth: number; }) => {
             temp.depth += 1;
           });
-          return;
         }
       });
 
@@ -535,7 +529,7 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
       edges: edges
     }
     try {
-      const response = await axios.post(`/api/discipline/save`, data)
+      await axios.post(`/api/discipline/save`, data)
     } catch (error) {
       console.log(`Ошибка сохранения ${error}`);
     }
@@ -548,7 +542,7 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
       edges: edges
     }
     try {
-      const response = await axios.post(`/api/discipline/saveComplex`, data)
+      await axios.post(`/api/discipline/saveComplex`, data)
     } catch (error) {
       console.log(`Ошибка сохранения ${error}`);
     }
@@ -580,12 +574,12 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
     >
       <Background />
       <Controls />
-      <a
+      <button
         className="absolute bottom-0 z-20 left-1/2 transform -translate-x-1/2 px-12 py-1 border-solid border-2 border-sky-500 rounded-lg cursor-pointer"
         onClick={isOnElementsPage ? save_complex : save}
       >
         Save
-      </a>
+      </button>
     </ReactFlow>
   );
 };

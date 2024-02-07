@@ -1,8 +1,6 @@
 "use client";
-
-import React from "react";
-import ReactFlow, { Controls, ReactFlowProvider, useReactFlow } from "reactflow";
-import { FC } from "react";
+import React, { FC } from "react";
+import ReactFlow, { Controls } from "reactflow";
 
 import "reactflow/dist/style.css";
 import RewritableNode from "./redactor/customNodes/view/Rewritablenode";

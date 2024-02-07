@@ -10,12 +10,12 @@ type BreadcrumbsProps = {
     items: BreadcrumbItem[];
 };
 
-export default function Breadcrumbs({ items }: BreadcrumbsProps) {
+export default function Breadcrumbs({ items }: Readonly<BreadcrumbsProps>) {
     return (
         <div className="text-sm breadcrumbs ml-4">
             <ul>
-                {items.map((item, index) => (
-                    <li key={index}>
+                {items.map((item) => (
+                    <li key={item.label}>
                         {item.href ? (
                             <Link href={item.href}>
                                 {item.icon}

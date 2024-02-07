@@ -67,18 +67,15 @@ class Tree<T> {
 
       if (sourceNode && targetNode) {
         sourceNode.children.push(targetNode);
-      } else {
-        // if (!sourceNode) console.error(`Source node not found for edge with source ID ${edge.source} and target ID ${edge.target}.`);
-        if (!targetNode) console.error(`Target node not found for edge with source ID ${edge.source} and target ID ${edge.target}.`);
-      }
+      } else if (!targetNode) console.error(`Target node not found for edge with source ID ${edge.source} and target ID ${edge.target}.`);
     }
   }
 
   traverseDF(callback: (node: Node<T>) => void): void {
     (function recurse(currentNode) {
       if (!currentNode) return;
-      for (let i = 0; i < currentNode.children.length; i++) {
-        recurse(currentNode.children[i]);
+      for (const element of currentNode.children) {
+        recurse(element);
       }
       callback(currentNode);
     })(this.root);
@@ -89,8 +86,8 @@ class Tree<T> {
     let currentNode = queue.shift();
 
     while (currentNode) {
-      for (let i = 0; i < currentNode.children.length; i++) {
-        queue.push(currentNode.children[i]);
+      for (const element of currentNode.children) {
+        queue.push(element);
       }
       callback(currentNode);
       currentNode = queue.shift();

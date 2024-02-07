@@ -1,5 +1,5 @@
-import React, { memo, useEffect, useState } from "react";
-import { Handle, Position, NodeResizer, ResizeParams } from "reactflow";
+import React, { memo, useState } from "react";
+import { Handle, Position, NodeResizer } from "reactflow";
 import sizes_nodes from "@/public/sizes";
 import { FileInput } from "react-daisyui";
 
@@ -9,7 +9,7 @@ type Props = {
         parentId: string;
         text: string;
         onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-        onAddNode: (position: { x: number; y: number }, id: string, posEdge: Boolean) => void;
+        onAddNode: (position: { x: number; y: number }, id: string, posEdge: boolean) => void;
         position: { x: number; y: number };
         video?: string;
         videoName: string;
@@ -30,11 +30,6 @@ const allowedTypes = [
 const NodeVideo: React.FC<Props> = memo(({ data }) => {
     const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
     const [selectedVideoName, setSelectedVideoName] = useState<string>("");
-    const [size, setSize] = useState({
-        width: sizes_nodes.VideoNode.width,
-        height: sizes_nodes.VideoNode.height
-    });
-
     const videoHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
         if (!files || files.length === 0) return;

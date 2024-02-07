@@ -6,11 +6,11 @@ import "reactflow/dist/style.css";
 import { ReactFlowProvider } from "reactflow";
 import Breadcrumbs from "@/components/discipline/breadcrumbs";
 
-interface paramProps {
+interface ParamProps {
   disciplineId: string;
 }
 
-export default function Page({ params }: { params: paramProps }) {
+export default function Page({ params }: Readonly<{ params: ParamProps }>) {
   const [sharedData, setSharedData] = useState(null);
   return (
     <div className="m-0 p-0 h-full">

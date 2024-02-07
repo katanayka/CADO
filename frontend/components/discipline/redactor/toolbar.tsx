@@ -1,8 +1,7 @@
 import { Input, Menu, Tabs } from "react-daisyui";
 import { usePathname } from "next/navigation";
-import { useContext, useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import "./style.css"
-import axios from "axios";
 import Link from "next/link";
 
 let oldValue = "";
@@ -11,31 +10,13 @@ let dragStart: any[] = []
 export default function Toolbar({
   disciplineId,
   sharedData,
-}: {
+}: Readonly<{
   disciplineId: string;
   sharedData: any;
-}) {
+}>) {
   const router = usePathname();
   const isOnElementsPage = router.includes("/elements");
   let draggedNodeId: string | null = null;
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const res = await axios.get(
-          `/api/elements/data`
-        );
-        if (res.status === 200) {
-          const data = await res.data;
-          console.log("Data fetched:", data);
-        }
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    fetchData()
-  }, [])
-
   const onDragStart = (
     event: any,
     nodeType: any
@@ -89,8 +70,7 @@ export default function Toolbar({
   };
 
   const menuItems = useMemo(() => generateMenu(sharedData), [sharedData]);
-  let nodes = JSON.parse(JSON.stringify(sharedData));
-  nodes = [
+  let nodes = [
     { parent: null, node: 'Rewritable', description: 'Description for Rewritable', depth: -1, type: 'Rewritable' },
     { parent: null, node: 'VideoN', description: 'Description for VideoN', depth: -1, type: 'VideoN' }
   ]
@@ -106,15 +86,15 @@ export default function Toolbar({
               </li>
             )}
             {nodes.map((node: any) => (
-              <li className="w-full" key={node + Math.random()}>
-                <a
+              <li className="w-full" key={node.node}>
+                <button
                   className="text-white"
                   onDragStart={(event) => onDragStart(event, JSON.stringify(node))}
                   onDragEnd={(event) => onDragEnd(event, JSON.stringify(node))}
                   draggable
                 >
                   {node.node}
-                </a>
+                </button>
               </li>
             ))}
           </ul>

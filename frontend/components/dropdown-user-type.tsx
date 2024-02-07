@@ -35,9 +35,9 @@ export default function DropdownType() {
                 {
                     Object.keys(user_dict).map((key) => (
                         <li key={key}>
-                            <a className="dropdown-list-item" key={key} onClick={() => handleTypeChange(user_dict[key])}>
+                            <button className="dropdown-list-item" key={key} onClick={() => handleTypeChange(user_dict[key])}>
                                 {user_dict[key]}
-                            </a>
+                            </button>
                         </li>
                     ))
                 }

@@ -1,4 +1,3 @@
-import { Collapse } from "react-daisyui";
 import Tree from "@/data/treeSctructure";
 import { FC } from "react";
 import CollapseMenu from "./collapseMenu";
