@@ -34,15 +34,10 @@ def get_data():
 @app.route('/api/discipline/save', methods=['POST'])
 def save_data():
     data = request.get_json()
-    # Here you would typically save the data to a database or a file
-    # For the sake of this example, let's just print it
-    print(data)
-    # Search for discipline in json
     discipline_id = unquote(data.get("disciplineId", 0))
     print(discipline_id)
     json_file = open_json("discipline_data.json")
     json_file[discipline_id] = data
-    print(json_file)
     save_json(json_file,"discipline_data.json")
     return {'message': 'Data saved successfully', 'data': data}, 200
 
