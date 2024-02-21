@@ -33,9 +33,9 @@ export default function Page({ params }: Readonly<{ params: ParamProps }>) {
 
 	return (
 		<div>
-			<div className="content flex h-full">
-				<div className="user h-full w-1/6"></div>
-				<div className="about bg-orange-700 h-full w-5/6 px-6 py-2 max-h-full">
+			<div className="content flex h-full min-h-screen">
+				<div className="bg-blue-500 user w-1/6"></div>
+				<div className="about bg-orange-700 w-5/6 px-6 py-2">
 					<Breadcrumbs
 						items={[
 							{ href: "/", label: "Home", icon: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="w-4 h-4 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg> },

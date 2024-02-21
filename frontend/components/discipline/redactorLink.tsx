@@ -1,21 +1,11 @@
-"use client"
-import { getCookie } from "cookies-next";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function RedactorLink({ disciplineId }: Readonly<{ disciplineId: string }>) {
     return (
-        <Link href={"/disciplines/" + disciplineId + "/redactor"} style={
-            typeof getCookie("userType") === "string"
-                ?
-                getCookie("userType") == "Преподаватель"
-                    ?
-                    {}
-                    :
-                    { visibility: "hidden" }
-                :
-                {}
-        }>
+        <Link
+            href={"/disciplines/" + disciplineId + "/redactor"}
+        >
             <Image
                 src="/open_link.svg"
                 alt="Open link"

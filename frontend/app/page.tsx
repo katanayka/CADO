@@ -9,8 +9,8 @@ export default function Home() {
 
 	return (
 		<div>
-			<div className="content flex h-full">
-				<div className="user h-full w-1/6">
+			<div className="content flex h-full min-h-screen">
+				<div className="bg-blue-500 flex-1">
 					<Icon/>
 					<DropdownType />
 				</div>

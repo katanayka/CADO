@@ -17,6 +17,7 @@ import RewritableNode from "./customNodes/redact/Rewritablenode";
 import NodeVideo from "./customNodes/redact/NodeVideo";
 import axios from "axios";
 import { usePathname } from "next/navigation";
+import { ImSpinner9 } from "react-icons/im";
 
 interface ReactFlowInstance {
   screenToFlowPosition: (position: { x: number; y: number }) => {
@@ -96,6 +97,7 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
   const initialEdges: Edge<any>[] = [];
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [loading, setLoading] = useState(false);
 
   const onEdgeUpdateStart = useCallback(() => {
     edgeUpdateSuccessful.current = false;
@@ -523,6 +525,7 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
   );
 
   const save = async () => {
+    setLoading(true);
     const data = {
       disciplineId: disciplineId,
       nodes: nodes,
@@ -532,6 +535,8 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
       await axios.post(`/api/discipline/save`, data)
     } catch (error) {
       console.log(`Ошибка сохранения ${error}`);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -578,7 +583,7 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
         className="absolute bottom-0 z-20 left-1/2 transform -translate-x-1/2 px-12 py-1 border-solid border-2 border-sky-500 rounded-lg cursor-pointer"
         onClick={isOnElementsPage ? save_complex : save}
       >
-        Save
+        {loading ? <ImSpinner9 size={24} className="animate-spin" /> : "Save"}
       </button>
     </ReactFlow>
   );

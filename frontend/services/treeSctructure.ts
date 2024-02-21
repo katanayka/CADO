@@ -1,10 +1,12 @@
 class Node<T> {
   id: string;
+  type: string;
   data: T;
   children: Node<T>[];
 
   constructor(id: string, data: T) {
     this.id = id;
+    this.type = "Node";
     this.data = data;
     this.children = [];
   }
@@ -53,7 +55,7 @@ class Tree<T> {
     return null;
   }
 
-  convertDataToTree(data: { nodes: { id: string, data: T, parentNode?: string | null }[], edges: { source: string, target: string }[] }): void {
+  convertDataToTree(data: { nodes: { id: string; data: T; parentNode: string | null }[]; edges: { source: string; target: string }[] }): void {
     const nodes = data.nodes;
     const edges = data.edges;
 
@@ -92,6 +94,18 @@ class Tree<T> {
       callback(currentNode);
       currentNode = queue.shift();
     }
+  }
+
+  // Calculate the height of the tree depending on provided node
+  calculateHeight(node: Node<T> | null): number {
+    if (!node) return 0;
+
+    let max = 0;
+    for (const child of node.children) {
+      const height = this.calculateHeight(child);
+      if (height > max) max = height;
+    }
+    return max + 1;
   }
 }
 
