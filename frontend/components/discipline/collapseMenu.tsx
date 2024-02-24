@@ -1,9 +1,7 @@
 import { Collapse } from 'react-daisyui';
 
 const CollapseMenu = ({ node }: { node: any }) => {
-
     console.log("Node", node);
-
     return (
         <Collapse icon="arrow" checkbox={true}>
             <Collapse.Title className="text-s font-medium">
