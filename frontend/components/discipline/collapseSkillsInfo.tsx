@@ -1,4 +1,4 @@
-import Tree from "@/services/treeSctructure";
+import {Tree} from "@/services/treeSctructure";
 import { FC } from "react";
 import CollapseMenu from "./collapseMenu";
 

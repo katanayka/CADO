@@ -1,12 +1,19 @@
+import { getElementSize, ElementType } from "@/public/sizes";
+
+interface Position {
+  x: number;
+  y: number;
+}
+
 class Node<T> {
   id: string;
   type: string;
   data: T;
   children: Node<T>[];
 
-  constructor(id: string, data: T) {
+  constructor(id: string, data: T, type?: string) {
     this.id = id;
-    this.type = "Node";
+    this.type = type ?? 'Rewritable';
     this.data = data;
     this.children = [];
   }
@@ -96,17 +103,23 @@ class Tree<T> {
     }
   }
 
-  // Calculate the height of the tree depending on provided node
-  calculateHeight(node: Node<T> | null): number {
-    if (!node) return 0;
-
-    let max = 0;
-    for (const child of node.children) {
-      const height = this.calculateHeight(child);
-      if (height > max) max = height;
+  getHierarchy(node: Node<T>): any {
+    const children = node.children.map((child) => this.getHierarchy(child));
+    const nodeType = node.type;
+    if (!nodeType) {
+      console.error(`Node type is not valid.`);
+      return;
     }
-    return max + 1;
+    const { width, height } = getElementSize(nodeType as ElementType);
+    return {
+      size:  [width, height],
+      input_data: { 
+        id: node.id, 
+        data: node.data, 
+        type: nodeType },
+      children: children,
+    };
   }
 }
 
-export default Tree;
+export { Tree }

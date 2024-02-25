@@ -1,12 +1,14 @@
-const sizes_nodes = {
-    "Rewritable": {
-        "width": 312,
-        "height": 128,
-    },
-    "VideoNode": {
-        "width":244,
-        "height":192,
-    }
+type ElementType = 'Rewritable' | 'VideoNode';
+
+const getElementSize = (type: ElementType) => {
+  const sizes = {
+    Rewritable: { width: 256, height: 256 },
+    VideoNode: { width: 200, height: 200 },
+  };
+
+  return sizes[type] || { width: 100, height: 100 };
 }
 
-export default sizes_nodes
+
+export { getElementSize };
+export type { ElementType };

@@ -37,39 +37,38 @@ export default function Toolbar({
     dragStart = []
   };
 
-  const generateMenu = (data: any[], parent = null) => {
-    if (!data) {
+  const generateMenu = (node: { children: any[]; id?: React.Key | null | undefined; data: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactPortal | PromiseLike<React.ReactNode> | Iterable<React.ReactNode> | null | undefined; }) => {
+    if (!node) {
       return null;
     }
-
-    const filteredData = parent
-      ? data.filter((item) => item.parent === parent)
-      : data.filter((item) => !item.parent);
-
-    return filteredData.map((item) => {
-      const hasChildren = data.some((child) => child.parent === item.node);
-      console.log(item);
-      return (
-        <Menu.Item
-          key={item.node}
-          className={hasChildren ? 'pt-2 w-full text-white' : ''}  // Adjust the class based on your styling needs
-          onDragStart={(event) => onDragStart(event, JSON.stringify(item))}
-          onDragEnd={(event) => onDragEnd(event, JSON.stringify(item))}
-          draggable
-        >
-          {hasChildren ? (
-            <Menu.Details open={true} label={<>{item.node}</>}>
-              {generateMenu(data, item.node)}
-            </Menu.Details>
-          ) : (
-            <span>{item.node}</span>
-          )}
-        </Menu.Item>
-      );
-    });
+  
+    const hasChildren = (node.children || []).length > 0;
+  
+    return (
+      <Menu.Item
+        key={node.id}
+        className={hasChildren ? 'pt-2 w-full text-white' : ''}  // Adjust the class based on your styling needs
+        onDragStart={(event) => onDragStart(event, JSON.stringify(node))}
+        onDragEnd={(event) => onDragEnd(event, JSON.stringify(node))}
+        draggable
+      >
+        {hasChildren ? (
+          <Menu.Details open={true} label={<>{node.id}</>}>
+            {(node.children || []).map((childNode, index) => (
+              generateMenu(childNode)
+            ))}
+          </Menu.Details>
+        ) : (
+          <span>{String(node.id)}</span>
+        )}
+      </Menu.Item>
+    );
   };
 
-  const menuItems = useMemo(() => generateMenu(sharedData), [sharedData]);
+  const menuItems = useMemo(() => {
+    return generateMenu(sharedData?.root);
+  }, [sharedData]);
+
   let nodes = [
     { parent: null, node: 'Rewritable', description: 'Description for Rewritable', depth: -1, type: 'Rewritable' },
     { parent: null, node: 'VideoN', description: 'Description for VideoN', depth: -1, type: 'VideoN' }
