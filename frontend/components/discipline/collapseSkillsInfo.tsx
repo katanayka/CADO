@@ -1,22 +1,21 @@
-import {Tree} from "@/services/treeSctructure";
+import { EnsembleTree } from "@/services/treeSctructure";
 import { FC } from "react";
 import CollapseMenu from "./collapseMenu";
 
 interface Props {
-    nodes: any;
-    edges: any;
+    data: EnsembleTree<any> | null;
 }
 
-export const CollapseSkillsInfo: FC<Props> = ({ nodes, edges }) => {
-    const tree = new Tree();
-    tree.convertDataToTree({
-        "nodes": nodes,
-        "edges": edges
-    });
-    console.log("Tree struct", tree);
+export const CollapseSkillsInfo: FC<Props> = ({ data }) => {
     return (
         <div>
-            {(tree.root) ? <CollapseMenu node={tree.root.children[0]} /> : null}
+            <hr/>
+            {(data) ? data.trees.map((tree, index) =>
+                <div key={`${tree.root?.id}_`}>
+                    <CollapseMenu node={tree.root} />
+                    <hr />
+                </div>
+            ) : null}
         </div>
     );
 }

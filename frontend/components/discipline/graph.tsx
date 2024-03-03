@@ -1,22 +1,25 @@
 "use client";
 import React, { FC } from "react";
-import ReactFlow, { Controls } from "reactflow";
+import ReactFlow, { Controls, useStoreApi } from "reactflow";
 
 import "reactflow/dist/style.css";
-import RewritableNode from "./redactor/customNodes/view/Rewritablenode";
-import VideoNode from "./redactor/customNodes/view/NodeVideo"
 
 interface GraphProps {
-    nodes: any;
-    edges: any;
+	nodes: any;
+	edges: any;
+	nodeTypes: { [key: string]: any };
 }
 
-const nodeTypes = {
-	Rewritable: RewritableNode,
-	VideoN: VideoNode,
-};
-
-const Graph: FC<GraphProps> = ({ nodes, edges }) => {
+const Graph: FC<GraphProps> = ({ nodes, edges, nodeTypes }) => {
+	const store = useStoreApi();
+	if (process.env.NODE_ENV === "development") {
+		store.getState().onError = (code, message) => {
+			if (code === "002") {
+				return;
+			}
+			console.warn(message);
+		};
+	}
 	return (
 		<ReactFlow nodes={nodes} edges={edges} nodeTypes={nodeTypes} fitView>
 			<Controls />

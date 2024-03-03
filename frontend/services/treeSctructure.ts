@@ -9,12 +9,14 @@ class Node<T> {
   id: string;
   type: string;
   data: T;
+  position?: Position;
   children: Node<T>[];
 
-  constructor(id: string, data: T, type?: string) {
+  constructor(id: string, data: T, type?: string, position?: Position) {
     this.id = id;
     this.type = type ?? 'Rewritable';
     this.data = data;
+    this.position = position;
     this.children = [];
   }
 }
@@ -22,13 +24,12 @@ class Node<T> {
 class Tree<T> {
   root: Node<T> | null;
 
-  constructor() {
-    this.root = null;
+  constructor(Tree?: Tree<T>) {
+    this.root = Tree ? Tree.root : null;
   }
 
-  addNode(id: string, data: T, parentId?: string | null): void {
-    const newNode = new Node(id, data);
-
+  addNode(id: string, data: T, parentId?: string | null, type?: string, position?: Position): void {
+    const newNode = new Node(id, data, type, position);
     if (!parentId) {
       if (!this.root) {
         this.root = newNode;
@@ -51,7 +52,6 @@ class Tree<T> {
     if (node.id === id) {
       return node;
     }
-
     for (const child of node.children) {
       const foundNode = this.findNodeById(child, id);
       if (foundNode) {
@@ -60,24 +60,6 @@ class Tree<T> {
     }
 
     return null;
-  }
-
-  convertDataToTree(data: { nodes: { id: string; data: T; parentNode: string | null }[]; edges: { source: string; target: string }[] }): void {
-    const nodes = data.nodes;
-    const edges = data.edges;
-
-    for (const node of nodes) {
-      this.addNode(node.id, node.data, node.parentNode);
-    }
-
-    for (const edge of edges) {
-      const sourceNode = this.findNodeById(this.root, edge.source);
-      const targetNode = this.findNodeById(this.root, edge.target);
-
-      if (sourceNode && targetNode) {
-        sourceNode.children.push(targetNode);
-      } else if (!targetNode) console.error(`Target node not found for edge with source ID ${edge.source} and target ID ${edge.target}.`);
-    }
   }
 
   traverseDF(callback: (node: Node<T>) => void): void {
@@ -112,14 +94,101 @@ class Tree<T> {
     }
     const { width, height } = getElementSize(nodeType as ElementType);
     return {
-      size:  [width, height],
-      input_data: { 
-        id: node.id, 
-        data: node.data, 
-        type: nodeType },
+      size: [width, height],
+      input_data: {
+        id: node.id,
+        data: node.data,
+        type: nodeType
+      },
       children: children,
     };
   }
 }
 
-export { Tree }
+class EnsembleTree<T> {
+  trees: Tree<T>[];
+
+  constructor(EnsTree?: EnsembleTree<T>) {
+    this.trees = EnsTree ? EnsTree.trees : [];
+  }
+
+  addTree(tree: Tree<T>): void {
+    this.trees.push(tree);
+  }
+
+  convertIntoNodesEdges(): { nodes: { id: string; data: T; position?: Position, type: string }[]; edges: { source: string; target: string, id: string }[] } {
+    const nodes: { id: string; data: T; position?: Position, type: string }[] = [];
+    const edges: { source: string; target: string, id: string }[] = [];
+    for (const tree of this.trees) {
+      const newTree = new Tree<T>(tree);
+      newTree.traverseBF((node) => {
+        nodes.push({ id: node.id, data: node.data, position: node.position, type: node.type });
+        for (const child of node.children) {
+          edges.push({ source: node.id, target: child.id, id: `${node.id}-${child.id}` });
+        }
+      });
+    }
+
+    return { nodes, edges };
+  }
+}
+
+function convertDataToTree(
+  data: {
+    nodes: {
+      id: string;
+      data: any;
+      position: Position;
+      type: string;
+    }[];
+    edges: { source: string; target: string }[]
+  }
+): EnsembleTree<any> {
+  const nodes = data.nodes;
+  const edges = data.edges;
+
+  // Create tree via nodes and get children via edges
+  /* Input data: 
+  nodes: Array(4):
+  0: Object { id: "Условные операторы-0_0", data: {…}, position: { x: 464, y: 176 }, type: "Rewritable"
+  1: Object { id: "if-1_1", data: {…}, position: { x: 464, y: 176 }, type: "Rewritable" }
+  2: Object { id: "else-2_2", data: {…}, position: { x: 464, y: 176 }, type: "Rewritable" }
+  3: Object { id: "elif-3_3", data: {…}, position: { x: 464, y: 176 }, type: "Rewritable" }
+  edges: Array(3):
+  0: Object { id: "Условные операторы-if_4", source: "Условные операторы-0_0", target: "if-1_1", … }
+  1: Object { id: "Условные операторы-else_5", source: "Условные операторы-0_0", target: "else-2_2", … }
+  2: Object { id: "Условные операторы-elif_6", source: "Условные операторы-0_0", target: "elif-3_3", … }
+  output data:
+  Tree { root: Node }
+  Node { id: "Условные операторы-0_0", type: "Rewritable", data: {…}, children: Array(3), position: {…} }
+  children: Array(3):
+  0: Node { id: "if-1_1", type: "Rewritable", data: {…}, children: Array(0), position: {…} }
+  1: Node { id: "else-2_2", type: "Rewritable", data: {…}, children: Array(0), position: {…} }
+  2: Node { id: "elif-3_3", type: "Rewritable", data: {…}, children: Array(0), position: {…} }
+  */
+  const treeEnsemble = new EnsembleTree<any>();
+  // Search for nodes that dont have parents
+  const rootNodes = nodes.filter((node) => !edges.find((edge) => edge.target === node.id));
+  // Add root nodes as trees
+  for (const rootNode of rootNodes) {
+    let tree = new Tree<any>();
+    const node = new Node<any>(rootNode.id, rootNode.data, rootNode.type, rootNode.position);
+    tree.root = node;
+    // Add children to the tree recursively
+    (function addChildren(currentNode) {
+      const childrenEdges = edges.filter((edge) => edge.source === currentNode.id);
+      for (const edge of childrenEdges) {
+        const childNode = nodes.find((node) => node.id === edge.target);
+        if (childNode) {
+          tree.addNode(childNode.id, childNode.data, currentNode.id, childNode.type, childNode.position);
+          addChildren(childNode);
+        }
+      }
+    })(rootNode);
+    treeEnsemble.addTree(tree);
+  }
+  return treeEnsemble;
+}
+
+
+export { Tree, EnsembleTree, convertDataToTree }

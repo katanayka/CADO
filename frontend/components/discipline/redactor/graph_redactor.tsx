@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import nodeTypesRedact from "@/data/NodeTypesRedact";
 import ReactFlow, {
   useEdgesState,
   updateEdge,
@@ -11,9 +12,7 @@ import ReactFlow, {
   Connection,
   useStoreApi,
 } from "reactflow";
-import RewritableNode from "./customNodes/redact/Rewritablenode";
-import NodeVideo from "./customNodes/redact/NodeVideo";
-import { Tree } from "@/services/treeSctructure";
+import { Tree, convertDataToTree } from "@/services/treeSctructure";
 import axios from "axios";
 import { usePathname } from "next/navigation";
 import { ImSpinner9 } from "react-icons/im";
@@ -25,18 +24,14 @@ interface ReactFlowInstance {
   };
 }
 
-const nodeTypes = {
-  Rewritable: RewritableNode,
-  VideoN: NodeVideo,
-};
-
 const MIN_DISTANCE = 392
 
-const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
+const GraphRedactor = ({ setSharedData }: { setSharedData: any}) => {
   const [reactFlowInstance, setReactFlowInstance] =
     useState<ReactFlowInstance | null>(null);
   const edgeUpdateSuccessful = useRef(true);
   const store = useStoreApi();
+  const nodeTypes = nodeTypesRedact;
 
   const getClosestEdge = useCallback((node: { id: string; parentNode: string; positionAbsolute: { x: number; y: number; }; }) => {
     const { nodeInternals } = store.getState();
@@ -119,13 +114,11 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
   const router = usePathname();
   const isOnElementsPage = router.includes("/elements");
   const disciplineId = router.split("/")[2];
-  console.log("DISCIPLINE ID", disciplineId)
   let id = 0;
-  const getId = () => `dndnode_${id++}`;
+  const getId = () => `_${id++}`;
 
   const onNodeDrag = useCallback(
     (_: any, node: any) => {
-      console.log(getClosestEdge(node), "ASD")
       const closeEdge = getClosestEdge(node);
       if (!node.data.isGroup)
         setEdges((es) => {
@@ -176,7 +169,6 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
       preventDefault: () => void;
       dataTransfer: { dropEffect: string };
     }) => {
-      console.log("ELEMENT HOLD")
       event.preventDefault();
       event.dataTransfer.dropEffect = "move";
     },
@@ -201,7 +193,6 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
   fullTreeInfoArray.addNode("Аргументы функции", "Описание аргументов функции", "Функции");
   fullTreeInfoArray.addNode("Возвращаемые значения", "Описание возвращаемых значений функции", "Функции");
 
-  console.log(fullTreeInfoArray);
 
 
   const onDrop = useCallback(
@@ -214,6 +205,7 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
       event.preventDefault();
       const type = event.dataTransfer.getData("application/reactflow");
       if (!type || reactFlowInstance === null) {
+        console.log("type is null or reactFlowInstance is null");
         return;
       }
       const data = JSON.parse(type);
@@ -221,9 +213,27 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
         x: event.clientX,
         y: event.clientY
       });
-      console.log(data, "DATA")
+      console.log(data);
       const rootNode = fullTreeInfoArray.findNodeById(fullTreeInfoArray.root, data.id)
       if (!rootNode) {
+        console.log("rootNode is null");
+        if (data.minElement) {
+          setNodes((ns) => [
+            ...ns,
+            {
+              id: data.node + getId(),
+              type: data.type,
+              position: {
+                x: startPos.x,
+                y: startPos.y
+              },
+              data: {
+                label: data.node,
+                text: data.description
+              }
+            }
+          ]);
+        }
         return;
       }
       let flowNodes: { id: string; type: any; position: { x: number; y: number; }; data: { label: string; text: string }; }[] = [];
@@ -233,7 +243,6 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
       const hierarchy = fullTreeInfoArray.getHierarchy(rootNode);
       const tree = layout.hierarchy(hierarchy);
       layout(tree);
-      console.log(tree.descendants(), "HIERARCHY")
       // Foreach element in tree.descendants() we need to create a property for current element id
       tree.descendants().forEach((element: {
         data: {
@@ -258,7 +267,6 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
           },
         });
       }
-      console.log(flowNodes, "FLOW NODES")
       for (const element of tree.descendants()) {
         if (element.children) {
           for (const child of element.children) {
@@ -271,7 +279,6 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
           }
         }
       }
-      console.log(flowEdges, "FLOW EDGES")
       setNodes((ns) => [...ns, ...flowNodes]);
       setEdges((es) => [...es, ...flowEdges]);
     }, [reactFlowInstance]
@@ -279,15 +286,23 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
 
   const save = async () => {
     setLoading(true);
+    const nodesData = nodes.map(node => ({
+      id: node.id,
+      data: node.data,
+      position: node.position,
+      type: node.type ?? 'defaultType', // provide a default value if node.type is undefined
+    }));
+    const tree = convertDataToTree({
+      "nodes": nodesData,
+      "edges": edges
+    });
     const data = {
       disciplineId: disciplineId,
-      nodes: nodes,
-      edges: edges
+      dataTree: tree
     }
     try {
       await axios.post(`/api/discipline/save`, data)
     } catch (error) {
-      console.log(`Ошибка сохранения ${error}`);
     } finally {
       setLoading(false);
     }
@@ -302,7 +317,6 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
     try {
       await axios.post(`/api/discipline/saveComplex`, data)
     } catch (error) {
-      console.log(`Ошибка сохранения ${error}`);
     }
   }
 

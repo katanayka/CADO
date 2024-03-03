@@ -1,11 +1,11 @@
 "use client";
 import GraphRedactor from "@/components/discipline/redactor/graph_redactor";
 import Toolbar from "@/components/discipline/redactor/toolbar";
+import nodeTypesRedact from "@/data/NodeTypesRedact";
 import { useState } from "react";
 import "reactflow/dist/style.css";
 import { ReactFlowProvider } from "reactflow";
 import Breadcrumbs from "@/components/discipline/breadcrumbs";
-
 interface ParamProps {
   disciplineId: string;
 }
@@ -27,7 +27,7 @@ export default function Page({ params }: Readonly<{ params: ParamProps }>) {
             </div>
             <div className="h-full">
               <ReactFlowProvider>
-                <GraphRedactor setSharedData={setSharedData} />
+                <GraphRedactor setSharedData={setSharedData} nodeTypes={nodeTypesRedact} />
               </ReactFlowProvider>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import React, { memo, useState } from "react";
 import { Handle, Position, NodeResizer } from "reactflow";
-import sizes_nodes from "@/public/sizes";
+import { getElementSize } from "@/public/sizes";
 import { FileInput } from "react-daisyui";
 
 type Props = {
@@ -33,10 +33,7 @@ const NodeVideo: React.FC<Props> = memo(({ data }) => {
     const videoHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
         if (!files || files.length === 0) return;
-    
         const fileType = String(files[0]?.type);
-        console.log(fileType);
-    
         if (allowedTypes.includes(fileType)) {
             // Convert video to base64 and apply to data video
             const reader = new FileReader();
@@ -49,10 +46,10 @@ const NodeVideo: React.FC<Props> = memo(({ data }) => {
             };
         }
     };
-
+    const nodeSize = getElementSize("VideoNode");
     return (
         <>
-            <NodeResizer isVisible={true} minWidth={sizes_nodes.VideoNode.width} minHeight={sizes_nodes.VideoNode.height} keepAspectRatio={true} />
+            <NodeResizer isVisible={true} minWidth={nodeSize.width} minHeight={nodeSize.height} keepAspectRatio={true} />
             <div className="border-solid border-2 rounded border-black p-2 column text-center bg-white" style={{ width: 192, height: 192 }}>
                 {selectedVideo === null ? (
                     <FileInput className="w-full h-full" bordered={true} onChange={videoHandler} />

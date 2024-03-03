@@ -3,8 +3,8 @@ import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 import "./style.css"
 import Link from "next/link";
+import nodeTypesRedact from "@/data/NodeTypesRedact";
 
-let oldValue = "";
 let dragStart: any[] = []
 
 export default function Toolbar({
@@ -37,13 +37,19 @@ export default function Toolbar({
     dragStart = []
   };
 
-  const generateMenu = (node: { children: any[]; id?: React.Key | null | undefined; data: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactPortal | PromiseLike<React.ReactNode> | Iterable<React.ReactNode> | null | undefined; }) => {
+  const generateMenu = (
+    node: { 
+      children: any[]; 
+      id: React.Key | null | undefined; 
+      data: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactPortal | PromiseLike<React.ReactNode> | Iterable<React.ReactNode> | null | undefined; 
+    }) => {
     if (!node) {
       return null;
     }
-  
+    
+    
     const hasChildren = (node.children || []).length > 0;
-  
+
     return (
       <Menu.Item
         key={node.id}
@@ -65,14 +71,43 @@ export default function Toolbar({
     );
   };
 
+  const generateMenuMin = (
+    node: { 
+      parent: any; 
+      node: string; 
+      description: string; 
+      type: string; 
+      minElement: boolean;
+    }) => {
+    if (!node) {
+      return null;
+    }
+    return (
+      <Menu.Item
+        key={node.node}
+        className="pt-2 w-full text-white"  // Adjust the class based on your styling needs
+        onDragStart={(event) => onDragStart(event, JSON.stringify(node))}
+        onDragEnd={(event) => onDragEnd(event, JSON.stringify(node))}
+        draggable
+      >
+        <span>{String(node.node)}</span>
+      </Menu.Item>
+    );
+  };
+
   const menuItems = useMemo(() => {
     return generateMenu(sharedData?.root);
   }, [sharedData]);
+  let keys = Object.keys(nodeTypesRedact)
+  let nodes = keys.map((key) => {
+    return { parent: null, node: key, description: `Description for ${key}`, type: key, minElement: true }
+  })
+  const menuItemsNodes = useMemo(() => {
+    return nodes.map((node, index) => {
+      return generateMenuMin(node)
+    });
+  }, [nodes]);
 
-  let nodes = [
-    { parent: null, node: 'Rewritable', description: 'Description for Rewritable', depth: -1, type: 'Rewritable' },
-    { parent: null, node: 'VideoN', description: 'Description for VideoN', depth: -1, type: 'VideoN' }
-  ]
   return (
     <div className="w-96 flex flex-col overflow-auto bg-blue-500">
       <Tabs variant="bordered" size="md" className="w-full grid grid-cols-2 ">
@@ -84,18 +119,7 @@ export default function Toolbar({
                 <Input className="w-full no-animation" />
               </li>
             )}
-            {nodes.map((node: any) => (
-              <li className="w-full" key={node.node}>
-                <button
-                  className="text-white"
-                  onDragStart={(event) => onDragStart(event, JSON.stringify(node))}
-                  onDragEnd={(event) => onDragEnd(event, JSON.stringify(node))}
-                  draggable
-                >
-                  {node.node}
-                </button>
-              </li>
-            ))}
+            {menuItemsNodes}
           </ul>
         </Tabs.RadioTab>
         <Tabs.RadioTab name="my_tabs_1" label="Расширенные" className="checked:bg-base-100 border wrap">

@@ -1,6 +1,8 @@
 "use client"
 import Breadcrumbs from "@/components/discipline/breadcrumbs";
 import GraphBlock from "@/components/discipline/graphBlock";
+import nodeTypesView from "@/data/NodeTypesView";
+import { EnsembleTree } from "@/services/treeSctructure";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import dynamic from "next/dynamic";
@@ -12,8 +14,7 @@ interface ParamProps {
 const CollapseSkillsInfo = dynamic(() => import("@/components/discipline/collapseSkillsInfo"))
 
 export default function Page({ params }: Readonly<{ params: ParamProps }>) {
-	const [nodes, setNodes] = useState([]);
-	const [edges, setEdges] = useState([]);
+	const [ensemble, setEnsemble] = useState<EnsembleTree<any> | null>(null);
 
 	useEffect(() => {
 		async function fetchData() {
@@ -22,10 +23,7 @@ export default function Page({ params }: Readonly<{ params: ParamProps }>) {
 			);
 			if (res.status === 200) {
 				const data = await res.data;
-				console.log("Data fetched:", data);
-				setNodes(data.nodes)
-				setEdges(data.edges)
-				console.log("Loaded")
+				setEnsemble(new EnsembleTree<any>(data.dataTree));
 			}
 		}
 		fetchData();
@@ -45,10 +43,10 @@ export default function Page({ params }: Readonly<{ params: ParamProps }>) {
 					<h1 className="font-bold text-2xl">
 						{decodeURIComponent(params.disciplineId)}
 					</h1>
-					<GraphBlock nodes={nodes} edges={edges} disciplineId={params.disciplineId} />
-					{nodes ?
+					<GraphBlock data={ensemble} disciplineId={params.disciplineId} nodeTypes={nodeTypesView} />
+					{ensemble ?
 						<div className="big-tile max-h-[40rem] overflow-auto">
-							<CollapseSkillsInfo nodes={nodes} edges={edges} />
+							<CollapseSkillsInfo data={ensemble} />
 						</div> :
 						null
 					}
