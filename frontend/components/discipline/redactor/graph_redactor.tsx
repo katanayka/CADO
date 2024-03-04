@@ -16,6 +16,7 @@ import { Tree, convertDataToTree } from "@/services/treeSctructure";
 import axios from "axios";
 import { usePathname } from "next/navigation";
 import { ImSpinner9 } from "react-icons/im";
+import HistoryTab from "./history_tab";
 
 interface ReactFlowInstance {
   screenToFlowPosition: (position: { x: number; y: number }) => {
@@ -26,7 +27,7 @@ interface ReactFlowInstance {
 
 const MIN_DISTANCE = 392
 
-const GraphRedactor = ({ setSharedData }: { setSharedData: any}) => {
+const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
   const [reactFlowInstance, setReactFlowInstance] =
     useState<ReactFlowInstance | null>(null);
   const edgeUpdateSuccessful = useRef(true);
@@ -92,6 +93,7 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any}) => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [loading, setLoading] = useState(false);
+  const historyList = useRef<any[]>([]);
 
   const onEdgeUpdateStart = useCallback(() => {
     edgeUpdateSuccessful.current = false;
@@ -109,7 +111,19 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any}) => {
     edgeUpdateSuccessful.current = true;
   }, [])
 
-  const onConnect = useCallback((params: Connection | Edge) => setEdges((els) => addEdge(params, els)), []);
+  const onConnect = useCallback((params: Connection | Edge) => {
+    // Generate a unique ID for the new edge (parent ID + Child ID + getID())
+    const edgeId = `${params.source}-${params.target}` + getId();
+  
+    // Add the new edge to the elements array
+    setEdges((els) => addEdge({ ...params, id: edgeId }, els));
+  
+    // Add a new entry to the history list
+    historyList.current = [
+      ...historyList.current,
+      { id: edgeId, action: 'Edge created' },
+    ];
+  }, []);
 
   const router = usePathname();
   const isOnElementsPage = router.includes("/elements");
@@ -193,6 +207,14 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any}) => {
   fullTreeInfoArray.addNode("Аргументы функции", "Описание аргументов функции", "Функции");
   fullTreeInfoArray.addNode("Возвращаемые значения", "Описание возвращаемых значений функции", "Функции");
 
+  const getTree = (node: any) => {
+    const flextree = require('d3-flextree').flextree;
+    const layout = flextree();
+    const hierarchy = fullTreeInfoArray.getHierarchy(node);
+    const tree = layout.hierarchy(hierarchy);
+    layout(tree);
+    return tree;
+  }
 
 
   const onDrop = useCallback(
@@ -218,10 +240,11 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any}) => {
       if (!rootNode) {
         console.log("rootNode is null");
         if (data.minElement) {
+          const elemId = data.node + getId();
           setNodes((ns) => [
             ...ns,
             {
-              id: data.node + getId(),
+              id: elemId,
               type: data.type,
               position: {
                 x: startPos.x,
@@ -233,17 +256,16 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any}) => {
               }
             }
           ]);
+          historyList.current.push({
+            action: "add",
+            id: elemId
+          });
         }
         return;
       }
       let flowNodes: { id: string; type: any; position: { x: number; y: number; }; data: { label: string; text: string }; }[] = [];
       let flowEdges: { id: string; source: string; target: string; animated: boolean; }[] = [];
-      const flextree = require('d3-flextree').flextree;
-      const layout = flextree();
-      const hierarchy = fullTreeInfoArray.getHierarchy(rootNode);
-      const tree = layout.hierarchy(hierarchy);
-      layout(tree);
-      // Foreach element in tree.descendants() we need to create a property for current element id
+      const tree = getTree(rootNode);
       tree.descendants().forEach((element: {
         data: {
           input_data: {
@@ -251,8 +273,10 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any}) => {
           };
         };
       }, index: any) => {
-        element.data.input_data.id_context = `${element.data.input_data.id}-${index}`+getId();
+        element.data.input_data.id_context = `${element.data.input_data.id}-${index}` + getId();
       });
+      let usedNodesIds: string[] = [];
+      let usedEdgesIds: string[] = [];
       for (const element of tree.descendants()) {
         flowNodes.push({
           id: element.data.input_data.id_context,
@@ -266,19 +290,28 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any}) => {
             text: element.data.input_data.id,
           },
         });
+        usedNodesIds.push(element.data.input_data.id_context);
       }
       for (const element of tree.descendants()) {
         if (element.children) {
           for (const child of element.children) {
+            const edgeId = `${element.data.input_data.id}-${child.data.input_data.id}` + getId();
             flowEdges.push({
-              id: `${element.data.input_data.id}-${child.data.input_data.id}` + getId(),
+              id: edgeId,
               source: element.data.input_data.id_context,
               target: child.data.input_data.id_context,
               animated: true
             });
+            usedEdgesIds.push(edgeId);
           }
         }
       }
+      historyList.current.push({
+        action: "add",
+        id: flowNodes[0].id,
+        usedNodesIds: usedNodesIds,
+        usedEdgesIds: usedEdgesIds,
+      });
       setNodes((ns) => [...ns, ...flowNodes]);
       setEdges((es) => [...es, ...flowEdges]);
     }, [reactFlowInstance]
@@ -290,7 +323,7 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any}) => {
       id: node.id,
       data: node.data,
       position: node.position,
-      type: node.type ?? 'defaultType', // provide a default value if node.type is undefined
+      type: node.type ?? 'defaultType',
     }));
     const tree = convertDataToTree({
       "nodes": nodesData,
@@ -325,34 +358,38 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any}) => {
   }, [])
 
   return (
-    <ReactFlow
-      nodes={nodes}
-      nodeTypes={nodeTypes}
-      onNodesChange={onNodesChange}
-      onNodeDrag={onNodeDrag}
-      onNodeDragStop={onNodeDragStop}
-      edges={edges}
-      onEdgesChange={onEdgesChange}
-      onEdgeUpdate={onEdgeUpdate}
-      onEdgeUpdateStart={onEdgeUpdateStart}
-      onEdgeUpdateEnd={onEdgeUpdateEnd}
-      className="z-10"
-      snapToGrid={true}
-      snapGrid={[16, 16]}
-      onDrop={onDrop}
-      onDragOver={onDragOver}
-      onInit={setReactFlowInstance}
-      onConnect={onConnect}
-    >
-      <Background />
-      <Controls />
-      <button
-        className="absolute bottom-0 z-20 left-1/2 transform -translate-x-1/2 px-12 py-1 border-solid border-2 border-sky-500 rounded-lg cursor-pointer no-animation translate"
-        onClick={isOnElementsPage ? save_complex : save}
+    <>
+      <ReactFlow
+        nodes={nodes}
+        nodeTypes={nodeTypes}
+        onNodesChange={onNodesChange}
+        onNodeDrag={onNodeDrag}
+        onNodeDragStop={onNodeDragStop}
+        edges={edges}
+        onEdgesChange={onEdgesChange}
+        onEdgeUpdate={onEdgeUpdate}
+        onEdgeUpdateStart={onEdgeUpdateStart}
+        onEdgeUpdateEnd={onEdgeUpdateEnd}
+        className="z-10"
+        snapToGrid={true}
+        snapGrid={[16, 16]}
+        onDrop={onDrop}
+        onDragOver={onDragOver}
+        onInit={setReactFlowInstance}
+        onConnect={onConnect}
       >
-        {loading ? <ImSpinner9 size={24} className="animate-spin" /> : "Save"}
-      </button>
-    </ReactFlow>
+        <Background />
+        <Controls />
+        <button
+          className="absolute bottom-0 z-20 left-1/2 transform -translate-x-1/2 px-12 py-1 border-solid border-2 border-sky-500 rounded-lg cursor-pointer no-animation translate"
+          onClick={isOnElementsPage ? save_complex : save}
+        >
+          {loading ? <ImSpinner9 size={24} className="animate-spin" /> : "Save"}
+        </button>
+
+      </ReactFlow>
+      <HistoryTab historyList={historyList}/>
+    </>
   );
 };
 
