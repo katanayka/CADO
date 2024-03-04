@@ -1,0 +1,359 @@
+{
+    "dataTree": {
+        "trees": [
+            {
+                "root": {
+                    "children": [
+                        {
+                            "children": [
+                                {
+                                    "children": [],
+                                    "data": {
+                                        "label": "if",
+                                        "text": "if"
+                                    },
+                                    "id": "if-3_36",
+                                    "position": {
+                                        "x": 2240,
+                                        "y": 1536
+                                    },
+                                    "type": "Rewritable"
+                                },
+                                {
+                                    "children": [],
+                                    "data": {
+                                        "label": "else",
+                                        "text": "else"
+                                    },
+                                    "id": "else-4_37",
+                                    "position": {
+                                        "x": 2496,
+                                        "y": 1536
+                                    },
+                                    "type": "Rewritable"
+                                },
+                                {
+                                    "children": [],
+                                    "data": {
+                                        "label": "elif",
+                                        "text": "elif"
+                                    },
+                                    "id": "elif-5_38",
+                                    "position": {
+                                        "x": 2752,
+                                        "y": 1536
+                                    },
+                                    "type": "Rewritable"
+                                }
+                            ],
+                            "data": {
+                                "label": "Условные операторы",
+                                "text": "Условные операторы"
+                            },
+                            "id": "Условные операторы-1_34",
+                            "position": {
+                                "x": 2496,
+                                "y": 1280
+                            },
+                            "type": "Rewritable"
+                        },
+                        {
+                            "children": [
+                                {
+                                    "children": [],
+                                    "data": {
+                                        "label": "for",
+                                        "text": "for"
+                                    },
+                                    "id": "for-6_39",
+                                    "position": {
+                                        "x": 3008,
+                                        "y": 1536
+                                    },
+                                    "type": "Rewritable"
+                                },
+                                {
+                                    "children": [],
+                                    "data": {
+                                        "label": "while",
+                                        "text": "while"
+                                    },
+                                    "id": "while-7_40",
+                                    "position": {
+                                        "x": 3264,
+                                        "y": 1536
+                                    },
+                                    "type": "Rewritable"
+                                }
+                            ],
+                            "data": {
+                                "label": "Циклы",
+                                "text": "Циклы"
+                            },
+                            "id": "Циклы-2_35",
+                            "position": {
+                                "x": 3136,
+                                "y": 1280
+                            },
+                            "type": "Rewritable"
+                        }
+                    ],
+                    "data": {
+                        "label": "Синтаксис",
+                        "text": "Синтаксис"
+                    },
+                    "id": "Синтаксис-0_33",
+                    "position": {
+                        "x": 2816,
+                        "y": 1024
+                    },
+                    "type": "Rewritable"
+                }
+            },
+            {
+                "root": {
+                    "children": [
+                        {
+                            "children": [
+                                {
+                                    "children": [
+                                        {
+                                            "children": [
+                                                {
+                                                    "children": [],
+                                                    "data": {
+                                                        "label": "if",
+                                                        "text": "if"
+                                                    },
+                                                    "id": "if-12_12",
+                                                    "position": {
+                                                        "x": -576,
+                                                        "y": 1104
+                                                    },
+                                                    "type": "Rewritable"
+                                                },
+                                                {
+                                                    "children": [],
+                                                    "data": {
+                                                        "label": "else",
+                                                        "text": "else"
+                                                    },
+                                                    "id": "else-13_13",
+                                                    "position": {
+                                                        "x": -320,
+                                                        "y": 1104
+                                                    },
+                                                    "type": "Rewritable"
+                                                },
+                                                {
+                                                    "children": [],
+                                                    "data": {
+                                                        "label": "elif",
+                                                        "text": "elif"
+                                                    },
+                                                    "id": "elif-14_14",
+                                                    "position": {
+                                                        "x": -64,
+                                                        "y": 1104
+                                                    },
+                                                    "type": "Rewritable"
+                                                }
+                                            ],
+                                            "data": {
+                                                "label": "Условные операторы",
+                                                "text": "Условные операторы"
+                                            },
+                                            "id": "Условные операторы-4_4",
+                                            "position": {
+                                                "x": -320,
+                                                "y": 848
+                                            },
+                                            "type": "Rewritable"
+                                        },
+                                        {
+                                            "children": [
+                                                {
+                                                    "children": [],
+                                                    "data": {
+                                                        "label": "for",
+                                                        "text": "for"
+                                                    },
+                                                    "id": "for-15_15",
+                                                    "position": {
+                                                        "x": 192,
+                                                        "y": 1104
+                                                    },
+                                                    "type": "Rewritable"
+                                                },
+                                                {
+                                                    "children": [],
+                                                    "data": {
+                                                        "label": "while",
+                                                        "text": "while"
+                                                    },
+                                                    "id": "while-16_16",
+                                                    "position": {
+                                                        "x": 448,
+                                                        "y": 1104
+                                                    },
+                                                    "type": "Rewritable"
+                                                }
+                                            ],
+                                            "data": {
+                                                "label": "Циклы",
+                                                "text": "Циклы"
+                                            },
+                                            "id": "Циклы-5_5",
+                                            "position": {
+                                                "x": 320,
+                                                "y": 848
+                                            },
+                                            "type": "Rewritable"
+                                        }
+                                    ],
+                                    "data": {
+                                        "label": "Синтаксис",
+                                        "text": "Синтаксис"
+                                    },
+                                    "id": "Синтаксис-1_1",
+                                    "position": {
+                                        "x": 0,
+                                        "y": 592
+                                    },
+                                    "type": "Rewritable"
+                                },
+                                {
+                                    "children": [
+                                        {
+                                            "children": [],
+                                            "data": {
+                                                "label": "Определение класса",
+                                                "text": "Определение класса"
+                                            },
+                                            "id": "Определение класса-6_6",
+                                            "position": {
+                                                "x": 576,
+                                                "y": 848
+                                            },
+                                            "type": "Rewritable"
+                                        },
+                                        {
+                                            "children": [],
+                                            "data": {
+                                                "label": "Методы",
+                                                "text": "Методы"
+                                            },
+                                            "id": "Методы-7_7",
+                                            "position": {
+                                                "x": 832,
+                                                "y": 848
+                                            },
+                                            "type": "Rewritable"
+                                        },
+                                        {
+                                            "children": [],
+                                            "data": {
+                                                "label": "Наследование",
+                                                "text": "Наследование"
+                                            },
+                                            "id": "Наследование-8_8",
+                                            "position": {
+                                                "x": 1088,
+                                                "y": 848
+                                            },
+                                            "type": "Rewritable"
+                                        }
+                                    ],
+                                    "data": {
+                                        "label": "Классы",
+                                        "text": "Классы"
+                                    },
+                                    "id": "Классы-2_2",
+                                    "position": {
+                                        "x": 832,
+                                        "y": 592
+                                    },
+                                    "type": "Rewritable"
+                                },
+                                {
+                                    "children": [
+                                        {
+                                            "children": [],
+                                            "data": {
+                                                "label": "Определение функции",
+                                                "text": "Определение функции"
+                                            },
+                                            "id": "Определение функции-9_9",
+                                            "position": {
+                                                "x": 1344,
+                                                "y": 848
+                                            },
+                                            "type": "Rewritable"
+                                        },
+                                        {
+                                            "children": [],
+                                            "data": {
+                                                "label": "Аргументы функции",
+                                                "text": "Аргументы функции"
+                                            },
+                                            "id": "Аргументы функции-10_10",
+                                            "position": {
+                                                "x": 1600,
+                                                "y": 848
+                                            },
+                                            "type": "Rewritable"
+                                        },
+                                        {
+                                            "children": [],
+                                            "data": {
+                                                "label": "Возвращаемые значения",
+                                                "text": "Возвращаемые значения"
+                                            },
+                                            "id": "Возвращаемые значения-11_11",
+                                            "position": {
+                                                "x": 1856,
+                                                "y": 848
+                                            },
+                                            "type": "Rewritable"
+                                        }
+                                    ],
+                                    "data": {
+                                        "label": "Функции",
+                                        "text": "Функции"
+                                    },
+                                    "id": "Функции-3_3",
+                                    "position": {
+                                        "x": 1600,
+                                        "y": 592
+                                    },
+                                    "type": "Rewritable"
+                                }
+                            ],
+                            "data": {
+                                "label": "Python",
+                                "text": "Python"
+                            },
+                            "id": "Python-0_0",
+                            "position": {
+                                "x": 800,
+                                "y": 336
+                            },
+                            "type": "Rewritable"
+                        }
+                    ],
+                    "data": {
+                        "label": "Rewritable",
+                        "text": "Description for Rewritable"
+                    },
+                    "id": "Rewritable_48",
+                    "position": {
+                        "x": 1104,
+                        "y": -16
+                    },
+                    "type": "Rewritable"
+                }
+            }
+        ]
+    },
+    "disciplineId": "%D0%90%D0%A2%D0%9F%D0%B8%D0%A0%D0%92"
+}

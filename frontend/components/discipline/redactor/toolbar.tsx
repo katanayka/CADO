@@ -109,7 +109,7 @@ export default function Toolbar({
   }, [nodes]);
 
   return (
-    <div className="w-96 flex flex-col overflow-auto bg-blue-500">
+    <div className="w-96 flex flex-col overflow-auto bg-blue-500" id="toolbar">
       <Tabs variant="bordered" size="md" className="w-full grid grid-cols-2 ">
         <Tabs.RadioTab name="my_tabs_1" label="Базовые" defaultChecked={true} className="checked:bg-base-100 border wrap">
           <ul className="menu rounded-box gap-2 items-center  flex h-[calc(100vh-5rem)] [&>*>a]:border-2 [&>*>a]:border-dashed [&>*>a]:border-gray-100 [&>*>a]:hover:border-gray-300">

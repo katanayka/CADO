@@ -264,7 +264,7 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
         return;
       }
       let flowNodes: { id: string; type: any; position: { x: number; y: number; }; data: { label: string; text: string }; }[] = [];
-      let flowEdges: { id: string; source: string; target: string; animated: boolean; }[] = [];
+      let flowEdges: { id: string; source: string; target: string; animated: boolean; sourceHandle: string; targetHandle: string; }[] = [];
       const tree = getTree(rootNode);
       tree.descendants().forEach((element: {
         data: {
@@ -299,7 +299,9 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
             flowEdges.push({
               id: edgeId,
               source: element.data.input_data.id_context,
+              sourceHandle: 'bottom',
               target: child.data.input_data.id_context,
+              targetHandle: 'top',
               animated: true
             });
             usedEdgesIds.push(edgeId);
@@ -383,6 +385,7 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
         <button
           className="absolute bottom-0 z-20 left-1/2 transform -translate-x-1/2 px-12 py-1 border-solid border-2 border-sky-500 rounded-lg cursor-pointer no-animation translate"
           onClick={isOnElementsPage ? save_complex : save}
+          id="saveButton"
         >
           {loading ? <ImSpinner9 size={24} className="animate-spin" /> : "Save"}
         </button>

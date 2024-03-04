@@ -1,5 +1,5 @@
 "use client";
-import { ReactFlowProvider } from "reactflow";
+import { ReactFlowProvider, useStore } from "reactflow";
 import { Collapse } from "react-daisyui";
 import { IoMap } from "react-icons/io5";
 import { EnsembleTree } from "@/services/treeSctructure";
@@ -15,11 +15,11 @@ interface GraphProps {
 }
 
 const GraphBlock: FC<GraphProps> = ({ data, disciplineId, nodeTypes }) => {
-    let [isOpen, setIsOpen] = useState(false);
-    const isTeacher = getCookie("userType") === "Преподаватель";
-    const {nodes,edges} = data?.convertIntoNodesEdges() ?? {nodes: [], edges: []};
+    const [isOpen, setIsOpen] = useState(false);
+    const isTeacher = getCookie("userType") === "teacher";
+    const { nodes, edges } = data?.convertIntoNodesEdges() ?? { nodes: [], edges: [] };
     return (
-        <Collapse checkbox={true} icon={"arrow"} className="big-tile py-0" onOpen={() => setIsOpen(true)} onClose={() => setIsOpen(false)}>
+        <Collapse checkbox={true} icon={"arrow"} className="big-tile py-0 mapBlock" onOpen={() => setIsOpen(true)} onClose={() => setIsOpen(false)}>
             <Collapse.Title className="text-xl font-medium">
                 <div className="flex mb-2">
                     <IoMap size={30} className="mx-6" /> Карта
@@ -27,14 +27,20 @@ const GraphBlock: FC<GraphProps> = ({ data, disciplineId, nodeTypes }) => {
             </Collapse.Title>
             <Collapse.Content>
                 {isOpen ?
-                    <div className="ourBlock big-tile h-96 w-full">
-                        {isTeacher ? <RedactorLink disciplineId={disciplineId} /> : null}
-                        <div className="bg-hero-graph-paper h-full w-full flex items-center place-content-center border rounded-l -mt-1">
-                            <ReactFlowProvider>
-                                <Graph nodes={nodes} edges={edges} nodeTypes={nodeTypes} />
-                            </ReactFlowProvider>
+                    <div className="flex flex-row space-x-4">
+                        <div className="ourBlock big-tile h-96 w-full">
+                            {isTeacher ? <RedactorLink disciplineId={disciplineId} /> : null}
+                            <div className="bg-hero-graph-paper h-full w-full flex items-center place-content-center border rounded-l -mt-1">
+                                <ReactFlowProvider>
+                                    <Graph nodes={nodes} edges={edges} nodeTypes={nodeTypes} />
+                                </ReactFlowProvider>
+                            </div>
                         </div>
-                    </div> : null}
+                        {/* <div className="big-tile h-96 stripes bg-hero-diagonal-lines w-1/4">
+
+                        </div> */}
+                    </div>
+                    : null}
             </Collapse.Content>
         </Collapse>
     );

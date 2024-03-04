@@ -1,3 +1,5 @@
+import DisciplinesType from "@/data/Disciplines.json"
+
 type DisciplineType = {
 	[key: string]: string;
 };

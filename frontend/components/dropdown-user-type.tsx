@@ -2,7 +2,6 @@
 import user_dict from "@/data/User-types";
 import { useEffect, useState } from "react";
 import { setCookie, getCookie } from 'cookies-next';
-import { Dropdown } from "react-daisyui";
 
 export default function DropdownType() {
     const [userType, setUserType] = useState("");
@@ -10,7 +9,8 @@ export default function DropdownType() {
     useEffect(() => {
         const userTypeFromLocalStorage = getCookie("userType");
         if (userTypeFromLocalStorage) {
-            setUserType(userTypeFromLocalStorage);
+            const userRu = userTypeFromLocalStorage === "student" ? "Студент" : "Преподаватель";
+            setUserType(userRu);
         } else {
             setCookie('userType', "Студент", {
                 sameSite: 'none',
@@ -21,8 +21,9 @@ export default function DropdownType() {
     }, []);
 
     const handleTypeChange = (val: string) => {
+        const userEn = val === "Преподаватель" ? "teacher" : "student";
         setUserType(val);
-        setCookie('userType', val, {
+        setCookie('userType', userEn, {
             sameSite: 'none',
             secure: true
         });

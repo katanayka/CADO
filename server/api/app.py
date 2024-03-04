@@ -21,8 +21,6 @@ def save_json(data, DATA_FILE_PATH):
     with open(DATA_FILE_PATH, 'w') as json_file:
         json.dump(data, json_file)
 
-
-
 @app.route("/api/discipline/data", methods=["GET"])
 def get_data():
     discipline = request.args.get("discipline", type=str)

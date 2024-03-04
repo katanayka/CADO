@@ -8,7 +8,7 @@ interface HistoryTabProps {
 export default function HistoryTab({ historyList }: HistoryTabProps) {
     console.log(historyList.current)
     return (
-        <div className='absolute top-12 right-12  bg-slate-300 w-1/6'>
+        <div className='absolute top-12 right-12 w-1/6 border-2 bg-white rounded-md'>
             <Collapse checkbox={true} icon='arrow'>
                 <Collapse.Title className="text-xl font-medium">
                     История

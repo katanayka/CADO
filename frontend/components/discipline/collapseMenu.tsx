@@ -7,7 +7,8 @@ const CollapseMenu = ({ node }: { node: any }) => {
                 {node.data.label}
                 {node.data.text ? <p className="text-xs">{node.data.text}</p> : null}
             </Collapse.Title>
-            <Collapse.Content>
+            <Collapse.Content className='right-0 p-0 pl-4'>
+
                 {node.data.inside ? <p>{node.data.inside}</p> : null}
                 {node.children.map((child: any) => (
                     <CollapseMenu key={child.id} node={child} />

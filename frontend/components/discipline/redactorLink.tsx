@@ -5,6 +5,7 @@ export default function RedactorLink({ disciplineId }: Readonly<{ disciplineId: 
     return (
         <Link
             href={"/disciplines/" + disciplineId + "/redactor"}
+            id="redactorLink"
         >
             <Image
                 src="/open_link.svg"

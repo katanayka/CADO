@@ -118,13 +118,13 @@ class EnsembleTree<T> {
 
   convertIntoNodesEdges(): { nodes: { id: string; data: T; position?: Position, type: string }[]; edges: { source: string; target: string, id: string }[] } {
     const nodes: { id: string; data: T; position?: Position, type: string }[] = [];
-    const edges: { source: string; target: string, id: string }[] = [];
+    const edges: { source: string; target: string, id: string; sourceHandle?: string; targetHandle?: string }[] = [];
     for (const tree of this.trees) {
       const newTree = new Tree<T>(tree);
       newTree.traverseBF((node) => {
         nodes.push({ id: node.id, data: node.data, position: node.position, type: node.type });
         for (const child of node.children) {
-          edges.push({ source: node.id, target: child.id, id: `${node.id}-${child.id}` });
+          edges.push({ source: node.id, target: child.id, id: `${node.id}-${child.id}`, sourceHandle: 'bottom', targetHandle: 'top' });
         }
       });
     }
@@ -146,35 +146,12 @@ function convertDataToTree(
 ): EnsembleTree<any> {
   const nodes = data.nodes;
   const edges = data.edges;
-
-  // Create tree via nodes and get children via edges
-  /* Input data: 
-  nodes: Array(4):
-  0: Object { id: "Условные операторы-0_0", data: {…}, position: { x: 464, y: 176 }, type: "Rewritable"
-  1: Object { id: "if-1_1", data: {…}, position: { x: 464, y: 176 }, type: "Rewritable" }
-  2: Object { id: "else-2_2", data: {…}, position: { x: 464, y: 176 }, type: "Rewritable" }
-  3: Object { id: "elif-3_3", data: {…}, position: { x: 464, y: 176 }, type: "Rewritable" }
-  edges: Array(3):
-  0: Object { id: "Условные операторы-if_4", source: "Условные операторы-0_0", target: "if-1_1", … }
-  1: Object { id: "Условные операторы-else_5", source: "Условные операторы-0_0", target: "else-2_2", … }
-  2: Object { id: "Условные операторы-elif_6", source: "Условные операторы-0_0", target: "elif-3_3", … }
-  output data:
-  Tree { root: Node }
-  Node { id: "Условные операторы-0_0", type: "Rewritable", data: {…}, children: Array(3), position: {…} }
-  children: Array(3):
-  0: Node { id: "if-1_1", type: "Rewritable", data: {…}, children: Array(0), position: {…} }
-  1: Node { id: "else-2_2", type: "Rewritable", data: {…}, children: Array(0), position: {…} }
-  2: Node { id: "elif-3_3", type: "Rewritable", data: {…}, children: Array(0), position: {…} }
-  */
   const treeEnsemble = new EnsembleTree<any>();
-  // Search for nodes that dont have parents
   const rootNodes = nodes.filter((node) => !edges.find((edge) => edge.target === node.id));
-  // Add root nodes as trees
   for (const rootNode of rootNodes) {
     let tree = new Tree<any>();
     const node = new Node<any>(rootNode.id, rootNode.data, rootNode.type, rootNode.position);
     tree.root = node;
-    // Add children to the tree recursively
     (function addChildren(currentNode) {
       const childrenEdges = edges.filter((edge) => edge.source === currentNode.id);
       for (const edge of childrenEdges) {
