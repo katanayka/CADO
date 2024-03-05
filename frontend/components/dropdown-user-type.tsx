@@ -12,7 +12,7 @@ export default function DropdownType() {
             const userRu = userTypeFromLocalStorage === "student" ? "Студент" : "Преподаватель";
             setUserType(userRu);
         } else {
-            setCookie('userType', "Студент", {
+            setCookie('userType', "student", {
                 sameSite: 'none',
                 secure: true
             });

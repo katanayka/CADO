@@ -1,0 +1,46 @@
+name: Run Cypress Tests
+
+on: [push]
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install Python dependencies
+        run: |
+          cd server/api
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Start Flask server
+        run: |
+          cd server/api
+          export FLASK_APP=app.py
+          flask run &
+        env:
+          FLASK_ENV: development
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: Install Node.js dependencies
+        run: |
+          cd frontend
+          npm ci
+
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v2
+        with:
+          start: npm start
+          wait-on: 'http://localhost:5000'
+          wait-on-timeout: 60
