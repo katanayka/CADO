@@ -21,7 +21,7 @@ const Graph: FC<GraphProps> = ({ nodes, edges, nodeTypes }) => {
 		};
 	}
 	return (
-		<ReactFlow nodes={nodes} edges={edges} nodeTypes={nodeTypes} fitView>
+		<ReactFlow nodes={nodes} edges={edges} nodeTypes={nodeTypes} fitView nodesConnectable={false} className="bg-hero-graph-paper">
 			<Controls />
 		</ReactFlow>
 	);

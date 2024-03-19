@@ -28,11 +28,23 @@ const GraphBlock: FC<GraphProps> = ({ data, disciplineId, nodeTypes }) => {
             <Collapse.Content>
                 {isOpen ?
                     <div className="flex flex-row space-x-4">
-                        <div className="ourBlock big-tile h-96 w-full">
+                        <div className="ourBlock big-tile h-[600px] w-full">
                             {isTeacher ? <RedactorLink disciplineId={disciplineId} /> : null}
-                            <div className="bg-hero-graph-paper h-full w-full flex items-center place-content-center border rounded-l -mt-1">
+                            <div className="h-full w-full flex items-center place-content-center border rounded-l -mt-1">
                                 <ReactFlowProvider>
                                     <Graph nodes={nodes} edges={edges} nodeTypes={nodeTypes} />
+                                    <div className="w-[30%] h-full flex flex-col gap-3 px-3">
+                                        {/*<...>*/}
+                                        <div className="relative top-[50%] left-[-30px] w-full">
+                                            
+                                        </div>
+                                        <div className="w-full text-center">
+                                            Python
+                                        </div>
+                                        <div className="overflow-auto">
+                                            Python - это высокоуровневый язык программирования, известный своей простотой и читаемостью кода. Он широко используется как для написания маленьких сценариев, так и для разработки крупных веб-приложений и научных вычислений. Python поддерживает различные парадигмы программирования, включая процедурное, объектно-ориентированное и функциональное программирование.
+                                        </div>
+                                    </div>
                                 </ReactFlowProvider>
                             </div>
                         </div>

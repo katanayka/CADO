@@ -33,3 +33,6 @@ next-env.d.ts
 
 # database
 discipline_data.json
+
+# train data
+research/data
