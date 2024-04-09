@@ -4,8 +4,8 @@ const CollapseMenu = ({ node }: { node: any }) => {
     return (
         <Collapse icon="arrow" checkbox={true}>
             <Collapse.Title className="text-s font-medium">
-                {node.data.label}
-                {node.data.text ? <p className="text-xs">{node.data.text}</p> : null}
+
+                {node.data.text ? node.data.text : null}
             </Collapse.Title>
             <Collapse.Content className='right-0 p-0 pl-4'>
 

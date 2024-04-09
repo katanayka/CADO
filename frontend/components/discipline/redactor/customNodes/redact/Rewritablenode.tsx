@@ -1,6 +1,8 @@
-import React, { memo } from "react";
+import React from "react";
 import { Handle, Position } from "reactflow";
 import { Textarea } from "react-daisyui";
+import { useDispatch } from "react-redux";
+import { setSelectedNode } from "@/services/selectedNodeSlice";
 
 type Props = {
   data: {
@@ -12,10 +14,12 @@ type Props = {
     onAddNode: (position: { x: number; y: number }, id: string, posEdge: boolean) => void;
     position: { x: number; y: number };
   };
+  id : string;
 };
 
 
-const RewritableNode: React.FC<Props> = memo(({ data }) => {
+const RewritableNode: React.FC<Props> = (({ data, id }) => {
+  const dispatch = useDispatch();
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newText = e.target.value;
     data.text = newText;
@@ -27,21 +31,20 @@ const RewritableNode: React.FC<Props> = memo(({ data }) => {
   }
   
   return (
-    <div className="border-solid border-2 rounded border-black p-4 column text-center bg-white" style={{ width: 192, height: 192 }}>
+    <div className="border-solid border-2 rounded border-black p-4 column text-center bg-white" style={{ width: 192, height: 96 }}>
       <div>
         <strong>{data.text}</strong>
       </div>
-      <input
-        type="text"
-        onChange={handleTextChange}
-        className="nodrag input input-bordered w-full max-w-xs"
-        placeholder="Тема"
-      />
-      <Textarea
-        onChange={handleInsideChange}
-        className="nodrag input input-bordered w-full max-w-xs mt-2 h-5 overflow-y-auto resize-none"
-        placeholder="Описание"
-      />
+      <button
+        className="btn btn-circle btn-xs btn-ghost bg-green-500 text-white"
+        onClick={() => { 
+          if (!data.id) {
+            data.id = id
+          }
+          dispatch(setSelectedNode(data)) 
+        }}
+      >
+      </button>
       <div
         className="absolute -bottom-3 z-20 left-1/2 transform -translate-x-1/2 w-6 h-6"
       >

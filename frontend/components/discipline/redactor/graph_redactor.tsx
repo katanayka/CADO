@@ -13,6 +13,8 @@ import ReactFlow, {
   useStoreApi,
 } from "reactflow";
 import { EnsembleTree, Tree, convertDataToTree } from "@/services/treeSctructure";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 import axios from "axios";
 import { usePathname } from "next/navigation";
 import { ImSpinner9 } from "react-icons/im";
@@ -95,14 +97,21 @@ const GraphRedactor = ({ setSharedData, dataTree }: { setSharedData: any, dataTr
   const initialEdges: Edge<any>[] = [];
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const selectedNode = useSelector((state: RootState) => state.selectedNode);
+  const [showNodeChangeModal, setShowNodeChangeModal] = useState(false);
 
   useEffect(() => {
     if (!dataTree) return;
-    const {nodes, edges} = dataTree.convertIntoNodesEdges();
+    const { nodes, edges } = dataTree.convertIntoNodesEdges();
     setNodes(nodes);
     setEdges(edges);
-    console.log(nodes)
   }, [dataTree]);
+
+  useEffect(() => {
+    if (selectedNode.id !== "") {
+      setShowNodeChangeModal(true);
+    }
+  }, [selectedNode]);
 
   const [loading, setLoading] = useState(false);
   const historyList = useRef<any[]>([]);
@@ -126,10 +135,10 @@ const GraphRedactor = ({ setSharedData, dataTree }: { setSharedData: any, dataTr
   const onConnect = useCallback((params: Connection | Edge) => {
     // Generate a unique ID for the new edge (parent ID + Child ID + getID())
     const edgeId = `${params.source}-${params.target}` + getId();
-  
+
     // Add the new edge to the elements array
     setEdges((els) => addEdge({ ...params, id: edgeId }, els));
-  
+
     // Add a new entry to the history list
     historyList.current = [
       ...historyList.current,
@@ -137,7 +146,7 @@ const GraphRedactor = ({ setSharedData, dataTree }: { setSharedData: any, dataTr
     ];
   }, []);
 
- 
+
   let id = 0;
   const getId = () => `_${id++}`;
 
@@ -237,7 +246,6 @@ const GraphRedactor = ({ setSharedData, dataTree }: { setSharedData: any, dataTr
       event.preventDefault();
       const type = event.dataTransfer.getData("application/reactflow");
       if (!type || reactFlowInstance === null) {
-        console.log("type is null or reactFlowInstance is null");
         return;
       }
       const data = JSON.parse(type);
@@ -245,10 +253,8 @@ const GraphRedactor = ({ setSharedData, dataTree }: { setSharedData: any, dataTr
         x: event.clientX,
         y: event.clientY
       });
-      console.log(data);
       const rootNode = fullTreeInfoArray.findNodeById(fullTreeInfoArray.root, data.id)
       if (!rootNode) {
-        console.log("rootNode is null");
         if (data.minElement) {
           const elemId = data.node + getId();
           setNodes((ns) => [
@@ -401,8 +407,15 @@ const GraphRedactor = ({ setSharedData, dataTree }: { setSharedData: any, dataTr
         </button>
 
       </ReactFlow>
-      <HistoryTab historyList={historyList}/>
-      <NodeChangeModal/>
+      <HistoryTab historyList={historyList} />
+      {showNodeChangeModal && <NodeChangeModal
+        selectedNode={selectedNode}
+        saveSelectedNode={(data) => {
+          setNodes((ns) => ns.map((n) => n.id === data.id ? { ...n, data: { ...n.data, text: data.text, inside: data.inside } } : n));
+          setShowNodeChangeModal(false);
+        }}
+        closeModal={() => setShowNodeChangeModal(false)}
+      />}
     </>
   );
 };
