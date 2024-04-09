@@ -23,7 +23,9 @@ export default function Page({ params }: Readonly<{ params: ParamProps }>) {
 			);
 			if (res.status === 200) {
 				const data = await res.data;
+				console.log(data)
 				setEnsemble(new EnsembleTree<any>(data.dataTree));
+				console.log(ensemble)
 			}
 		}
 		fetchData();

@@ -32,7 +32,10 @@ next-env.d.ts
 .env
 
 # database
-discipline_data.json
 
 # train data
 research/data
+# Cache
+/research/aboba/__pycache__
+/research/models/124M
+/research/.vscode

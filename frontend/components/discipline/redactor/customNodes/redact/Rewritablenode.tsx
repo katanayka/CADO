@@ -31,7 +31,7 @@ const RewritableNode: React.FC<Props> = (({ data, id }) => {
   }
   
   return (
-    <div className="border-solid border-2 rounded border-black p-4 column text-center bg-white" style={{ width: 192, height: 96 }}>
+    <div className="border-solid border-2 rounded border-black p-4 column text-center bg-white" style={{ width: 192 }}>
       <div>
         <strong>{data.text}</strong>
       </div>

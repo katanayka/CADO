@@ -25,6 +25,7 @@ export default function Page({ params }: Readonly<{ params: ParamProps }>) {
       const data = await res.data;
       const ensemble = new EnsembleTree<any>(data.dataTree);
       setData(ensemble);
+      console.log(ensemble);
     }
   }
   // Make sure to call fetchData() only once
