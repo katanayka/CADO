@@ -362,7 +362,7 @@ const GraphRedactor = ({ setSharedData, dataTree }: { setSharedData: any, dataTr
       setLoading(false);
     }
   }
-  
+
   const save_complex = async () => {
     const data = {
       disciplineId: disciplineId,
@@ -415,15 +415,17 @@ const GraphRedactor = ({ setSharedData, dataTree }: { setSharedData: any, dataTr
         </button>
 
       </ReactFlow>
-      <HistoryTab historyList={historyList} />
-      {showNodeChangeModal && <NodeChangeModal
-        selectedNode={selectedNode}
-        saveSelectedNode={(data) => {
-          setNodes((ns) => ns.map((n) => n.id === data.id ? { ...n, data: { ...n.data, text: data.text, inside: data.inside } } : n));
-          setShowNodeChangeModal(false);
-        }}
-        closeModal={() => setShowNodeChangeModal(false)}
-      />}
+      {showNodeChangeModal ?
+        <NodeChangeModal
+          selectedNode={selectedNode}
+          saveSelectedNode={(data) => {
+            setNodes((ns) => ns.map((n) => n.id === data.id ? { ...n, data: { ...n.data, text: data.text, inside: data.inside } } : n));
+            setShowNodeChangeModal(false);
+          }}
+          closeModal={() => setShowNodeChangeModal(false)}
+        /> :
+      <HistoryTab historyList={historyList} /> }
+
     </>
   );
 };
