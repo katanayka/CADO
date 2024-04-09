@@ -2,16 +2,34 @@
 import GraphRedactor from "@/components/discipline/redactor/graph_redactor";
 import Toolbar from "@/components/discipline/redactor/toolbar";
 import nodeTypesRedact from "@/data/NodeTypesRedact";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "reactflow/dist/style.css";
 import { ReactFlowProvider } from "reactflow";
 import Breadcrumbs from "@/components/discipline/breadcrumbs";
+import { EnsembleTree } from "@/services/treeSctructure";
+import axios from "axios";
 interface ParamProps {
   disciplineId: string;
 }
 
 export default function Page({ params }: Readonly<{ params: ParamProps }>) {
   const [sharedData, setSharedData] = useState(null);
+  const [data, setData] = useState<EnsembleTree<any> | null>(null);
+  async function fetchData() {
+    const res = await axios.get(
+      `/api/discipline/data?discipline=${(params.disciplineId)}`
+    );
+    if (res.status === 200) {
+      const data = await res.data;
+      const ensemble = new EnsembleTree<any>(data.dataTree);
+      setData(ensemble);
+      console.log(ensemble,"ASD");
+    }
+  }
+  // Make sure to call fetchData() only once
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <div className="m-0 p-0 h-full">
       <div className="content flex h-full">
@@ -27,7 +45,7 @@ export default function Page({ params }: Readonly<{ params: ParamProps }>) {
             </div>
             <div className="h-full" id="flow">
               <ReactFlowProvider>
-                <GraphRedactor setSharedData={setSharedData}/>
+                <GraphRedactor setSharedData={setSharedData} dataTree={data} />
               </ReactFlowProvider>
             </div>
           </div>

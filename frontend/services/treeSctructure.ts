@@ -106,6 +106,12 @@ class Tree<T> {
 }
 
 class EnsembleTree<T> {
+  getHierarchy(root: any) {
+    throw new Error("Method not implemented.");
+  }
+  root(root: any) {
+    throw new Error("Method not implemented.");
+  }
   trees: Tree<T>[];
 
   constructor(EnsTree?: EnsembleTree<T>) {

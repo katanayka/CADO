@@ -9,6 +9,7 @@
 		"lint": "next lint"
 	},
 	"dependencies": {
+		"@reduxjs/toolkit": "^2.2.3",
 		"axios": "^1.6.1",
 		"cookies-next": "^4.1.0",
 		"d3-flextree": "^2.1.2",

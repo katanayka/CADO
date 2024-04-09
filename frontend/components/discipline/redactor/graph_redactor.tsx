@@ -12,11 +12,12 @@ import ReactFlow, {
   Connection,
   useStoreApi,
 } from "reactflow";
-import { Tree, convertDataToTree } from "@/services/treeSctructure";
+import { EnsembleTree, Tree, convertDataToTree } from "@/services/treeSctructure";
 import axios from "axios";
 import { usePathname } from "next/navigation";
 import { ImSpinner9 } from "react-icons/im";
 import HistoryTab from "./history_tab";
+import NodeChangeModal from "./node_change_modal";
 
 interface ReactFlowInstance {
   screenToFlowPosition: (position: { x: number; y: number }) => {
@@ -27,7 +28,7 @@ interface ReactFlowInstance {
 
 const MIN_DISTANCE = 392
 
-const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
+const GraphRedactor = ({ setSharedData, dataTree }: { setSharedData: any, dataTree: any }) => {
   const [reactFlowInstance, setReactFlowInstance] =
     useState<ReactFlowInstance | null>(null);
   const edgeUpdateSuccessful = useRef(true);
@@ -87,11 +88,22 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
       },
     };
   }, []);
-
+  const router = usePathname();
+  const isOnElementsPage = router.includes("/elements");
+  const disciplineId = router.split("/")[2];
   const initialNodes: Node<any, string | undefined>[] = [];
   const initialEdges: Edge<any>[] = [];
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+
+  useEffect(() => {
+    if (!dataTree) return;
+    const {nodes, edges} = dataTree.convertIntoNodesEdges();
+    setNodes(nodes);
+    setEdges(edges);
+    console.log(nodes)
+  }, [dataTree]);
+
   const [loading, setLoading] = useState(false);
   const historyList = useRef<any[]>([]);
 
@@ -125,9 +137,7 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
     ];
   }, []);
 
-  const router = usePathname();
-  const isOnElementsPage = router.includes("/elements");
-  const disciplineId = router.split("/")[2];
+ 
   let id = 0;
   const getId = () => `_${id++}`;
 
@@ -392,6 +402,7 @@ const GraphRedactor = ({ setSharedData }: { setSharedData: any }) => {
 
       </ReactFlow>
       <HistoryTab historyList={historyList}/>
+      <NodeChangeModal/>
     </>
   );
 };
