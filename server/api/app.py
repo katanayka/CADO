@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 def open_json(DATA_FILE_PATH):
     try:
-        with open(DATA_FILE_PATH, 'r') as json_file:
+        with open(DATA_FILE_PATH, 'r', encoding='utf-8') as json_file:
             data = json.load(json_file)
     except FileNotFoundError:
         # If the file doesn't exist, create it
@@ -18,8 +18,8 @@ def open_json(DATA_FILE_PATH):
     return data
 
 def save_json(data, DATA_FILE_PATH):
-    with open(DATA_FILE_PATH, 'w') as json_file:
-        json.dump(data, json_file)
+    with open(DATA_FILE_PATH, 'w', encoding='utf-8') as json_file:
+        json.dump(data, json_file, ensure_ascii=False)
 
 @app.route("/api/discipline/data", methods=["GET"])
 def get_data():

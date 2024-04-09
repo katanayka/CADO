@@ -352,13 +352,17 @@ const GraphRedactor = ({ setSharedData, dataTree }: { setSharedData: any, dataTr
       dataTree: tree
     }
     try {
-      await axios.post(`/api/discipline/save`, data)
+      await axios.post(`/api/discipline/save`, data, {
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        }
+      })
     } catch (error) {
     } finally {
       setLoading(false);
     }
   }
-
+  
   const save_complex = async () => {
     const data = {
       disciplineId: disciplineId,
@@ -366,7 +370,11 @@ const GraphRedactor = ({ setSharedData, dataTree }: { setSharedData: any, dataTr
       edges: edges
     }
     try {
-      await axios.post(`/api/discipline/saveComplex`, data)
+      await axios.post(`/api/discipline/saveComplex`, data, {
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        }
+      })
     } catch (error) {
     }
   }
