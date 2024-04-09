@@ -1,6 +1,5 @@
 import React from "react";
 import { Handle, Position } from "reactflow";
-import { Textarea } from "react-daisyui";
 import { useDispatch } from "react-redux";
 import { setSelectedNode } from "@/services/selectedNodeSlice";
 
@@ -20,15 +19,6 @@ type Props = {
 
 const RewritableNode: React.FC<Props> = (({ data, id }) => {
   const dispatch = useDispatch();
-  const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newText = e.target.value;
-    data.text = newText;
-  }
-
-  const handleInsideChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const newText = e.target.value;
-    data.inside = newText;
-  }
   
   return (
     <div className="border-solid border-2 rounded border-black p-4 column text-center bg-white" style={{ width: 192 }}>

@@ -1,7 +1,7 @@
-import Link from "next/link";
 import Discipline from "../data/Disciplines";
 import Icon from "@/components/Icon";
 import dynamic from 'next/dynamic';
+import discipline_card from "@/components/discipline_card";
 
 const DropdownType = dynamic(() => import('@/components/dropdown-user-type'), { ssr: false });
 
@@ -18,16 +18,7 @@ export default function Home() {
 					<h1> Предметные дисциплины </h1>
 					<div className="flex flex-wrap">
 						{Object.keys(Discipline).map((key) => (
-							<div className="big-tile h-48 w-full" key={key}>
-								<h2>Дисциплина: {key}</h2>
-								<Link
-									href="/disciplines/[disciplineId]"
-									as={`/disciplines/${Discipline[key]}`}
-									className="text-blue-500 underline"
-								>
-									{key}
-								</Link>
-							</div>
+							discipline_card({ key, Discipline: Discipline[key] })
 						))}
 					</div>
 				</div>
