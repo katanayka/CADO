@@ -27,7 +27,7 @@ export default function Page({ params }: Readonly<{ params: ParamProps }>) {
             </div>
             <div className="h-full" id="flow">
               <ReactFlowProvider>
-                <GraphRedactor setSharedData={setSharedData} />
+                <GraphRedactor setSharedData={setSharedData}/>
               </ReactFlowProvider>
             </div>
           </div>
