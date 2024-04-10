@@ -23,11 +23,11 @@ const UserIdShowcase = () => {
         });
     }, [userId]);
     return (
-        <>
+        <div className="flex flex-col gap-2 items-center">
             {/* Place for userId key*/}
             <h3> User ID: </h3>
-            <input type="text" value={userId} className="" onChange={inputChangeHandler} />
-        </>
+            <input type="text" value={userId} onChange={inputChangeHandler} className="border-2 border-gray-300 w-[80%]" />
+        </div>
     )
 }
 

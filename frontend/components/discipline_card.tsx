@@ -24,7 +24,7 @@ export default function discipline_card({ key, Discipline }: Props) {
                     Перейти к дисциплине
                 </Link>
             </div>
-            <div className='flex flex-col justify-between w-1/3 h-[30%] dir-column mt-auto mb-4'>
+            {/* <div className='flex flex-col justify-between w-1/3 h-[30%] dir-column mt-auto mb-4'>
                 <div>
                     <label>Прогресс изучения дисциплины:</label>
                     <Progress_bar value={50} />
@@ -33,7 +33,7 @@ export default function discipline_card({ key, Discipline }: Props) {
                     <label>Время на изучение:</label>
                     <Progress_bar value={25} />
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }

@@ -69,26 +69,35 @@ const CollapseMenu = ({ node, accessToEdit, userProgress, setUserProgress }: { n
                         {node.data.inside}
                     </p>)
                     : null}
-                {(node.data.theory || node.data.practice) ?
+                {(node.data.theory?.length > 0 || node.data.practice?.length > 0) ?
                     (
                         <>
                             <span className='font-bold text-lg mb-2 block'>
                                 Чеклист:
                             </span>
+
                             <div className='p-2 bg-gray-100 rounded-lg mb-2 flex justify-between'>
                                 <div>
-                                    <p>
-                                        Вы знаете теорию, если:
-                                    </p>
-                                    {node.data.theory.map((item: string, index: number) => (
-                                        <CollapseMenuTrackerRow key={index} item={item} ndt={node.data.text} checkedValue={userProgress[node.data.text] ? userProgress[node.data.text][item] : false} onCheckboxChange={(checked: boolean) => handleCheckboxChange(item, checked)} />
-                                    ))}
-                                    <p>
-                                        Вы освоили практику, если:
-                                    </p>
-                                    {node.data.practice.map((item: string, index: number) => (
-                                        <CollapseMenuTrackerRow key={index} item={item} ndt={node.data.text} checkedValue={userProgress[node.data.text] ? userProgress[node.data.text][item] : false} onCheckboxChange={(checked: boolean) => handleCheckboxChange(item, checked)} />
-                                    ))}
+                                    {node.data.theory.length > 0 &&
+                                        <>
+                                            <p>
+                                                Вы знаете теорию, если:
+                                            </p>
+                                            {node.data.theory.map((item: string, index: number) => (
+                                                <CollapseMenuTrackerRow key={index} item={item} ndt={node.data.text} checkedValue={userProgress[node.data.text] ? userProgress[node.data.text][item] : false} onCheckboxChange={(checked: boolean) => handleCheckboxChange(item, checked)} />
+                                            ))}
+                                        </>
+                                    }
+                                    {node.data.practice.length > 0 &&
+                                        <>
+                                            <p>
+                                                Вы освоили практику, если:
+                                            </p>
+                                            {node.data.practice.map((item: string, index: number) => (
+                                                <CollapseMenuTrackerRow key={index} item={item} ndt={node.data.text} checkedValue={userProgress[node.data.text] ? userProgress[node.data.text][item] : false} onCheckboxChange={(checked: boolean) => handleCheckboxChange(item, checked)} />
+                                            ))}
+                                        </>
+                                    }
                                 </div>
                                 <div>
                                     <AnimatedRadialProgress value={progressValue} />
@@ -98,11 +107,11 @@ const CollapseMenu = ({ node, accessToEdit, userProgress, setUserProgress }: { n
                     )
                     : null}
                 {node.children.map((child: any) => (
-                    <CollapseMenu 
-                        key={child.id} 
-                        node={child} 
-                        accessToEdit={accessToEdit} 
-                        userProgress={userProgress} 
+                    <CollapseMenu
+                        key={child.id}
+                        node={child}
+                        accessToEdit={accessToEdit}
+                        userProgress={userProgress}
                         setUserProgress={setUserProgress} />
                 ))}
             </Collapse.Content>
