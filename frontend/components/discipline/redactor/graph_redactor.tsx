@@ -20,6 +20,7 @@ import { usePathname } from "next/navigation";
 import { ImSpinner9 } from "react-icons/im";
 import HistoryTab from "./history_tab";
 import NodeChangeModal from "./node_change_modal";
+import selectedNodeToHide from "@/services/selectedNodeToHide";
 
 interface ReactFlowInstance {
   screenToFlowPosition: (position: { x: number; y: number }) => {
@@ -99,7 +100,7 @@ const GraphRedactor = ({ setSharedData, dataTree }: { setSharedData: any, dataTr
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const selectedNode = useSelector((state: RootState) => state.selectedNode);
   const [showNodeChangeModal, setShowNodeChangeModal] = useState(false);
-
+  const selectedNodetoHide = useSelector((state: RootState) => state.selectedNodeToHide);
   useEffect(() => {
     if (!dataTree) return;
     const { nodes, edges } = dataTree.convertIntoNodesEdges();
@@ -112,6 +113,48 @@ const GraphRedactor = ({ setSharedData, dataTree }: { setSharedData: any, dataTr
       setShowNodeChangeModal(true);
     }
   }, [selectedNode]);
+  useEffect(() => {
+    if (selectedNodetoHide.id !== "") {
+      const childNodes = getChildNodes(selectedNodetoHide.id, edges, nodes);
+      if (childNodes.length != 0) {
+        const hide = childNodes[0].hidden
+        setNodes((nds) =>
+          nds.map((node) => {
+            if (childNodes.includes(node)) {
+              node.hidden = !hide;
+            }
+            return node;
+          })
+        );
+        setEdges((eds) =>
+          eds.map((edge) => {
+            const node = nodes.find((node) => node.id === edge.target);
+            if (node?.hidden == true) {
+              edge.hidden = true
+            }
+            if (node?.hidden == false) {
+              edge.hidden = false
+            }
+            return edge;
+          })
+        );
+      }
+    }
+  }, [selectedNodetoHide]);
+
+  function getChildNodes(nodeId: string, edges: Edge[], nodes: Node[]): Node[] {
+    const childNodes: Node[] = [];
+    const outgoingEdges = edges.filter(edge => edge.source === nodeId);
+    outgoingEdges.forEach(edge => {
+      const childNode = nodes.find(node => node.id === edge.target);
+      if (childNode) {
+        childNodes.push(childNode);
+        const grandChildNodes = getChildNodes(childNode.id, edges, nodes);
+        childNodes.push(...grandChildNodes);
+      }
+    });
+    return childNodes;
+  }
 
   const [loading, setLoading] = useState(false);
   const historyList = useRef<any[]>([]);
@@ -336,6 +379,8 @@ const GraphRedactor = ({ setSharedData, dataTree }: { setSharedData: any, dataTr
   );
 
   const save = async () => {
+    console.log(selectedNodetoHide);
+    store.getState();
     setLoading(true);
     const nodesData = nodes.map(node => ({
       id: node.id,
@@ -362,7 +407,7 @@ const GraphRedactor = ({ setSharedData, dataTree }: { setSharedData: any, dataTr
       setLoading(false);
     }
   }
-  
+
   const save_complex = async () => {
     const data = {
       disciplineId: disciplineId,

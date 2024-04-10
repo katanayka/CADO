@@ -28,7 +28,7 @@ const Page: React.FC<{ params: ParamProps }> = ({ params }) => {
                         </div>
                         <div className="h-full">
                             <ReactFlowProvider>
-                                <GraphRedactor setSharedData={setSharedData} />
+                                <GraphRedactor setSharedData={setSharedData} dataTree={undefined} />
                             </ReactFlowProvider>
                         </div>
                     </div>

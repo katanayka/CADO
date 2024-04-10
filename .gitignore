@@ -39,3 +39,4 @@ research/data
 /research/aboba/__pycache__
 /research/models/124M
 /research/.vscode
+node_modules
