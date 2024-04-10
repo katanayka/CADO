@@ -13,7 +13,7 @@ import ReactFlow, {
   useStoreApi,
 } from "reactflow";
 import { EnsembleTree, Tree, convertDataToTree } from "@/services/treeSctructure";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import axios from "axios";
 import { usePathname } from "next/navigation";
@@ -21,6 +21,7 @@ import { ImSpinner9 } from "react-icons/im";
 import HistoryTab from "./history_tab";
 import NodeChangeModal from "./node_change_modal";
 import selectedNodeToHide from "@/services/selectedNodeToHide";
+import { setSelectedNode } from "@/services/selectedNodeSlice";
 
 interface ReactFlowInstance {
   screenToFlowPosition: (position: { x: number; y: number }) => {
@@ -427,6 +428,7 @@ const GraphRedactor = ({ setSharedData, dataTree }: { setSharedData: any, dataTr
   useEffect(() => {
     setSharedData(fullTreeInfoArray);
   }, [])
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -467,7 +469,15 @@ const GraphRedactor = ({ setSharedData, dataTree }: { setSharedData: any, dataTr
             setNodes((ns) => ns.map((n) => n.id === data.id ? { ...n, data: { ...n.data, text: data.text, inside: data.inside } } : n));
             setShowNodeChangeModal(false);
           }}
-          closeModal={() => setShowNodeChangeModal(false)}
+          closeModal={() => {
+            setShowNodeChangeModal(false);
+            dispatch(setSelectedNode({
+              id:'',
+              parentId:'',
+              text:'',
+              inside:''
+            }))
+          }}
         /> :
       <HistoryTab historyList={historyList} /> }
 

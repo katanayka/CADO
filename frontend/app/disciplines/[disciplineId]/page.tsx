@@ -18,7 +18,9 @@ const CollapseSkillsInfo = dynamic(() => import("@/components/discipline/collaps
 
 export default function Page({ params }: Readonly<{ params: ParamProps }>) {
 	const [ensemble, setEnsemble] = useState<EnsembleTree<any> | null>(null);
+	const [userProgress , setUserProgress] = useState<any>(null);
 	const isTeacher = getCookie("userType") === "teacher";
+	const userId = getCookie("userId");
 
 	useEffect(() => {
 		async function fetchData() {
@@ -27,12 +29,21 @@ export default function Page({ params }: Readonly<{ params: ParamProps }>) {
 			);
 			if (res.status === 200) {
 				const data = await res.data;
-				console.log(data)
 				setEnsemble(new EnsembleTree<any>(data.dataTree));
-				console.log(ensemble)
+			}
+		}
+		async function fetchUserProgress(disciplineId: string, userId?: string) {
+			const res = await axios.get(
+				`/api/discipline/progress?discipline=${disciplineId}&userId=${userId}`
+			);
+			if (res.status === 200) {
+				const data = await res.data;
+				setUserProgress(data.data);
+				console.log(data.data)
 			}
 		}
 		fetchData();
+		fetchUserProgress(params.disciplineId, userId);
 	}, []);
 	
 	return (
@@ -53,7 +64,7 @@ export default function Page({ params }: Readonly<{ params: ParamProps }>) {
 						<GraphBlock data={ensemble} disciplineId={params.disciplineId} nodeTypes={nodeTypesView} />
 						{ensemble ?
 							<div className="big-tile max-h-[40rem] overflow-auto">
-								<CollapseSkillsInfo data={ensemble} accessToEdit={isTeacher} />
+								<CollapseSkillsInfo data={ensemble} accessToEdit={isTeacher} userProgress={userProgress} />
 							</div> :
 							null
 						}

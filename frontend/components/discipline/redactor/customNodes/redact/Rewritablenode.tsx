@@ -21,7 +21,7 @@ type Props = {
 
 const RewritableNode: React.FC<Props> = (({ data, id }) => {
   const dispatch = useDispatch();
-  data.hide = false;
+  data.hide ? data.hide = false : null
   return (
     <div className="border-solid border-2 rounded border-black p-4 column text-center bg-white" style={{ width: 192 }}>
       <div>
@@ -49,7 +49,6 @@ const RewritableNode: React.FC<Props> = (({ data, id }) => {
           }
           updatedData.hide = !updatedData.hide;
           dispatch(setSelectedNodeToHide(updatedData));
-        
         }}
       >
         <div>
