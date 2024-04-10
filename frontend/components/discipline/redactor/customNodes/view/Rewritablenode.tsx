@@ -1,6 +1,8 @@
 // Добавьте import React, { memo, useCallback } from "react";
 import React, { memo, useCallback } from "react";
 import { Handle, Position } from "reactflow";
+import { useDispatch } from 'react-redux';
+import { setSelectNodeInfo } from "@/services/selectedNodeInfo";
 
 type Props = {
   data: {
@@ -16,8 +18,10 @@ type Props = {
 
 
 const RewritableNode: React.FC<Props> = memo(({ data }) => {
+  const dispatch = useDispatch();
   const handleShow = useCallback(() => {
-    
+    dispatch(setSelectNodeInfo(data));
+    console.log(data);
   }, []);
   return (
     <button className="border-solid border-2 rounded border-black p-4 pb-8 column text-center bg-white overflow-hidden" style={{ width: 192 }} onClick={() => handleShow()}>
