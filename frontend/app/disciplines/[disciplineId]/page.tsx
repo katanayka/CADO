@@ -15,6 +15,7 @@ interface ParamProps {
 }
 
 const CollapseSkillsInfo = dynamic(() => import("@/components/discipline/collapseSkillsInfo"))
+const Header = dynamic(() => import('@/components/header'), { ssr: false });
 
 export default function Page({ params }: Readonly<{ params: ParamProps }>) {
 	const [ensemble, setEnsemble] = useState<EnsembleTree<any> | null>(null);
@@ -48,6 +49,7 @@ export default function Page({ params }: Readonly<{ params: ParamProps }>) {
 	
 	return (
 		<div>
+			<Header />
 			<Provider store={store}>
 				<div className="content flex h-full min-h-screen">
 					<div className="bg-blue-500 user w-1/6"></div>

@@ -14,7 +14,7 @@ export default function Progress_bar({ value }: Props) {
           style={{ left: `${(i + 1) * 20}%` }}
         />
       ))}
-      <div className="progress-bar-fill h-2 bg-blue-500 rounded-lg" style={{ width: `${value}%` }}></div>
+      <div className="progress-bar-fill h-2  rounded-lg" style={{ width: `${value}%` }}></div>
     </div>
   )
 }

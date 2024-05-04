@@ -1,7 +1,6 @@
 "use client"
 import React, { useEffect } from 'react'
 import axios from 'axios'
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Form, Toggle } from 'react-daisyui';
 import ParentComponent from '@/components/discipline/edit/trackerMenu';
 import { v4 as uuidv4 } from 'uuid';
