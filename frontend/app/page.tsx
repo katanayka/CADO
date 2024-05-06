@@ -15,8 +15,8 @@ export default function Home() {
             <div className="content flex h-full min-h-screen">
                 <div className="bg-blue-500 flex-1">
                     <Icon/>
-                    {/* <DropdownType />
-                    <UserIdShowcase /> */}
+                    <DropdownType />
+                    {/* <UserIdShowcase /> */}
                     <Login />
                 </div>
                 <div className="about bg-orange-700 h-full w-5/6 px-6 py-2 min-h-screen">

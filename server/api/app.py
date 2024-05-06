@@ -1,6 +1,5 @@
 import os
 import json
-
 from flask import Flask, request
 from urllib.parse import unquote
 
@@ -129,6 +128,52 @@ def save_progress():
 
     save_json(json_file,PROGRESS_FILE_PATH)
     return {'message': 'Progress saved successfully', 'data': data}, 200
+
+users = []
+
+USERS_FILE = 'users.json'
+
+def read_users():
+    try:
+        with open(USERS_FILE, 'r') as file:
+            users = json.load(file)
+    except FileNotFoundError:
+        users = []
+    return users
+
+def write_users(users):
+    with open(USERS_FILE, 'w') as file:
+        json.dump(users, file)
+
+@app.route('/api/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    user_id = data.get('userId')
+    password = data.get('password')
+
+    users = read_users()
+
+    # Dummy authentication logic (replace this with actual authentication logic)
+    for user in users:
+        if user['userId'] == user_id and user['password'] == password:
+            return 'Login successful!', 200
+    return 'Invalid credentials', 401
+
+@app.route('/api/register', methods=['POST'])
+def register():
+    data = request.get_json()
+    user_id = data.get('userId')
+    password = data.get('password')
+
+    users = read_users()
+
+    for user in users:
+        if user['userId'] == user_id:
+            return 'User already exists', 400
+
+    users.append({'userId': user_id, 'password': password})
+    write_users(users)
+    return 'User registered successfully!', 201
 
 
 if __name__ == "__main__":
