@@ -1,6 +1,6 @@
 import os
 import json
-from flask import Flask, request
+from flask import Flask, jsonify, request
 from urllib.parse import unquote
 
 app = Flask(__name__)
@@ -156,8 +156,8 @@ def login():
     # Dummy authentication logic (replace this with actual authentication logic)
     for user in users:
         if user['userId'] == user_id and user['password'] == password:
-            return 'Login successful!', 200
-    return 'Invalid credentials', 401
+            return {'message': 'Login successful!', 'userType': user.get('userType')}, 200
+    return {'message': 'Invalid credentials'}, 401
 
 @app.route('/api/register', methods=['POST'])
 def register():
@@ -175,6 +175,188 @@ def register():
     write_users(users)
     return 'User registered successfully!', 201
 
+UPLOAD_FOLDER = 'uploads/'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+from fuzzywuzzy import fuzz
+from fuzzywuzzy import process
+import logging
+import fitz
+logging.getLogger().setLevel(logging.ERROR)
+import chardet
+import re
+
+import re
+from fuzzywuzzy import process, fuzz
+import chardet
+
+def check_toc(toc):
+    while True:
+        made_changes = False
+        for i in range(len(toc) - 1):
+            if toc[i][0] == toc[i + 1][0] and toc[i][2] > toc[i + 1][2]:
+                # Swap places
+                toc[i], toc[i + 1] = toc[i + 1], toc[i]
+                made_changes = True
+            elif toc[i][2] > toc[i + 1][2]:
+                # Remove this element
+                toc.pop(i + 1)
+                made_changes = True
+                break  # Break out of the loop after removing an element
+        if not made_changes:
+            break  # If no changes were made in the current pass, we're done
+    return toc
+
+def extract_text_from_blocks(blocks):
+    text = ''
+    for block_list in blocks:
+        for block in block_list:
+            text_block = block[4]
+            # Ensure text_block is bytes
+            if isinstance(text_block, str):
+                text_block = text_block.encode()
+            # Detect encoding
+            result = chardet.detect(text_block)
+            charenc = result['encoding']
+            # Decode the text
+            try:
+                text_block = text_block.decode(charenc)
+            except UnicodeDecodeError:
+                text_block = text_block.decode(charenc, errors='replace')
+            text_block = text_block.replace('-\n', '')
+            text += text_block
+    return text
+
+def similar(a, b):
+    return max([fuzz.ratio(a.lower().strip(), b.lower().strip()) / 100,
+                fuzz.ratio(a.lower().replace('глава', '').replace("\n", "").strip(),
+                           b.lower().replace('глава', '').replace("\n", "").strip()) / 100])
+
+def get_blocks_on_page(doc, page_number):
+    page = doc[page_number]
+    textPage = page.get_textpage()
+    blocks = textPage.extractBLOCKS()
+    blocks.sort(key=lambda x: x[3])
+    # Filter blocks by using fuzzywuzzy to exclude blocks with "Глава n" with 90% similarity
+    blocks = [block for block in blocks if similar(block[4], 'Глава 1\n') < 0.85]
+    return blocks
+
+def get_blocks_on_pages(doc, pages):
+    blocks = []
+    for page_number in pages:
+        blocks.append(get_blocks_on_page(doc, page_number))
+    return blocks
+
+def process_text_header(text):
+    text = text.replace('\n', ' ')
+    text = re.sub(r'\s+', ' ', text)
+    text = text.strip()
+    # Remove special characters
+    text = re.sub(r'[^a-zA-Zа-яА-Я0-9\s]', '', text)
+    # Remove double spaces
+    text = re.sub(r'\s+', ' ', text)
+    # Remove leading and trailing spaces
+    text = text.strip()
+    # Lowercase
+    text = text.lower()
+    return text
+
+def split_pdf_by_toc(pdf_document, toc):
+    found_titles = 0
+    not_found_titles = 0
+    found_half = 0
+    text_in_toc = {}
+    for toc_elem in toc:
+        level, title, page_number = toc_elem
+        next_block_title = None
+        if toc.index(toc_elem) < len(toc) - 1:
+            next_block_title = toc[toc.index(toc_elem) + 1][1]
+        # Get textPage object for the page
+        start_page = page_number
+        # Get endpage by checking next element in toc
+        # If it is last element, then it is the last page of the document
+        if toc.index(toc_elem) == len(toc) - 1:
+            end_page = pdf_document.page_count
+        else:
+            end_page = toc[toc.index(toc_elem) + 1][2]
+        pages = list(range(start_page - 1, end_page))
+        blocks = get_blocks_on_pages(pdf_document, pages)
+        # Find index of block with header and block with next header
+        header_block_index = None
+        next_header_block_index = None
+        g = 0
+        for i in range(len(blocks)):
+            for j in range(len(blocks[i])):
+                block_text = blocks[i][j][4]
+                best_match_cur_head, score_cur = process.extractOne(title, [block_text])
+                if next_block_title:
+                    best_match_next_head, score_next = process.extractOne(next_block_title, [block_text])
+                if score_cur >= 90 and i == 0:
+                    header_block_index = g
+                if next_block_title and score_next >= 90 and i == len(blocks) - 1:
+                    next_header_block_index = g
+                    break
+                g += 1
+        # Get blocks only between header and next header
+        # Flatten blocks array to 1D
+        blocks = [block for block_list in blocks for block in block_list]
+        if header_block_index is not None and next_header_block_index:
+            found_titles += 1
+            blocks = blocks[header_block_index: next_header_block_index]
+        # If header_block_index not none or next_header_block_index not none
+        if (int(header_block_index is not None)) + (int(next_header_block_index is not None)) == 1:
+            found_half += 1
+            if next_header_block_index is None:
+                blocks = blocks[header_block_index:]
+            else:
+                blocks = blocks[:next_header_block_index]
+        if header_block_index is None and next_header_block_index is None:
+            not_found_titles += 1
+            continue
+        text = extract_text_from_blocks([blocks])
+        text_in_toc[process_text_header(title)] = text
+    print(f'{found_titles} - {not_found_titles} - {found_half}')
+    return text_in_toc, found_titles, not_found_titles, found_half
+
+
+def processPDF(pdf_path):
+    doc_lists = []
+    doc = fitz.open(pdf_path)
+    toc = doc.get_toc()
+    toc_ = check_toc(toc)
+    doc_list, a, b, c = split_pdf_by_toc(doc, toc_)
+    doc_lists.append(doc_list)
+    total_found = a
+    total_not_found = b
+    total_found_half = c
+    doc.close()
+    return doc_lists, total_found, total_not_found, total_found_half
+
+@app.route('/api/readPDF', methods=['POST'])
+def readPDF():
+    if 'file' not in request.files:
+        return jsonify({"error": "No file part"}), 400
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({"error": "No selected file"}), 400
+    if file and file.filename.endswith('.pdf'):
+        try:
+            # File is PDF file
+            # Save it to the uploads folder
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
+            # Process the PDF
+            doc_lists, total_found, total_not_found, total_found_half = processPDF(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
+            if total_found == 0:
+                os.remove(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
+                return jsonify({"error": "No titles found"}), 400
+            # Delete the uploaded file
+            os.remove(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
+            return jsonify({"message": "PDF read successfully!", "data": doc_lists, "total_found": total_found, "total_not_found": total_not_found, "total_found_half": total_found_half}), 200
+        except:
+            os.remove(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
+            return jsonify({"error": "Error reading PDF"}), 400
+    else:
+        return jsonify({"error": "Invalid file type"}), 400
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

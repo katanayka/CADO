@@ -174,4 +174,4 @@ function convertDataToTree(
 }
 
 
-export { Tree, EnsembleTree, convertDataToTree }
+export { Tree, EnsembleTree, convertDataToTree, Node }

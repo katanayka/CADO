@@ -9,13 +9,6 @@ const UserIdShowcase = () => {
         setUserId(e.target.value);
     }
 	// If userId is not in cookies, then set userId to random string value
-	if (!userId) {
-		const newUserId = Math.random().toString(36).substring(7);
-		setCookie("userId", newUserId, {
-			sameSite: 'none',
-			secure: true
-		});
-	}
     useEffect(() => {
         setCookie("userId", userId, {
             sameSite: 'none',

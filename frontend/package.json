@@ -10,6 +10,11 @@
 	},
 	"dependencies": {
 		"3": "^2.1.0",
+		"@emotion/react": "^11.11.4",
+		"@emotion/styled": "^11.11.5",
+		"@mui/icons-material": "^5.15.19",
+		"@mui/material": "^5.15.19",
+		"@mui/x-charts": "^7.6.1",
 		"@reduxjs/toolkit": "^2.2.3",
 		"axios": "^1.6.1",
 		"cookies-next": "^4.1.0",
