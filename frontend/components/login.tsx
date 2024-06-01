@@ -20,7 +20,7 @@ const UserIdShowcase = () => {
                     sameSite: 'none',
                     secure: true
                 });
-                if (_.data['userType'] == 1) {
+                if (_.data['userType'] == "teacher") {
                     setCookie("userType", 'teacher', {
                         sameSite: 'none',
                         secure: true

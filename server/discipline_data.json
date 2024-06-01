@@ -1,1 +1,2103 @@
-{"ОПиА": {"disciplineId": "%D0%9E%D0%9F%D0%B8%D0%90", "dataTree": {"trees": [{"root": {"id": "Синтаксис-0_2", "type": "Rewritable", "data": {"id": "Синтаксис-0_2", "inside": "\n\nЦель дисциплины:\n\nРазвитие интереса к современным средам программирования и их практическому применению, формирование навыка самостоятельного выполнения поставленных задач, развития умений и навыков программирования.\n\nЗадачи дисциплины:\n\nФормирование знаний об основных синтаксических и алгоритмических конструкций языка программирования Python. Формирование понятия алгоритма и основных требований методологии программирования, как технологической основы разработки качественных программных компонентов, основ объектно-ориентированного программирования. Изучение базовых структур данных и использование их для построения алгоритма. Привитие навыков эффективного решения практических задач с использованием языка программирования Python.\n\n", "label": "Синтаксис", "text": "МУП Core 2022 Python 1 Программирование и основы алгоритмизации 1"}, "position": {"x": 4352, "y": 192}, "children": [{"id": "Rewritable_17", "type": "Rewritable", "data": {"id": "Rewritable_17", "inside": "Основные принципы организации Языка Python. Базовые элементы программирования и типы данных....", "label": "Rewritable", "practice": [], "text": "УВ №1, Лекционное занятие 1, \"Основные принципы организации Языка Python. Базовые элементы.", "theory": []}, "position": {"x": 880, "y": 848}, "children": [{"id": "Встроенные типы данных-0_150", "type": "Rewritable", "data": {"label": "Встроенные типы данных", "text": "Встроенные типы данных"}, "position": {"x": 912, "y": 1312}, "children": [{"id": "Числа-1_151", "type": "Rewritable", "data": {"label": "Числа", "text": "Числа"}, "position": {"x": 272, "y": 1568}, "children": []}, {"id": "Строки-2_152", "type": "Rewritable", "data": {"label": "Строки", "text": "Строки"}, "position": {"x": 528, "y": 1568}, "children": []}, {"id": "Списки-3_153", "type": "Rewritable", "data": {"label": "Списки", "text": "Списки"}, "position": {"x": 784, "y": 1568}, "children": []}, {"id": "Кортежи-4_154", "type": "Rewritable", "data": {"label": "Кортежи", "text": "Кортежи"}, "position": {"x": 1040, "y": 1568}, "children": []}, {"id": "Множества-5_155", "type": "Rewritable", "data": {"label": "Множества", "text": "Множества"}, "position": {"x": 1296, "y": 1568}, "children": []}, {"id": "Словари-6_156", "type": "Rewritable", "data": {"label": "Словари", "text": "Словари"}, "position": {"x": 1552, "y": 1568}, "children": []}]}]}, {"id": "Rewritable_18", "type": "Rewritable", "data": {"id": "Rewritable_18", "inside": "Основные принципы организации Языка Python. Базовые элементы программирования и типы данных.", "label": "Rewritable", "practice": [], "text": "УВ №2, Практическое занятие 1, \"Основные принципы организации Языка Python. Базовые элементы.", "theory": ["1"]}, "position": {"x": 1072, "y": 848}, "children": [{"id": "Встроенные типы данных-0_163", "type": "Rewritable", "data": {"label": "Встроенные типы данных", "text": "Встроенные типы данных"}, "position": {"x": 1136, "y": 1264}, "children": [{"id": "Числа-1_164", "type": "Rewritable", "data": {"label": "Числа", "text": "Числа"}, "position": {"x": 496, "y": 1520}, "children": []}, {"id": "Строки-2_165", "type": "Rewritable", "data": {"label": "Строки", "text": "Строки"}, "position": {"x": 752, "y": 1520}, "children": []}, {"id": "Списки-3_166", "type": "Rewritable", "data": {"label": "Списки", "text": "Списки"}, "position": {"x": 1008, "y": 1520}, "children": []}, {"id": "Кортежи-4_167", "type": "Rewritable", "data": {"label": "Кортежи", "text": "Кортежи"}, "position": {"x": 1264, "y": 1520}, "children": []}, {"id": "Множества-5_168", "type": "Rewritable", "data": {"label": "Множества", "text": "Множества"}, "position": {"x": 1520, "y": 1520}, "children": []}, {"id": "Словари-6_169", "type": "Rewritable", "data": {"label": "Словари", "text": "Словари"}, "position": {"x": 1776, "y": 1520}, "children": []}]}]}, {"id": "Rewritable_19", "type": "Rewritable", "data": {"id": "Rewritable_19", "inside": "Основные принципы организации Языка Python. Базовые элементы программирования и типы данных", "label": "Rewritable", "text": "УВ №3, Практическое занятие 2, \"Основные принципы организации Языка Python. Базовые элементы "}, "position": {"x": 1264, "y": 848}, "children": []}, {"id": "Rewritable_20", "type": "Rewritable", "data": {"id": "Rewritable_20", "inside": "Основные принципы организации Языка Python. Базовые элементы программирования и типы данных", "label": "Rewritable", "text": "УВ №4, Практическое занятие 3, \"Основные принципы организации Языка Python. Базовые элементы "}, "position": {"x": 1456, "y": 848}, "children": []}, {"id": "Rewritable_21", "type": "Rewritable", "data": {"id": "Rewritable_21", "inside": "Управляющие конструкции", "label": "Rewritable", "text": "УВ №5, Лекционное занятие 2, \"Управляющие конструкции\""}, "position": {"x": 1648, "y": 848}, "children": []}, {"id": "Rewritable_22", "type": "Rewritable", "data": {"id": "Rewritable_22", "inside": "Управляющие конструкции", "label": "Rewritable", "text": "УВ №6, Практическое занятие 4, \"Управляющие конструкции\""}, "position": {"x": 1840, "y": 848}, "children": []}, {"id": "Rewritable_23", "type": "Rewritable", "data": {"id": "Rewritable_23", "inside": "Управляющие конструкции", "label": "Rewritable", "text": "УВ №7, Практическое занятие 5, \"Управляющие конструкции\""}, "position": {"x": 2032, "y": 848}, "children": []}, {"id": "Rewritable_24", "type": "Rewritable", "data": {"id": "Rewritable_24", "inside": "Управляющие конструкции", "label": "Rewritable", "text": "УВ №8, Практическое занятие 6, \"Управляющие конструкции\""}, "position": {"x": 2224, "y": 848}, "children": []}, {"id": "Rewritable_25", "type": "Rewritable", "data": {"id": "Rewritable_25", "inside": "Управляющие конструкции", "label": "Rewritable", "text": "УВ №9, Практическое занятие 7, \"Управляющие конструкции\""}, "position": {"x": 2416, "y": 848}, "children": []}, {"id": "Rewritable_26", "type": "Rewritable", "data": {"id": "Rewritable_26", "inside": "Управляющие конструкции", "label": "Rewritable", "text": "УВ №10, Практическое занятие 8, \"Управляющие конструкции\""}, "position": {"x": 2608, "y": 848}, "children": []}, {"id": "Rewritable_27", "type": "Rewritable", "data": {"id": "Rewritable_27", "inside": "\n\nКоллоквиум\n\nУправляющие конструкции\n\n", "label": "Rewritable", "text": "УВ №11, Практическое занятие 9, \"Управляющие конструкции\""}, "position": {"x": 2800, "y": 848}, "children": [{"id": "Функции-0_189", "type": "Rewritable", "data": {"label": "Функции", "text": "Функции"}, "position": {"x": 2832, "y": 1168}, "children": [{"id": "Определение функции-1_190", "type": "Rewritable", "data": {"label": "Определение функции", "text": "Определение функции"}, "position": {"x": 2576, "y": 1424}, "children": []}, {"id": "Аргументы функции-2_191", "type": "Rewritable", "data": {"label": "Аргументы функции", "text": "Аргументы функции"}, "position": {"x": 2832, "y": 1424}, "children": []}, {"id": "Возвращаемые значения-3_192", "type": "Rewritable", "data": {"label": "Возвращаемые значения", "text": "Возвращаемые значения"}, "position": {"x": 3088, "y": 1424}, "children": []}]}]}, {"id": "Rewritable_28", "type": "Rewritable", "data": {"id": "Rewritable_28", "inside": "Организация функций", "label": "Rewritable", "text": "УВ №12, Лекционное занятие 3, \"Организация функций\""}, "position": {"x": 2992, "y": 848}, "children": [{"id": "Функции-0_196", "type": "Rewritable", "data": {"label": "Функции", "text": "Функции"}, "position": {"x": 3024, "y": 1200}, "children": [{"id": "Определение функции-1_197", "type": "Rewritable", "data": {"label": "Определение функции", "text": "Определение функции"}, "position": {"x": 2768, "y": 1456}, "children": []}, {"id": "Аргументы функции-2_198", "type": "Rewritable", "data": {"label": "Аргументы функции", "text": "Аргументы функции"}, "position": {"x": 3024, "y": 1456}, "children": []}, {"id": "Возвращаемые значения-3_199", "type": "Rewritable", "data": {"label": "Возвращаемые значения", "text": "Возвращаемые значения"}, "position": {"x": 3280, "y": 1456}, "children": []}]}]}, {"id": "Rewritable_29", "type": "Rewritable", "data": {"id": "Rewritable_29", "inside": "Организация функций", "label": "Rewritable", "text": "УВ №13, Практическое занятие 10, \"Организация функций\""}, "position": {"x": 3184, "y": 848}, "children": []}, {"id": "Rewritable_30", "type": "Rewritable", "data": {"id": "Rewritable_30", "inside": "Организация функций", "label": "Rewritable", "text": "УВ №14, Практическое занятие 11, \"Организация функций\""}, "position": {"x": 3376, "y": 848}, "children": []}, {"id": "Rewritable_31", "type": "Rewritable", "data": {"id": "Rewritable_31", "inside": "Организация функций", "label": "Rewritable", "text": "УВ №15, Практическое занятие 12, \"Организация функций\""}, "position": {"x": 3568, "y": 848}, "children": [{"id": "Классы-0_182", "type": "Rewritable", "data": {"label": "Классы", "text": "Классы"}, "position": {"x": 3552, "y": 1184}, "children": [{"id": "Определение класса-1_183", "type": "Rewritable", "data": {"label": "Определение класса", "text": "Определение класса"}, "position": {"x": 3296, "y": 1440}, "children": []}, {"id": "Методы-2_184", "type": "Rewritable", "data": {"label": "Методы", "text": "Методы"}, "position": {"x": 3552, "y": 1440}, "children": []}, {"id": "Наследование-3_185", "type": "Rewritable", "data": {"label": "Наследование", "text": "Наследование"}, "position": {"x": 3808, "y": 1440}, "children": []}]}]}, {"id": "Rewritable_32", "type": "Rewritable", "data": {"id": "Rewritable_32", "inside": "\n\nКоллоквиум\n\nОрганизация функций\n\n", "label": "Rewritable", "text": "УВ №16, Практическое занятие 13, \"Организация функций\""}, "position": {"x": 3760, "y": 848}, "children": [{"id": "Lambda-функции-0_181", "type": "Rewritable", "data": {"label": "Lambda-функции", "text": "Lambda-функции"}, "position": {"x": 3760, "y": 1216}, "children": []}]}, {"id": "Rewritable_33", "type": "Rewritable", "data": {"id": "Rewritable_33", "inside": "Работа со строками и текстом", "label": "Rewritable", "text": "УВ №17, Лекционное занятие 4, \"Работа со строками и текстом\""}, "position": {"x": 3952, "y": 848}, "children": []}, {"id": "Rewritable_34", "type": "Rewritable", "data": {"id": "Rewritable_34", "inside": "Работа со строками и текстом", "label": "Rewritable", "text": "УВ №18, Практическое занятие 14, \"Работа со строками и текстом\""}, "position": {"x": 4144, "y": 848}, "children": []}, {"id": "Rewritable_35", "type": "Rewritable", "data": {"id": "Rewritable_35", "inside": "Работа со строками и текстом", "label": "Rewritable", "text": "УВ №19, Практическое занятие 15, \"Работа со строками и текстом\""}, "position": {"x": 4336, "y": 848}, "children": []}, {"id": "Rewritable_36", "type": "Rewritable", "data": {"id": "Rewritable_36", "inside": "Работа со строками и текстом", "label": "Rewritable", "text": "УВ №20, Практическое занятие 16, \"Работа со строками и текстом\""}, "position": {"x": 4528, "y": 848}, "children": []}, {"id": "Rewritable_37", "type": "Rewritable", "data": {"id": "Rewritable_37", "inside": "Коллекции. Работа с файлами", "label": "Rewritable", "text": "УВ №21, Лекционное занятие 5, \"Коллекции. Работа с файлами\""}, "position": {"x": 4720, "y": 848}, "children": [{"id": "Работа с файлами-0_1", "type": "Rewritable", "data": {"label": "Работа с файлами", "text": "Работа с файлами"}, "position": {"x": 4784, "y": 1232}, "children": [{"id": "Чтение файла-1_2", "type": "Rewritable", "data": {"label": "Чтение файла", "text": "Чтение файла"}, "position": {"x": 4656, "y": 1488}, "children": []}, {"id": "Запись в файл-2_3", "type": "Rewritable", "data": {"label": "Запись в файл", "text": "Запись в файл"}, "position": {"x": 4912, "y": 1488}, "children": []}]}]}, {"id": "Rewritable_38", "type": "Rewritable", "data": {"id": "Rewritable_38", "inside": "Коллекции. Работа с файлами", "label": "Rewritable", "text": "УВ №22, Практическое занятие 17, \"Коллекции. Работа с файлами\""}, "position": {"x": 4912, "y": 848}, "children": [{"id": "Работа с файлами-0_6", "type": "Rewritable", "data": {"label": "Работа с файлами", "text": "Работа с файлами"}, "position": {"x": 5008, "y": 1280}, "children": [{"id": "Чтение файла-1_7", "type": "Rewritable", "data": {"label": "Чтение файла", "text": "Чтение файла"}, "position": {"x": 4880, "y": 1536}, "children": []}, {"id": "Запись в файл-2_8", "type": "Rewritable", "data": {"label": "Запись в файл", "text": "Запись в файл"}, "position": {"x": 5136, "y": 1536}, "children": []}]}]}, {"id": "Rewritable_39", "type": "Rewritable", "data": {"id": "Rewritable_39", "inside": "Коллекции. Работа с файлами", "label": "Rewritable", "text": "УВ №23, Практическое занятие 18, \"Коллекции. Работа с файлами\""}, "position": {"x": 5104, "y": 848}, "children": [{"id": "Работа с файлами-0_11", "type": "Rewritable", "data": {"label": "Работа с файлами", "text": "Работа с файлами"}, "position": {"x": 5152, "y": 1232}, "children": [{"id": "Чтение файла-1_12", "type": "Rewritable", "data": {"label": "Чтение файла", "text": "Чтение файла"}, "position": {"x": 5024, "y": 1488}, "children": []}, {"id": "Запись в файл-2_13", "type": "Rewritable", "data": {"label": "Запись в файл", "text": "Запись в файл"}, "position": {"x": 5280, "y": 1488}, "children": []}]}]}, {"id": "Rewritable_40", "type": "Rewritable", "data": {"id": "Rewritable_40", "inside": "\n\nКоллоквиум\n\nКоллекции. Работа с файлами\n\n", "label": "Rewritable", "text": "УВ №24, Практическое занятие 19, \"Коллекции. Работа с файлами\""}, "position": {"x": 5296, "y": 848}, "children": [{"id": "Работа с файлами-0_16", "type": "Rewritable", "data": {"label": "Работа с файлами", "text": "Работа с файлами"}, "position": {"x": 5360, "y": 1248}, "children": [{"id": "Чтение файла-1_17", "type": "Rewritable", "data": {"label": "Чтение файла", "text": "Чтение файла"}, "position": {"x": 5232, "y": 1504}, "children": []}, {"id": "Запись в файл-2_18", "type": "Rewritable", "data": {"label": "Запись в файл", "text": "Запись в файл"}, "position": {"x": 5488, "y": 1504}, "children": []}]}]}, {"id": "Rewritable_41", "type": "Rewritable", "data": {"id": "Rewritable_41", "inside": "Элементы функционального программирования", "label": "Rewritable", "text": "УВ №25, Лекционное занятие 6, \"Элементы функционального программирования\""}, "position": {"x": 5488, "y": 848}, "children": [{"id": "Функции-0_21", "type": "Rewritable", "data": {"label": "Функции", "text": "Функции"}, "position": {"x": 5488, "y": 1264}, "children": [{"id": "Определение функции-1_22", "type": "Rewritable", "data": {"label": "Определение функции", "text": "Определение функции"}, "position": {"x": 5232, "y": 1520}, "children": []}, {"id": "Аргументы функции-2_23", "type": "Rewritable", "data": {"label": "Аргументы функции", "text": "Аргументы функции"}, "position": {"x": 5488, "y": 1520}, "children": []}, {"id": "Возвращаемые значения-3_24", "type": "Rewritable", "data": {"label": "Возвращаемые значения", "text": "Возвращаемые значения"}, "position": {"x": 5744, "y": 1520}, "children": []}]}]}, {"id": "Rewritable_42", "type": "Rewritable", "data": {"id": "Rewritable_42", "inside": "Элементы функционального программирования", "label": "Rewritable", "text": "УВ №26, Практическое занятие 20, \"Элементы функционального программирования\""}, "position": {"x": 5680, "y": 848}, "children": [{"id": "Функции-0_28", "type": "Rewritable", "data": {"label": "Функции", "text": "Функции"}, "position": {"x": 5728, "y": 1216}, "children": [{"id": "Определение функции-1_29", "type": "Rewritable", "data": {"label": "Определение функции", "text": "Определение функции"}, "position": {"x": 5472, "y": 1472}, "children": []}, {"id": "Аргументы функции-2_30", "type": "Rewritable", "data": {"label": "Аргументы функции", "text": "Аргументы функции"}, "position": {"x": 5728, "y": 1472}, "children": []}, {"id": "Возвращаемые значения-3_31", "type": "Rewritable", "data": {"label": "Возвращаемые значения", "text": "Возвращаемые значения"}, "position": {"x": 5984, "y": 1472}, "children": []}]}]}, {"id": "Rewritable_43", "type": "Rewritable", "data": {"id": "Rewritable_43", "inside": "Элементы функционального программирования", "label": "Rewritable", "text": "УВ №27, Практическое занятие 21, \"Элементы функционального программирования\""}, "position": {"x": 5872, "y": 848}, "children": [{"id": "Функции-0_35", "type": "Rewritable", "data": {"label": "Функции", "text": "Функции"}, "position": {"x": 5968, "y": 1248}, "children": [{"id": "Определение функции-1_36", "type": "Rewritable", "data": {"label": "Определение функции", "text": "Определение функции"}, "position": {"x": 5712, "y": 1504}, "children": []}, {"id": "Аргументы функции-2_37", "type": "Rewritable", "data": {"label": "Аргументы функции", "text": "Аргументы функции"}, "position": {"x": 5968, "y": 1504}, "children": []}, {"id": "Возвращаемые значения-3_38", "type": "Rewritable", "data": {"label": "Возвращаемые значения", "text": "Возвращаемые значения"}, "position": {"x": 6224, "y": 1504}, "children": []}]}]}, {"id": "Rewritable_44", "type": "Rewritable", "data": {"id": "Rewritable_44", "inside": "Консультация", "label": "Rewritable", "text": "УВ №28, Консультация 1, \"Консультация\""}, "position": {"x": 6064, "y": 848}, "children": []}, {"id": "Rewritable_45", "type": "Rewritable", "data": {"id": "Rewritable_45", "inside": "Консультация", "label": "Rewritable", "text": "УВ №29, Консультация 2, \"Консультация\""}, "position": {"x": 6256, "y": 848}, "children": []}, {"id": "Rewritable_46", "type": "Rewritable", "data": {"id": "Rewritable_46", "inside": "Консультация", "label": "Rewritable", "text": "УВ №30, Консультация 3, \"Консультация\""}, "position": {"x": 6448, "y": 848}, "children": []}, {"id": "Rewritable_47", "type": "Rewritable", "data": {"id": "Rewritable_47", "inside": "\n\nДифференцированный зачет\n\nЗачет с оценкой\n\n", "label": "Rewritable", "text": "УВ №31, Аттестация 1, \"Аттестация\""}, "position": {"x": 6640, "y": 848}, "children": [{"id": "Python-0_42", "type": "Rewritable", "data": {"label": "Python", "text": "Python"}, "position": {"x": 6640, "y": 1184}, "children": [{"id": "Синтаксис-1_43", "type": "Rewritable", "data": {"label": "Синтаксис", "text": "Синтаксис"}, "position": {"x": 3600, "y": 1440}, "children": [{"id": "Условные операторы-13_55", "type": "Rewritable", "data": {"label": "Условные операторы", "text": "Условные операторы"}, "position": {"x": 3280, "y": 1696}, "children": [{"id": "if-35_77", "type": "Rewritable", "data": {"label": "if", "text": "if"}, "position": {"x": 3024, "y": 1952}, "children": []}, {"id": "else-36_78", "type": "Rewritable", "data": {"label": "else", "text": "else"}, "position": {"x": 3280, "y": 1952}, "children": []}, {"id": "elif-37_79", "type": "Rewritable", "data": {"label": "elif", "text": "elif"}, "position": {"x": 3536, "y": 1952}, "children": []}]}, {"id": "Циклы-14_56", "type": "Rewritable", "data": {"label": "Циклы", "text": "Циклы"}, "position": {"x": 3920, "y": 1696}, "children": [{"id": "for-38_80", "type": "Rewritable", "data": {"label": "for", "text": "for"}, "position": {"x": 3792, "y": 1952}, "children": []}, {"id": "while-39_81", "type": "Rewritable", "data": {"label": "while", "text": "while"}, "position": {"x": 4048, "y": 1952}, "children": []}]}]}, {"id": "Классы-2_44", "type": "Rewritable", "data": {"label": "Классы", "text": "Классы"}, "position": {"x": 4432, "y": 1440}, "children": [{"id": "Определение класса-15_57", "type": "Rewritable", "data": {"label": "Определение класса", "text": "Определение класса"}, "position": {"x": 4176, "y": 1696}, "children": []}, {"id": "Методы-16_58", "type": "Rewritable", "data": {"label": "Методы", "text": "Методы"}, "position": {"x": 4432, "y": 1696}, "children": []}, {"id": "Наследование-17_59", "type": "Rewritable", "data": {"label": "Наследование", "text": "Наследование"}, "position": {"x": 4688, "y": 1696}, "children": []}]}, {"id": "Функции-3_45", "type": "Rewritable", "data": {"label": "Функции", "text": "Функции"}, "position": {"x": 5200, "y": 1440}, "children": [{"id": "Определение функции-18_60", "type": "Rewritable", "data": {"label": "Определение функции", "text": "Определение функции"}, "position": {"x": 4944, "y": 1696}, "children": []}, {"id": "Аргументы функции-19_61", "type": "Rewritable", "data": {"label": "Аргументы функции", "text": "Аргументы функции"}, "position": {"x": 5200, "y": 1696}, "children": []}, {"id": "Возвращаемые значения-20_62", "type": "Rewritable", "data": {"label": "Возвращаемые значения", "text": "Возвращаемые значения"}, "position": {"x": 5456, "y": 1696}, "children": []}]}, {"id": "Встроенные типы данных-4_46", "type": "Rewritable", "data": {"label": "Встроенные типы данных", "text": "Встроенные типы данных"}, "position": {"x": 6352, "y": 1440}, "children": [{"id": "Числа-21_63", "type": "Rewritable", "data": {"label": "Числа", "text": "Числа"}, "position": {"x": 5712, "y": 1696}, "children": []}, {"id": "Строки-22_64", "type": "Rewritable", "data": {"label": "Строки", "text": "Строки"}, "position": {"x": 5968, "y": 1696}, "children": []}, {"id": "Списки-23_65", "type": "Rewritable", "data": {"label": "Списки", "text": "Списки"}, "position": {"x": 6224, "y": 1696}, "children": []}, {"id": "Кортежи-24_66", "type": "Rewritable", "data": {"label": "Кортежи", "text": "Кортежи"}, "position": {"x": 6480, "y": 1696}, "children": []}, {"id": "Множества-25_67", "type": "Rewritable", "data": {"label": "Множества", "text": "Множества"}, "position": {"x": 6736, "y": 1696}, "children": []}, {"id": "Словари-26_68", "type": "Rewritable", "data": {"label": "Словари", "text": "Словари"}, "position": {"x": 6992, "y": 1696}, "children": []}]}, {"id": "Работа с файлами-5_47", "type": "Rewritable", "data": {"label": "Работа с файлами", "text": "Работа с файлами"}, "position": {"x": 7376, "y": 1440}, "children": [{"id": "Чтение файла-27_69", "type": "Rewritable", "data": {"label": "Чтение файла", "text": "Чтение файла"}, "position": {"x": 7248, "y": 1696}, "children": []}, {"id": "Запись в файл-28_70", "type": "Rewritable", "data": {"label": "Запись в файл", "text": "Запись в файл"}, "position": {"x": 7504, "y": 1696}, "children": []}]}, {"id": "Обработка исключений-6_48", "type": "Rewritable", "data": {"label": "Обработка исключений", "text": "Обработка исключений"}, "position": {"x": 7888, "y": 1440}, "children": [{"id": "try-except-29_71", "type": "Rewritable", "data": {"label": "try-except", "text": "try-except"}, "position": {"x": 7760, "y": 1696}, "children": []}, {"id": "finally-30_72", "type": "Rewritable", "data": {"label": "finally", "text": "finally"}, "position": {"x": 8016, "y": 1696}, "children": []}]}, {"id": "Модули и пакеты-7_49", "type": "Rewritable", "data": {"label": "Модули и пакеты", "text": "Модули и пакеты"}, "position": {"x": 8400, "y": 1440}, "children": [{"id": "Импорт модулей-31_73", "type": "Rewritable", "data": {"label": "Импорт модулей", "text": "Импорт модулей"}, "position": {"x": 8272, "y": 1696}, "children": []}, {"id": "Создание модулей-32_74", "type": "Rewritable", "data": {"label": "Создание модулей", "text": "Создание модулей"}, "position": {"x": 8528, "y": 1696}, "children": []}]}, {"id": "Регулярные выражения-8_50", "type": "Rewritable", "data": {"label": "Регулярные выражения", "text": "Регулярные выражения"}, "position": {"x": 8656, "y": 1440}, "children": []}, {"id": "Lambda-функции-9_51", "type": "Rewritable", "data": {"label": "Lambda-функции", "text": "Lambda-функции"}, "position": {"x": 8912, "y": 1440}, "children": []}, {"id": "List Comprehensions-10_52", "type": "Rewritable", "data": {"label": "List Comprehensions", "text": "List Comprehensions"}, "position": {"x": 9168, "y": 1440}, "children": []}, {"id": "Работа с библиотеками-11_53", "type": "Rewritable", "data": {"label": "Работа с библиотеками", "text": "Работа с библиотеками"}, "position": {"x": 9424, "y": 1440}, "children": [{"id": "Пример: NumPy-33_75", "type": "Rewritable", "data": {"label": "Пример: NumPy", "text": "Пример: NumPy"}, "position": {"x": 9296, "y": 1696}, "children": []}, {"id": "Пример: Pandas-34_76", "type": "Rewritable", "data": {"label": "Пример: Pandas", "text": "Пример: Pandas"}, "position": {"x": 9552, "y": 1696}, "children": []}]}, {"id": "Заключение-12_54", "type": "Rewritable", "data": {"label": "Заключение", "text": "Заключение"}, "position": {"x": 9680, "y": 1440}, "children": []}]}]}]}}]}}, "АТПиРВ": {"disciplineId": "%D0%90%D0%A2%D0%9F%D0%B8%D0%A0%D0%92", "dataTree": {"trees": [{"root": {"id": "Синтаксис-0_33", "type": "Rewritable", "data": {"hide": false, "label": "Синтаксис", "text": "Синтаксис"}, "position": {"x": 2816, "y": 1024}, "children": [{"id": "Условные операторы-1_34", "type": "Rewritable", "data": {"hide": false, "label": "Условные операторы", "text": "Условные операторы"}, "position": {"x": 2496, "y": 1280}, "children": [{"id": "if-3_36", "type": "Rewritable", "data": {"hide": false, "label": "if", "text": "if"}, "position": {"x": 2240, "y": 1536}, "children": []}, {"id": "else-4_37", "type": "Rewritable", "data": {"hide": false, "label": "else", "text": "else"}, "position": {"x": 2496, "y": 1536}, "children": []}, {"id": "elif-5_38", "type": "Rewritable", "data": {"hide": false, "label": "elif", "text": "elif"}, "position": {"x": 2752, "y": 1536}, "children": []}]}, {"id": "Циклы-2_35", "type": "Rewritable", "data": {"hide": false, "label": "Циклы", "text": "Циклы"}, "position": {"x": 3136, "y": 1280}, "children": [{"id": "for-6_39", "type": "Rewritable", "data": {"hide": false, "label": "for", "text": "for"}, "position": {"x": 3008, "y": 1536}, "children": []}, {"id": "while-7_40", "type": "Rewritable", "data": {"hide": false, "label": "while", "text": "while"}, "position": {"x": 3264, "y": 1536}, "children": []}]}]}}, {"root": {"id": "Rewritable_48", "type": "Rewritable", "data": {"hide": false, "label": "Rewritable", "text": "Description for Rewritable"}, "position": {"x": 1104, "y": -16}, "children": [{"id": "Python-0_0", "type": "Rewritable", "data": {"hide": false, "label": "Python", "text": "Python"}, "position": {"x": 800, "y": 336}, "children": [{"id": "Синтаксис-1_1", "type": "Rewritable", "data": {"hide": false, "label": "Синтаксис", "text": "Синтаксис"}, "position": {"x": 0, "y": 592}, "children": [{"id": "Условные операторы-4_4", "type": "Rewritable", "data": {"hide": false, "label": "Условные операторы", "text": "Условные операторы"}, "position": {"x": -320, "y": 848}, "children": [{"id": "if-12_12", "type": "Rewritable", "data": {"hide": false, "label": "if", "text": "if"}, "position": {"x": -576, "y": 1104}, "children": []}, {"id": "else-13_13", "type": "Rewritable", "data": {"hide": false, "label": "else", "text": "else"}, "position": {"x": -320, "y": 1104}, "children": []}, {"id": "elif-14_14", "type": "Rewritable", "data": {"hide": false, "label": "elif", "text": "elif"}, "position": {"x": -64, "y": 1104}, "children": []}]}, {"id": "Циклы-5_5", "type": "Rewritable", "data": {"hide": false, "label": "Циклы", "text": "Циклы"}, "position": {"x": 320, "y": 848}, "children": [{"id": "for-15_15", "type": "Rewritable", "data": {"hide": false, "label": "for", "text": "for"}, "position": {"x": 192, "y": 1104}, "children": []}, {"id": "while-16_16", "type": "Rewritable", "data": {"hide": false, "label": "while", "text": "while"}, "position": {"x": 448, "y": 1104}, "children": []}]}]}, {"id": "Классы-2_2", "type": "Rewritable", "data": {"hide": false, "label": "Классы", "text": "Классы"}, "position": {"x": 832, "y": 592}, "children": [{"id": "Определение класса-6_6", "type": "Rewritable", "data": {"hide": false, "label": "Определение класса", "text": "Определение класса"}, "position": {"x": 576, "y": 848}, "children": []}, {"id": "Методы-7_7", "type": "Rewritable", "data": {"hide": false, "label": "Методы", "text": "Методы"}, "position": {"x": 832, "y": 848}, "children": []}, {"id": "Наследование-8_8", "type": "Rewritable", "data": {"hide": false, "label": "Наследование", "text": "Наследование"}, "position": {"x": 1088, "y": 848}, "children": []}]}, {"id": "Функции-3_3", "type": "Rewritable", "data": {"hide": false, "label": "Функции", "text": "Функции"}, "position": {"x": 1600, "y": 592}, "children": [{"id": "Определение функции-9_9", "type": "Rewritable", "data": {"hide": false, "label": "Определение функции", "text": "Определение функции"}, "position": {"x": 1344, "y": 848}, "children": []}, {"id": "Аргументы функции-10_10", "type": "Rewritable", "data": {"hide": false, "label": "Аргументы функции", "text": "Аргументы функции"}, "position": {"x": 1600, "y": 848}, "children": []}, {"id": "Возвращаемые значения-11_11", "type": "Rewritable", "data": {"hide": false, "label": "Возвращаемые значения", "text": "Возвращаемые значения"}, "position": {"x": 1856, "y": 848}, "children": []}]}]}]}}]}}}
+{
+    "Программирование и основы алгоритмизации": {
+        "disciplineId": "%D0%9E%D0%9F%D0%B8%D0%90",
+        "dataTree": {
+            "trees": [
+                {
+                    "root": {
+                        "id": "Синтаксис-0_2",
+                        "type": "Rewritable",
+                        "data": {
+                            "id": "Синтаксис-0_2",
+                            "inside": "\n\nЦель дисциплины:\n\nРазвитие интереса к современным средам программирования и их практическому применению, формирование навыка самостоятельного выполнения поставленных задач, развития умений и навыков программирования.\n\nЗадачи дисциплины:\n\nФормирование знаний об основных синтаксических и алгоритмических конструкций языка программирования Python. Формирование понятия алгоритма и основных требований методологии программирования, как технологической основы разработки качественных программных компонентов, основ объектно-ориентированного программирования. Изучение базовых структур данных и использование их для построения алгоритма. Привитие навыков эффективного решения практических задач с использованием языка программирования Python.\n\n",
+                            "label": "Синтаксис",
+                            "text": "МУП Core 2022 Python 1 Программирование и основы алгоритмизации 1"
+                        },
+                        "position": {
+                            "x": 4352,
+                            "y": 192
+                        },
+                        "children": [
+                            {
+                                "id": "Rewritable_17",
+                                "type": "Rewritable",
+                                "data": {
+                                    "id": "Rewritable_17",
+                                    "inside": "Основные принципы организации Языка Python. Базовые элементы программирования и типы данных....",
+                                    "label": "Rewritable",
+                                    "practice": [],
+                                    "text": "УВ №1, Лекционное занятие 1, \"Основные принципы организации Языка Python. Базовые элементы.",
+                                    "theory": []
+                                },
+                                "position": {
+                                    "x": 880,
+                                    "y": 848
+                                },
+                                "children": [
+                                    {
+                                        "id": "Встроенные типы данных-0_150",
+                                        "type": "Rewritable",
+                                        "data": {
+                                            "label": "Встроенные типы данных",
+                                            "text": "Встроенные типы данных"
+                                        },
+                                        "position": {
+                                            "x": 912,
+                                            "y": 1312
+                                        },
+                                        "children": [
+                                            {
+                                                "id": "Числа-1_151",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Числа",
+                                                    "text": "Числа"
+                                                },
+                                                "position": {
+                                                    "x": 272,
+                                                    "y": 1568
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Строки-2_152",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Строки",
+                                                    "text": "Строки"
+                                                },
+                                                "position": {
+                                                    "x": 528,
+                                                    "y": 1568
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Списки-3_153",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Списки",
+                                                    "text": "Списки"
+                                                },
+                                                "position": {
+                                                    "x": 784,
+                                                    "y": 1568
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Кортежи-4_154",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Кортежи",
+                                                    "text": "Кортежи"
+                                                },
+                                                "position": {
+                                                    "x": 1040,
+                                                    "y": 1568
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Множества-5_155",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Множества",
+                                                    "text": "Множества"
+                                                },
+                                                "position": {
+                                                    "x": 1296,
+                                                    "y": 1568
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Словари-6_156",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Словари",
+                                                    "text": "Словари"
+                                                },
+                                                "position": {
+                                                    "x": 1552,
+                                                    "y": 1568
+                                                },
+                                                "children": []
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "Rewritable_18",
+                                "type": "Rewritable",
+                                "data": {
+                                    "id": "Rewritable_18",
+                                    "inside": "Основные принципы организации Языка Python. Базовые элементы программирования и типы данных.",
+                                    "label": "Rewritable",
+                                    "practice": [],
+                                    "text": "УВ №2, Практическое занятие 1, \"Основные принципы организации Языка Python. Базовые элементы.",
+                                    "theory": [
+                                        "1"
+                                    ]
+                                },
+                                "position": {
+                                    "x": 1072,
+                                    "y": 848
+                                },
+                                "children": [
+                                    {
+                                        "id": "Встроенные типы данных-0_163",
+                                        "type": "Rewritable",
+                                        "data": {
+                                            "label": "Встроенные типы данных",
+                                            "text": "Встроенные типы данных"
+                                        },
+                                        "position": {
+                                            "x": 1136,
+                                            "y": 1264
+                                        },
+                                        "children": [
+                                            {
+                                                "id": "Числа-1_164",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Числа",
+                                                    "text": "Числа"
+                                                },
+                                                "position": {
+                                                    "x": 496,
+                                                    "y": 1520
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Строки-2_165",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Строки",
+                                                    "text": "Строки"
+                                                },
+                                                "position": {
+                                                    "x": 752,
+                                                    "y": 1520
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Списки-3_166",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Списки",
+                                                    "text": "Списки"
+                                                },
+                                                "position": {
+                                                    "x": 1008,
+                                                    "y": 1520
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Кортежи-4_167",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Кортежи",
+                                                    "text": "Кортежи"
+                                                },
+                                                "position": {
+                                                    "x": 1264,
+                                                    "y": 1520
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Множества-5_168",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Множества",
+                                                    "text": "Множества"
+                                                },
+                                                "position": {
+                                                    "x": 1520,
+                                                    "y": 1520
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Словари-6_169",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Словари",
+                                                    "text": "Словари"
+                                                },
+                                                "position": {
+                                                    "x": 1776,
+                                                    "y": 1520
+                                                },
+                                                "children": []
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "Rewritable_19",
+                                "type": "Rewritable",
+                                "data": {
+                                    "id": "Rewritable_19",
+                                    "inside": "Основные принципы организации Языка Python. Базовые элементы программирования и типы данных",
+                                    "label": "Rewritable",
+                                    "text": "УВ №3, Практическое занятие 2, \"Основные принципы организации Языка Python. Базовые элементы "
+                                },
+                                "position": {
+                                    "x": 1264,
+                                    "y": 848
+                                },
+                                "children": []
+                            },
+                            {
+                                "id": "Rewritable_20",
+                                "type": "Rewritable",
+                                "data": {
+                                    "id": "Rewritable_20",
+                                    "inside": "Основные принципы организации Языка Python. Базовые элементы программирования и типы данных",
+                                    "label": "Rewritable",
+                                    "text": "УВ №4, Практическое занятие 3, \"Основные принципы организации Языка Python. Базовые элементы "
+                                },
+                                "position": {
+                                    "x": 1456,
+                                    "y": 848
+                                },
+                                "children": []
+                            },
+                            {
+                                "id": "Rewritable_21",
+                                "type": "Rewritable",
+                                "data": {
+                                    "id": "Rewritable_21",
+                                    "inside": "Управляющие конструкции",
+                                    "label": "Rewritable",
+                                    "text": "УВ №5, Лекционное занятие 2, \"Управляющие конструкции\""
+                                },
+                                "position": {
+                                    "x": 1648,
+                                    "y": 848
+                                },
+                                "children": []
+                            },
+                            {
+                                "id": "Rewritable_22",
+                                "type": "Rewritable",
+                                "data": {
+                                    "id": "Rewritable_22",
+                                    "inside": "Управляющие конструкции",
+                                    "label": "Rewritable",
+                                    "text": "УВ №6, Практическое занятие 4, \"Управляющие конструкции\""
+                                },
+                                "position": {
+                                    "x": 1840,
+                                    "y": 848
+                                },
+                                "children": []
+                            },
+                            {
+                                "id": "Rewritable_23",
+                                "type": "Rewritable",
+                                "data": {
+                                    "id": "Rewritable_23",
+                                    "inside": "Управляющие конструкции",
+                                    "label": "Rewritable",
+                                    "text": "УВ №7, Практическое занятие 5, \"Управляющие конструкции\""
+                                },
+                                "position": {
+                                    "x": 2032,
+                                    "y": 848
+                                },
+                                "children": []
+                            },
+                            {
+                                "id": "Rewritable_24",
+                                "type": "Rewritable",
+                                "data": {
+                                    "id": "Rewritable_24",
+                                    "inside": "Управляющие конструкции",
+                                    "label": "Rewritable",
+                                    "text": "УВ №8, Практическое занятие 6, \"Управляющие конструкции\""
+                                },
+                                "position": {
+                                    "x": 2224,
+                                    "y": 848
+                                },
+                                "children": []
+                            },
+                            {
+                                "id": "Rewritable_25",
+                                "type": "Rewritable",
+                                "data": {
+                                    "id": "Rewritable_25",
+                                    "inside": "Управляющие конструкции",
+                                    "label": "Rewritable",
+                                    "text": "УВ №9, Практическое занятие 7, \"Управляющие конструкции\""
+                                },
+                                "position": {
+                                    "x": 2416,
+                                    "y": 848
+                                },
+                                "children": []
+                            },
+                            {
+                                "id": "Rewritable_26",
+                                "type": "Rewritable",
+                                "data": {
+                                    "id": "Rewritable_26",
+                                    "inside": "Управляющие конструкции",
+                                    "label": "Rewritable",
+                                    "text": "УВ №10, Практическое занятие 8, \"Управляющие конструкции\""
+                                },
+                                "position": {
+                                    "x": 2608,
+                                    "y": 848
+                                },
+                                "children": []
+                            },
+                            {
+                                "id": "Rewritable_27",
+                                "type": "Rewritable",
+                                "data": {
+                                    "id": "Rewritable_27",
+                                    "inside": "\n\nКоллоквиум\n\nУправляющие конструкции\n\n",
+                                    "label": "Rewritable",
+                                    "text": "УВ №11, Практическое занятие 9, \"Управляющие конструкции\""
+                                },
+                                "position": {
+                                    "x": 2800,
+                                    "y": 848
+                                },
+                                "children": [
+                                    {
+                                        "id": "Функции-0_189",
+                                        "type": "Rewritable",
+                                        "data": {
+                                            "label": "Функции",
+                                            "text": "Функции"
+                                        },
+                                        "position": {
+                                            "x": 2832,
+                                            "y": 1168
+                                        },
+                                        "children": [
+                                            {
+                                                "id": "Определение функции-1_190",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Определение функции",
+                                                    "text": "Определение функции"
+                                                },
+                                                "position": {
+                                                    "x": 2576,
+                                                    "y": 1424
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Аргументы функции-2_191",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Аргументы функции",
+                                                    "text": "Аргументы функции"
+                                                },
+                                                "position": {
+                                                    "x": 2832,
+                                                    "y": 1424
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Возвращаемые значения-3_192",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Возвращаемые значения",
+                                                    "text": "Возвращаемые значения"
+                                                },
+                                                "position": {
+                                                    "x": 3088,
+                                                    "y": 1424
+                                                },
+                                                "children": []
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "Rewritable_28",
+                                "type": "Rewritable",
+                                "data": {
+                                    "id": "Rewritable_28",
+                                    "inside": "Организация функций",
+                                    "label": "Rewritable",
+                                    "text": "УВ №12, Лекционное занятие 3, \"Организация функций\""
+                                },
+                                "position": {
+                                    "x": 2992,
+                                    "y": 848
+                                },
+                                "children": [
+                                    {
+                                        "id": "Функции-0_196",
+                                        "type": "Rewritable",
+                                        "data": {
+                                            "label": "Функции",
+                                            "text": "Функции"
+                                        },
+                                        "position": {
+                                            "x": 3024,
+                                            "y": 1200
+                                        },
+                                        "children": [
+                                            {
+                                                "id": "Определение функции-1_197",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Определение функции",
+                                                    "text": "Определение функции"
+                                                },
+                                                "position": {
+                                                    "x": 2768,
+                                                    "y": 1456
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Аргументы функции-2_198",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Аргументы функции",
+                                                    "text": "Аргументы функции"
+                                                },
+                                                "position": {
+                                                    "x": 3024,
+                                                    "y": 1456
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Возвращаемые значения-3_199",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Возвращаемые значения",
+                                                    "text": "Возвращаемые значения"
+                                                },
+                                                "position": {
+                                                    "x": 3280,
+                                                    "y": 1456
+                                                },
+                                                "children": []
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "Rewritable_29",
+                                "type": "Rewritable",
+                                "data": {
+                                    "id": "Rewritable_29",
+                                    "inside": "Организация функций",
+                                    "label": "Rewritable",
+                                    "text": "УВ №13, Практическое занятие 10, \"Организация функций\""
+                                },
+                                "position": {
+                                    "x": 3184,
+                                    "y": 848
+                                },
+                                "children": []
+                            },
+                            {
+                                "id": "Rewritable_30",
+                                "type": "Rewritable",
+                                "data": {
+                                    "id": "Rewritable_30",
+                                    "inside": "Организация функций",
+                                    "label": "Rewritable",
+                                    "text": "УВ №14, Практическое занятие 11, \"Организация функций\""
+                                },
+                                "position": {
+                                    "x": 3376,
+                                    "y": 848
+                                },
+                                "children": []
+                            },
+                            {
+                                "id": "Rewritable_31",
+                                "type": "Rewritable",
+                                "data": {
+                                    "id": "Rewritable_31",
+                                    "inside": "Организация функций",
+                                    "label": "Rewritable",
+                                    "text": "УВ №15, Практическое занятие 12, \"Организация функций\""
+                                },
+                                "position": {
+                                    "x": 3568,
+                                    "y": 848
+                                },
+                                "children": [
+                                    {
+                                        "id": "Классы-0_182",
+                                        "type": "Rewritable",
+                                        "data": {
+                                            "label": "Классы",
+                                            "text": "Классы"
+                                        },
+                                        "position": {
+                                            "x": 3552,
+                                            "y": 1184
+                                        },
+                                        "children": [
+                                            {
+                                                "id": "Определение класса-1_183",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Определение класса",
+                                                    "text": "Определение класса"
+                                                },
+                                                "position": {
+                                                    "x": 3296,
+                                                    "y": 1440
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Методы-2_184",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Методы",
+                                                    "text": "Методы"
+                                                },
+                                                "position": {
+                                                    "x": 3552,
+                                                    "y": 1440
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Наследование-3_185",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Наследование",
+                                                    "text": "Наследование"
+                                                },
+                                                "position": {
+                                                    "x": 3808,
+                                                    "y": 1440
+                                                },
+                                                "children": []
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "Rewritable_32",
+                                "type": "Rewritable",
+                                "data": {
+                                    "id": "Rewritable_32",
+                                    "inside": "\n\nКоллоквиум\n\nОрганизация функций\n\n",
+                                    "label": "Rewritable",
+                                    "text": "УВ №16, Практическое занятие 13, \"Организация функций\""
+                                },
+                                "position": {
+                                    "x": 3760,
+                                    "y": 848
+                                },
+                                "children": [
+                                    {
+                                        "id": "Lambda-функции-0_181",
+                                        "type": "Rewritable",
+                                        "data": {
+                                            "label": "Lambda-функции",
+                                            "text": "Lambda-функции"
+                                        },
+                                        "position": {
+                                            "x": 3760,
+                                            "y": 1216
+                                        },
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "Rewritable_33",
+                                "type": "Rewritable",
+                                "data": {
+                                    "id": "Rewritable_33",
+                                    "inside": "Работа со строками и текстом",
+                                    "label": "Rewritable",
+                                    "text": "УВ №17, Лекционное занятие 4, \"Работа со строками и текстом\""
+                                },
+                                "position": {
+                                    "x": 3952,
+                                    "y": 848
+                                },
+                                "children": []
+                            },
+                            {
+                                "id": "Rewritable_34",
+                                "type": "Rewritable",
+                                "data": {
+                                    "id": "Rewritable_34",
+                                    "inside": "Работа со строками и текстом",
+                                    "label": "Rewritable",
+                                    "text": "УВ №18, Практическое занятие 14, \"Работа со строками и текстом\""
+                                },
+                                "position": {
+                                    "x": 4144,
+                                    "y": 848
+                                },
+                                "children": []
+                            },
+                            {
+                                "id": "Rewritable_35",
+                                "type": "Rewritable",
+                                "data": {
+                                    "id": "Rewritable_35",
+                                    "inside": "Работа со строками и текстом",
+                                    "label": "Rewritable",
+                                    "text": "УВ №19, Практическое занятие 15, \"Работа со строками и текстом\""
+                                },
+                                "position": {
+                                    "x": 4336,
+                                    "y": 848
+                                },
+                                "children": []
+                            },
+                            {
+                                "id": "Rewritable_36",
+                                "type": "Rewritable",
+                                "data": {
+                                    "id": "Rewritable_36",
+                                    "inside": "Работа со строками и текстом",
+                                    "label": "Rewritable",
+                                    "text": "УВ №20, Практическое занятие 16, \"Работа со строками и текстом\""
+                                },
+                                "position": {
+                                    "x": 4528,
+                                    "y": 848
+                                },
+                                "children": []
+                            },
+                            {
+                                "id": "Rewritable_37",
+                                "type": "Rewritable",
+                                "data": {
+                                    "id": "Rewritable_37",
+                                    "inside": "Коллекции. Работа с файлами",
+                                    "label": "Rewritable",
+                                    "text": "УВ №21, Лекционное занятие 5, \"Коллекции. Работа с файлами\""
+                                },
+                                "position": {
+                                    "x": 4720,
+                                    "y": 848
+                                },
+                                "children": [
+                                    {
+                                        "id": "Работа с файлами-0_1",
+                                        "type": "Rewritable",
+                                        "data": {
+                                            "label": "Работа с файлами",
+                                            "text": "Работа с файлами"
+                                        },
+                                        "position": {
+                                            "x": 4784,
+                                            "y": 1232
+                                        },
+                                        "children": [
+                                            {
+                                                "id": "Чтение файла-1_2",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Чтение файла",
+                                                    "text": "Чтение файла"
+                                                },
+                                                "position": {
+                                                    "x": 4656,
+                                                    "y": 1488
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Запись в файл-2_3",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Запись в файл",
+                                                    "text": "Запись в файл"
+                                                },
+                                                "position": {
+                                                    "x": 4912,
+                                                    "y": 1488
+                                                },
+                                                "children": []
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "Rewritable_38",
+                                "type": "Rewritable",
+                                "data": {
+                                    "id": "Rewritable_38",
+                                    "inside": "Коллекции. Работа с файлами",
+                                    "label": "Rewritable",
+                                    "text": "УВ №22, Практическое занятие 17, \"Коллекции. Работа с файлами\""
+                                },
+                                "position": {
+                                    "x": 4912,
+                                    "y": 848
+                                },
+                                "children": [
+                                    {
+                                        "id": "Работа с файлами-0_6",
+                                        "type": "Rewritable",
+                                        "data": {
+                                            "label": "Работа с файлами",
+                                            "text": "Работа с файлами"
+                                        },
+                                        "position": {
+                                            "x": 5008,
+                                            "y": 1280
+                                        },
+                                        "children": [
+                                            {
+                                                "id": "Чтение файла-1_7",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Чтение файла",
+                                                    "text": "Чтение файла"
+                                                },
+                                                "position": {
+                                                    "x": 4880,
+                                                    "y": 1536
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Запись в файл-2_8",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Запись в файл",
+                                                    "text": "Запись в файл"
+                                                },
+                                                "position": {
+                                                    "x": 5136,
+                                                    "y": 1536
+                                                },
+                                                "children": []
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "Rewritable_39",
+                                "type": "Rewritable",
+                                "data": {
+                                    "id": "Rewritable_39",
+                                    "inside": "Коллекции. Работа с файлами",
+                                    "label": "Rewritable",
+                                    "text": "УВ №23, Практическое занятие 18, \"Коллекции. Работа с файлами\""
+                                },
+                                "position": {
+                                    "x": 5104,
+                                    "y": 848
+                                },
+                                "children": [
+                                    {
+                                        "id": "Работа с файлами-0_11",
+                                        "type": "Rewritable",
+                                        "data": {
+                                            "label": "Работа с файлами",
+                                            "text": "Работа с файлами"
+                                        },
+                                        "position": {
+                                            "x": 5152,
+                                            "y": 1232
+                                        },
+                                        "children": [
+                                            {
+                                                "id": "Чтение файла-1_12",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Чтение файла",
+                                                    "text": "Чтение файла"
+                                                },
+                                                "position": {
+                                                    "x": 5024,
+                                                    "y": 1488
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Запись в файл-2_13",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Запись в файл",
+                                                    "text": "Запись в файл"
+                                                },
+                                                "position": {
+                                                    "x": 5280,
+                                                    "y": 1488
+                                                },
+                                                "children": []
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "Rewritable_40",
+                                "type": "Rewritable",
+                                "data": {
+                                    "id": "Rewritable_40",
+                                    "inside": "\n\nКоллоквиум\n\nКоллекции. Работа с файлами\n\n",
+                                    "label": "Rewritable",
+                                    "text": "УВ №24, Практическое занятие 19, \"Коллекции. Работа с файлами\""
+                                },
+                                "position": {
+                                    "x": 5296,
+                                    "y": 848
+                                },
+                                "children": [
+                                    {
+                                        "id": "Работа с файлами-0_16",
+                                        "type": "Rewritable",
+                                        "data": {
+                                            "label": "Работа с файлами",
+                                            "text": "Работа с файлами"
+                                        },
+                                        "position": {
+                                            "x": 5360,
+                                            "y": 1248
+                                        },
+                                        "children": [
+                                            {
+                                                "id": "Чтение файла-1_17",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Чтение файла",
+                                                    "text": "Чтение файла"
+                                                },
+                                                "position": {
+                                                    "x": 5232,
+                                                    "y": 1504
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Запись в файл-2_18",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Запись в файл",
+                                                    "text": "Запись в файл"
+                                                },
+                                                "position": {
+                                                    "x": 5488,
+                                                    "y": 1504
+                                                },
+                                                "children": []
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "Rewritable_41",
+                                "type": "Rewritable",
+                                "data": {
+                                    "id": "Rewritable_41",
+                                    "inside": "Элементы функционального программирования",
+                                    "label": "Rewritable",
+                                    "text": "УВ №25, Лекционное занятие 6, \"Элементы функционального программирования\""
+                                },
+                                "position": {
+                                    "x": 5488,
+                                    "y": 848
+                                },
+                                "children": [
+                                    {
+                                        "id": "Функции-0_21",
+                                        "type": "Rewritable",
+                                        "data": {
+                                            "label": "Функции",
+                                            "text": "Функции"
+                                        },
+                                        "position": {
+                                            "x": 5488,
+                                            "y": 1264
+                                        },
+                                        "children": [
+                                            {
+                                                "id": "Определение функции-1_22",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Определение функции",
+                                                    "text": "Определение функции"
+                                                },
+                                                "position": {
+                                                    "x": 5232,
+                                                    "y": 1520
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Аргументы функции-2_23",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Аргументы функции",
+                                                    "text": "Аргументы функции"
+                                                },
+                                                "position": {
+                                                    "x": 5488,
+                                                    "y": 1520
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Возвращаемые значения-3_24",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Возвращаемые значения",
+                                                    "text": "Возвращаемые значения"
+                                                },
+                                                "position": {
+                                                    "x": 5744,
+                                                    "y": 1520
+                                                },
+                                                "children": []
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "Rewritable_42",
+                                "type": "Rewritable",
+                                "data": {
+                                    "id": "Rewritable_42",
+                                    "inside": "Элементы функционального программирования",
+                                    "label": "Rewritable",
+                                    "text": "УВ №26, Практическое занятие 20, \"Элементы функционального программирования\""
+                                },
+                                "position": {
+                                    "x": 5680,
+                                    "y": 848
+                                },
+                                "children": [
+                                    {
+                                        "id": "Функции-0_28",
+                                        "type": "Rewritable",
+                                        "data": {
+                                            "label": "Функции",
+                                            "text": "Функции"
+                                        },
+                                        "position": {
+                                            "x": 5728,
+                                            "y": 1216
+                                        },
+                                        "children": [
+                                            {
+                                                "id": "Определение функции-1_29",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Определение функции",
+                                                    "text": "Определение функции"
+                                                },
+                                                "position": {
+                                                    "x": 5472,
+                                                    "y": 1472
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Аргументы функции-2_30",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Аргументы функции",
+                                                    "text": "Аргументы функции"
+                                                },
+                                                "position": {
+                                                    "x": 5728,
+                                                    "y": 1472
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Возвращаемые значения-3_31",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Возвращаемые значения",
+                                                    "text": "Возвращаемые значения"
+                                                },
+                                                "position": {
+                                                    "x": 5984,
+                                                    "y": 1472
+                                                },
+                                                "children": []
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "Rewritable_43",
+                                "type": "Rewritable",
+                                "data": {
+                                    "id": "Rewritable_43",
+                                    "inside": "Элементы функционального программирования",
+                                    "label": "Rewritable",
+                                    "text": "УВ №27, Практическое занятие 21, \"Элементы функционального программирования\""
+                                },
+                                "position": {
+                                    "x": 5872,
+                                    "y": 848
+                                },
+                                "children": [
+                                    {
+                                        "id": "Функции-0_35",
+                                        "type": "Rewritable",
+                                        "data": {
+                                            "label": "Функции",
+                                            "text": "Функции"
+                                        },
+                                        "position": {
+                                            "x": 5968,
+                                            "y": 1248
+                                        },
+                                        "children": [
+                                            {
+                                                "id": "Определение функции-1_36",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Определение функции",
+                                                    "text": "Определение функции"
+                                                },
+                                                "position": {
+                                                    "x": 5712,
+                                                    "y": 1504
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Аргументы функции-2_37",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Аргументы функции",
+                                                    "text": "Аргументы функции"
+                                                },
+                                                "position": {
+                                                    "x": 5968,
+                                                    "y": 1504
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Возвращаемые значения-3_38",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Возвращаемые значения",
+                                                    "text": "Возвращаемые значения"
+                                                },
+                                                "position": {
+                                                    "x": 6224,
+                                                    "y": 1504
+                                                },
+                                                "children": []
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "Rewritable_44",
+                                "type": "Rewritable",
+                                "data": {
+                                    "id": "Rewritable_44",
+                                    "inside": "Консультация",
+                                    "label": "Rewritable",
+                                    "text": "УВ №28, Консультация 1, \"Консультация\""
+                                },
+                                "position": {
+                                    "x": 6064,
+                                    "y": 848
+                                },
+                                "children": []
+                            },
+                            {
+                                "id": "Rewritable_45",
+                                "type": "Rewritable",
+                                "data": {
+                                    "id": "Rewritable_45",
+                                    "inside": "Консультация",
+                                    "label": "Rewritable",
+                                    "text": "УВ №29, Консультация 2, \"Консультация\""
+                                },
+                                "position": {
+                                    "x": 6256,
+                                    "y": 848
+                                },
+                                "children": []
+                            },
+                            {
+                                "id": "Rewritable_46",
+                                "type": "Rewritable",
+                                "data": {
+                                    "id": "Rewritable_46",
+                                    "inside": "Консультация",
+                                    "label": "Rewritable",
+                                    "text": "УВ №30, Консультация 3, \"Консультация\""
+                                },
+                                "position": {
+                                    "x": 6448,
+                                    "y": 848
+                                },
+                                "children": []
+                            },
+                            {
+                                "id": "Rewritable_47",
+                                "type": "Rewritable",
+                                "data": {
+                                    "id": "Rewritable_47",
+                                    "inside": "\n\nДифференцированный зачет\n\nЗачет с оценкой\n\n",
+                                    "label": "Rewritable",
+                                    "text": "УВ №31, Аттестация 1, \"Аттестация\""
+                                },
+                                "position": {
+                                    "x": 6640,
+                                    "y": 848
+                                },
+                                "children": [
+                                    {
+                                        "id": "Python-0_42",
+                                        "type": "Rewritable",
+                                        "data": {
+                                            "label": "Python",
+                                            "text": "Python"
+                                        },
+                                        "position": {
+                                            "x": 6640,
+                                            "y": 1184
+                                        },
+                                        "children": [
+                                            {
+                                                "id": "Синтаксис-1_43",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Синтаксис",
+                                                    "text": "Синтаксис"
+                                                },
+                                                "position": {
+                                                    "x": 3600,
+                                                    "y": 1440
+                                                },
+                                                "children": [
+                                                    {
+                                                        "id": "Условные операторы-13_55",
+                                                        "type": "Rewritable",
+                                                        "data": {
+                                                            "label": "Условные операторы",
+                                                            "text": "Условные операторы"
+                                                        },
+                                                        "position": {
+                                                            "x": 3280,
+                                                            "y": 1696
+                                                        },
+                                                        "children": [
+                                                            {
+                                                                "id": "if-35_77",
+                                                                "type": "Rewritable",
+                                                                "data": {
+                                                                    "label": "if",
+                                                                    "text": "if"
+                                                                },
+                                                                "position": {
+                                                                    "x": 3024,
+                                                                    "y": 1952
+                                                                },
+                                                                "children": []
+                                                            },
+                                                            {
+                                                                "id": "else-36_78",
+                                                                "type": "Rewritable",
+                                                                "data": {
+                                                                    "label": "else",
+                                                                    "text": "else"
+                                                                },
+                                                                "position": {
+                                                                    "x": 3280,
+                                                                    "y": 1952
+                                                                },
+                                                                "children": []
+                                                            },
+                                                            {
+                                                                "id": "elif-37_79",
+                                                                "type": "Rewritable",
+                                                                "data": {
+                                                                    "label": "elif",
+                                                                    "text": "elif"
+                                                                },
+                                                                "position": {
+                                                                    "x": 3536,
+                                                                    "y": 1952
+                                                                },
+                                                                "children": []
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "id": "Циклы-14_56",
+                                                        "type": "Rewritable",
+                                                        "data": {
+                                                            "label": "Циклы",
+                                                            "text": "Циклы"
+                                                        },
+                                                        "position": {
+                                                            "x": 3920,
+                                                            "y": 1696
+                                                        },
+                                                        "children": [
+                                                            {
+                                                                "id": "for-38_80",
+                                                                "type": "Rewritable",
+                                                                "data": {
+                                                                    "label": "for",
+                                                                    "text": "for"
+                                                                },
+                                                                "position": {
+                                                                    "x": 3792,
+                                                                    "y": 1952
+                                                                },
+                                                                "children": []
+                                                            },
+                                                            {
+                                                                "id": "while-39_81",
+                                                                "type": "Rewritable",
+                                                                "data": {
+                                                                    "label": "while",
+                                                                    "text": "while"
+                                                                },
+                                                                "position": {
+                                                                    "x": 4048,
+                                                                    "y": 1952
+                                                                },
+                                                                "children": []
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "Классы-2_44",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Классы",
+                                                    "text": "Классы"
+                                                },
+                                                "position": {
+                                                    "x": 4432,
+                                                    "y": 1440
+                                                },
+                                                "children": [
+                                                    {
+                                                        "id": "Определение класса-15_57",
+                                                        "type": "Rewritable",
+                                                        "data": {
+                                                            "label": "Определение класса",
+                                                            "text": "Определение класса"
+                                                        },
+                                                        "position": {
+                                                            "x": 4176,
+                                                            "y": 1696
+                                                        },
+                                                        "children": []
+                                                    },
+                                                    {
+                                                        "id": "Методы-16_58",
+                                                        "type": "Rewritable",
+                                                        "data": {
+                                                            "label": "Методы",
+                                                            "text": "Методы"
+                                                        },
+                                                        "position": {
+                                                            "x": 4432,
+                                                            "y": 1696
+                                                        },
+                                                        "children": []
+                                                    },
+                                                    {
+                                                        "id": "Наследование-17_59",
+                                                        "type": "Rewritable",
+                                                        "data": {
+                                                            "label": "Наследование",
+                                                            "text": "Наследование"
+                                                        },
+                                                        "position": {
+                                                            "x": 4688,
+                                                            "y": 1696
+                                                        },
+                                                        "children": []
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "Функции-3_45",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Функции",
+                                                    "text": "Функции"
+                                                },
+                                                "position": {
+                                                    "x": 5200,
+                                                    "y": 1440
+                                                },
+                                                "children": [
+                                                    {
+                                                        "id": "Определение функции-18_60",
+                                                        "type": "Rewritable",
+                                                        "data": {
+                                                            "label": "Определение функции",
+                                                            "text": "Определение функции"
+                                                        },
+                                                        "position": {
+                                                            "x": 4944,
+                                                            "y": 1696
+                                                        },
+                                                        "children": []
+                                                    },
+                                                    {
+                                                        "id": "Аргументы функции-19_61",
+                                                        "type": "Rewritable",
+                                                        "data": {
+                                                            "label": "Аргументы функции",
+                                                            "text": "Аргументы функции"
+                                                        },
+                                                        "position": {
+                                                            "x": 5200,
+                                                            "y": 1696
+                                                        },
+                                                        "children": []
+                                                    },
+                                                    {
+                                                        "id": "Возвращаемые значения-20_62",
+                                                        "type": "Rewritable",
+                                                        "data": {
+                                                            "label": "Возвращаемые значения",
+                                                            "text": "Возвращаемые значения"
+                                                        },
+                                                        "position": {
+                                                            "x": 5456,
+                                                            "y": 1696
+                                                        },
+                                                        "children": []
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "Встроенные типы данных-4_46",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Встроенные типы данных",
+                                                    "text": "Встроенные типы данных"
+                                                },
+                                                "position": {
+                                                    "x": 6352,
+                                                    "y": 1440
+                                                },
+                                                "children": [
+                                                    {
+                                                        "id": "Числа-21_63",
+                                                        "type": "Rewritable",
+                                                        "data": {
+                                                            "label": "Числа",
+                                                            "text": "Числа"
+                                                        },
+                                                        "position": {
+                                                            "x": 5712,
+                                                            "y": 1696
+                                                        },
+                                                        "children": []
+                                                    },
+                                                    {
+                                                        "id": "Строки-22_64",
+                                                        "type": "Rewritable",
+                                                        "data": {
+                                                            "label": "Строки",
+                                                            "text": "Строки"
+                                                        },
+                                                        "position": {
+                                                            "x": 5968,
+                                                            "y": 1696
+                                                        },
+                                                        "children": []
+                                                    },
+                                                    {
+                                                        "id": "Списки-23_65",
+                                                        "type": "Rewritable",
+                                                        "data": {
+                                                            "label": "Списки",
+                                                            "text": "Списки"
+                                                        },
+                                                        "position": {
+                                                            "x": 6224,
+                                                            "y": 1696
+                                                        },
+                                                        "children": []
+                                                    },
+                                                    {
+                                                        "id": "Кортежи-24_66",
+                                                        "type": "Rewritable",
+                                                        "data": {
+                                                            "label": "Кортежи",
+                                                            "text": "Кортежи"
+                                                        },
+                                                        "position": {
+                                                            "x": 6480,
+                                                            "y": 1696
+                                                        },
+                                                        "children": []
+                                                    },
+                                                    {
+                                                        "id": "Множества-25_67",
+                                                        "type": "Rewritable",
+                                                        "data": {
+                                                            "label": "Множества",
+                                                            "text": "Множества"
+                                                        },
+                                                        "position": {
+                                                            "x": 6736,
+                                                            "y": 1696
+                                                        },
+                                                        "children": []
+                                                    },
+                                                    {
+                                                        "id": "Словари-26_68",
+                                                        "type": "Rewritable",
+                                                        "data": {
+                                                            "label": "Словари",
+                                                            "text": "Словари"
+                                                        },
+                                                        "position": {
+                                                            "x": 6992,
+                                                            "y": 1696
+                                                        },
+                                                        "children": []
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "Работа с файлами-5_47",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Работа с файлами",
+                                                    "text": "Работа с файлами"
+                                                },
+                                                "position": {
+                                                    "x": 7376,
+                                                    "y": 1440
+                                                },
+                                                "children": [
+                                                    {
+                                                        "id": "Чтение файла-27_69",
+                                                        "type": "Rewritable",
+                                                        "data": {
+                                                            "label": "Чтение файла",
+                                                            "text": "Чтение файла"
+                                                        },
+                                                        "position": {
+                                                            "x": 7248,
+                                                            "y": 1696
+                                                        },
+                                                        "children": []
+                                                    },
+                                                    {
+                                                        "id": "Запись в файл-28_70",
+                                                        "type": "Rewritable",
+                                                        "data": {
+                                                            "label": "Запись в файл",
+                                                            "text": "Запись в файл"
+                                                        },
+                                                        "position": {
+                                                            "x": 7504,
+                                                            "y": 1696
+                                                        },
+                                                        "children": []
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "Обработка исключений-6_48",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Обработка исключений",
+                                                    "text": "Обработка исключений"
+                                                },
+                                                "position": {
+                                                    "x": 7888,
+                                                    "y": 1440
+                                                },
+                                                "children": [
+                                                    {
+                                                        "id": "try-except-29_71",
+                                                        "type": "Rewritable",
+                                                        "data": {
+                                                            "label": "try-except",
+                                                            "text": "try-except"
+                                                        },
+                                                        "position": {
+                                                            "x": 7760,
+                                                            "y": 1696
+                                                        },
+                                                        "children": []
+                                                    },
+                                                    {
+                                                        "id": "finally-30_72",
+                                                        "type": "Rewritable",
+                                                        "data": {
+                                                            "label": "finally",
+                                                            "text": "finally"
+                                                        },
+                                                        "position": {
+                                                            "x": 8016,
+                                                            "y": 1696
+                                                        },
+                                                        "children": []
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "Модули и пакеты-7_49",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Модули и пакеты",
+                                                    "text": "Модули и пакеты"
+                                                },
+                                                "position": {
+                                                    "x": 8400,
+                                                    "y": 1440
+                                                },
+                                                "children": [
+                                                    {
+                                                        "id": "Импорт модулей-31_73",
+                                                        "type": "Rewritable",
+                                                        "data": {
+                                                            "label": "Импорт модулей",
+                                                            "text": "Импорт модулей"
+                                                        },
+                                                        "position": {
+                                                            "x": 8272,
+                                                            "y": 1696
+                                                        },
+                                                        "children": []
+                                                    },
+                                                    {
+                                                        "id": "Создание модулей-32_74",
+                                                        "type": "Rewritable",
+                                                        "data": {
+                                                            "label": "Создание модулей",
+                                                            "text": "Создание модулей"
+                                                        },
+                                                        "position": {
+                                                            "x": 8528,
+                                                            "y": 1696
+                                                        },
+                                                        "children": []
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "Регулярные выражения-8_50",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Регулярные выражения",
+                                                    "text": "Регулярные выражения"
+                                                },
+                                                "position": {
+                                                    "x": 8656,
+                                                    "y": 1440
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Lambda-функции-9_51",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Lambda-функции",
+                                                    "text": "Lambda-функции"
+                                                },
+                                                "position": {
+                                                    "x": 8912,
+                                                    "y": 1440
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "List Comprehensions-10_52",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "List Comprehensions",
+                                                    "text": "List Comprehensions"
+                                                },
+                                                "position": {
+                                                    "x": 9168,
+                                                    "y": 1440
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Работа с библиотеками-11_53",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Работа с библиотеками",
+                                                    "text": "Работа с библиотеками"
+                                                },
+                                                "position": {
+                                                    "x": 9424,
+                                                    "y": 1440
+                                                },
+                                                "children": [
+                                                    {
+                                                        "id": "Пример: NumPy-33_75",
+                                                        "type": "Rewritable",
+                                                        "data": {
+                                                            "label": "Пример: NumPy",
+                                                            "text": "Пример: NumPy"
+                                                        },
+                                                        "position": {
+                                                            "x": 9296,
+                                                            "y": 1696
+                                                        },
+                                                        "children": []
+                                                    },
+                                                    {
+                                                        "id": "Пример: Pandas-34_76",
+                                                        "type": "Rewritable",
+                                                        "data": {
+                                                            "label": "Пример: Pandas",
+                                                            "text": "Пример: Pandas"
+                                                        },
+                                                        "position": {
+                                                            "x": 9552,
+                                                            "y": 1696
+                                                        },
+                                                        "children": []
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "Заключение-12_54",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "label": "Заключение",
+                                                    "text": "Заключение"
+                                                },
+                                                "position": {
+                                                    "x": 9680,
+                                                    "y": 1440
+                                                },
+                                                "children": []
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    },
+    "АТПиРВ": {
+        "disciplineId": "%D0%90%D0%A2%D0%9F%D0%B8%D0%A0%D0%92",
+        "dataTree": {
+            "trees": [
+                {
+                    "root": {
+                        "id": "Синтаксис-0_33",
+                        "type": "Rewritable",
+                        "data": {
+                            "hide": false,
+                            "label": "Синтаксис",
+                            "text": "Синтаксис"
+                        },
+                        "position": {
+                            "x": 2816,
+                            "y": 1024
+                        },
+                        "children": [
+                            {
+                                "id": "Условные операторы-1_34",
+                                "type": "Rewritable",
+                                "data": {
+                                    "hide": false,
+                                    "label": "Условные операторы",
+                                    "text": "Условные операторы"
+                                },
+                                "position": {
+                                    "x": 2496,
+                                    "y": 1280
+                                },
+                                "children": [
+                                    {
+                                        "id": "if-3_36",
+                                        "type": "Rewritable",
+                                        "data": {
+                                            "hide": false,
+                                            "label": "if",
+                                            "text": "if"
+                                        },
+                                        "position": {
+                                            "x": 2240,
+                                            "y": 1536
+                                        },
+                                        "children": []
+                                    },
+                                    {
+                                        "id": "else-4_37",
+                                        "type": "Rewritable",
+                                        "data": {
+                                            "hide": false,
+                                            "label": "else",
+                                            "text": "else"
+                                        },
+                                        "position": {
+                                            "x": 2496,
+                                            "y": 1536
+                                        },
+                                        "children": []
+                                    },
+                                    {
+                                        "id": "elif-5_38",
+                                        "type": "Rewritable",
+                                        "data": {
+                                            "hide": false,
+                                            "label": "elif",
+                                            "text": "elif"
+                                        },
+                                        "position": {
+                                            "x": 2752,
+                                            "y": 1536
+                                        },
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "Циклы-2_35",
+                                "type": "Rewritable",
+                                "data": {
+                                    "hide": false,
+                                    "label": "Циклы",
+                                    "text": "Циклы"
+                                },
+                                "position": {
+                                    "x": 3136,
+                                    "y": 1280
+                                },
+                                "children": [
+                                    {
+                                        "id": "for-6_39",
+                                        "type": "Rewritable",
+                                        "data": {
+                                            "hide": false,
+                                            "label": "for",
+                                            "text": "for"
+                                        },
+                                        "position": {
+                                            "x": 3008,
+                                            "y": 1536
+                                        },
+                                        "children": []
+                                    },
+                                    {
+                                        "id": "while-7_40",
+                                        "type": "Rewritable",
+                                        "data": {
+                                            "hide": false,
+                                            "label": "while",
+                                            "text": "while"
+                                        },
+                                        "position": {
+                                            "x": 3264,
+                                            "y": 1536
+                                        },
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "root": {
+                        "id": "Rewritable_48",
+                        "type": "Rewritable",
+                        "data": {
+                            "hide": false,
+                            "label": "Rewritable",
+                            "text": "Description for Rewritable"
+                        },
+                        "position": {
+                            "x": 1104,
+                            "y": -16
+                        },
+                        "children": [
+                            {
+                                "id": "Python-0_0",
+                                "type": "Rewritable",
+                                "data": {
+                                    "hide": false,
+                                    "label": "Python",
+                                    "text": "Python"
+                                },
+                                "position": {
+                                    "x": 800,
+                                    "y": 336
+                                },
+                                "children": [
+                                    {
+                                        "id": "Синтаксис-1_1",
+                                        "type": "Rewritable",
+                                        "data": {
+                                            "hide": false,
+                                            "label": "Синтаксис",
+                                            "text": "Синтаксис"
+                                        },
+                                        "position": {
+                                            "x": 0,
+                                            "y": 592
+                                        },
+                                        "children": [
+                                            {
+                                                "id": "Условные операторы-4_4",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "hide": false,
+                                                    "label": "Условные операторы",
+                                                    "text": "Условные операторы"
+                                                },
+                                                "position": {
+                                                    "x": -320,
+                                                    "y": 848
+                                                },
+                                                "children": [
+                                                    {
+                                                        "id": "if-12_12",
+                                                        "type": "Rewritable",
+                                                        "data": {
+                                                            "hide": false,
+                                                            "label": "if",
+                                                            "text": "if"
+                                                        },
+                                                        "position": {
+                                                            "x": -576,
+                                                            "y": 1104
+                                                        },
+                                                        "children": []
+                                                    },
+                                                    {
+                                                        "id": "else-13_13",
+                                                        "type": "Rewritable",
+                                                        "data": {
+                                                            "hide": false,
+                                                            "label": "else",
+                                                            "text": "else"
+                                                        },
+                                                        "position": {
+                                                            "x": -320,
+                                                            "y": 1104
+                                                        },
+                                                        "children": []
+                                                    },
+                                                    {
+                                                        "id": "elif-14_14",
+                                                        "type": "Rewritable",
+                                                        "data": {
+                                                            "hide": false,
+                                                            "label": "elif",
+                                                            "text": "elif"
+                                                        },
+                                                        "position": {
+                                                            "x": -64,
+                                                            "y": 1104
+                                                        },
+                                                        "children": []
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "Циклы-5_5",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "hide": false,
+                                                    "label": "Циклы",
+                                                    "text": "Циклы"
+                                                },
+                                                "position": {
+                                                    "x": 320,
+                                                    "y": 848
+                                                },
+                                                "children": [
+                                                    {
+                                                        "id": "for-15_15",
+                                                        "type": "Rewritable",
+                                                        "data": {
+                                                            "hide": false,
+                                                            "label": "for",
+                                                            "text": "for"
+                                                        },
+                                                        "position": {
+                                                            "x": 192,
+                                                            "y": 1104
+                                                        },
+                                                        "children": []
+                                                    },
+                                                    {
+                                                        "id": "while-16_16",
+                                                        "type": "Rewritable",
+                                                        "data": {
+                                                            "hide": false,
+                                                            "label": "while",
+                                                            "text": "while"
+                                                        },
+                                                        "position": {
+                                                            "x": 448,
+                                                            "y": 1104
+                                                        },
+                                                        "children": []
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "Классы-2_2",
+                                        "type": "Rewritable",
+                                        "data": {
+                                            "hide": false,
+                                            "label": "Классы",
+                                            "text": "Классы"
+                                        },
+                                        "position": {
+                                            "x": 832,
+                                            "y": 592
+                                        },
+                                        "children": [
+                                            {
+                                                "id": "Определение класса-6_6",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "hide": false,
+                                                    "label": "Определение класса",
+                                                    "text": "Определение класса"
+                                                },
+                                                "position": {
+                                                    "x": 576,
+                                                    "y": 848
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Методы-7_7",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "hide": false,
+                                                    "label": "Методы",
+                                                    "text": "Методы"
+                                                },
+                                                "position": {
+                                                    "x": 832,
+                                                    "y": 848
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Наследование-8_8",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "hide": false,
+                                                    "label": "Наследование",
+                                                    "text": "Наследование"
+                                                },
+                                                "position": {
+                                                    "x": 1088,
+                                                    "y": 848
+                                                },
+                                                "children": []
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "Функции-3_3",
+                                        "type": "Rewritable",
+                                        "data": {
+                                            "hide": false,
+                                            "label": "Функции",
+                                            "text": "Функции"
+                                        },
+                                        "position": {
+                                            "x": 1600,
+                                            "y": 592
+                                        },
+                                        "children": [
+                                            {
+                                                "id": "Определение функции-9_9",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "hide": false,
+                                                    "label": "Определение функции",
+                                                    "text": "Определение функции"
+                                                },
+                                                "position": {
+                                                    "x": 1344,
+                                                    "y": 848
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Аргументы функции-10_10",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "hide": false,
+                                                    "label": "Аргументы функции",
+                                                    "text": "Аргументы функции"
+                                                },
+                                                "position": {
+                                                    "x": 1600,
+                                                    "y": 848
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "id": "Возвращаемые значения-11_11",
+                                                "type": "Rewritable",
+                                                "data": {
+                                                    "hide": false,
+                                                    "label": "Возвращаемые значения",
+                                                    "text": "Возвращаемые значения"
+                                                },
+                                                "position": {
+                                                    "x": 1856,
+                                                    "y": 848
+                                                },
+                                                "children": []
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}

@@ -201,7 +201,7 @@ def get_marks():
     if not username:
         return {'message': 'Username is required'}, 400
     
-    # Get user_id and user_type from database by username
+    # Получите идентификатор пользователя и тип пользователя из базы данных по имени пользователя
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("SELECT id, role FROM users WHERE username = ?", (username,))
@@ -213,14 +213,22 @@ def get_marks():
     user_id, user_type = result
     
     if user_type == 'teacher':
-        # If the user is a teacher, return a list of subjects with empty marks
-        cursor.execute("SELECT name FROM subjects")
-        subjects = cursor.fetchall()
+        # Если пользователь - учитель, верните оценки каждого студента
+        cursor.execute("""
+            SELECT users.username, grades.grade, grades.pair, subjects.name 
+            FROM grades 
+            JOIN subjects ON grades.subject_id = subjects.id 
+            JOIN users ON grades.user_id = users.id
+            WHERE users.role = 'student'
+        """)
+        marks = cursor.fetchall()
         conn.close()
-        data = [{'subject_name': subject[0], 'marks': []} for subject in subjects]
-        return jsonify({'message': 'Subjects retrieved successfully', 'data': data}), 200
+        
+        data = [{'username': mark[0], 'grade': mark[1], 'pair': mark[2], 'subject_name': mark[3]} for mark in marks]
+
+        return jsonify({'message': 'Student marks retrieved successfully', 'data': data}), 200
     else:
-        # If the user is a student, get marks from the database
+        # Если пользователь - студент, получите его оценки из базы данных
         cursor.execute("""
             SELECT grades.grade, grades.pair, subjects.name 
             FROM grades 
@@ -232,6 +240,7 @@ def get_marks():
         
         data = [{'grade': mark[0], 'pair': mark[1], 'subject_name': mark[2]} for mark in marks]
         return jsonify({'message': 'Marks retrieved successfully', 'data': data}), 200
+
 
 
 @app.route('/api/getGroupMarks', methods=['GET'])

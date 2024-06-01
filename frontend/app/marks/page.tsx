@@ -49,17 +49,24 @@ export default function Home() {
                 }
             });
             const data = response.data.data;
-            const formattedData = data.reduce((acc, curr) => {
-                const { subject_name, pair, grade } = curr;
-                if (!acc[subject_name]) {
-                    acc[subject_name] = [];
-                }
-                if (!acc[subject_name][pair - 1]) {
-                    acc[subject_name][pair - 1] = [];
-                }
-                acc[subject_name][pair - 1].push(grade);
-                return acc;
-            }, {});
+            let formattedData;
+            console.log(isTeacher)
+            if (!isTeacher) {
+                
+                formattedData = data.reduce((acc, curr) => {
+                    const { subject_name, pair, grade } = curr;
+                    if (!acc[subject_name]) {
+                        acc[subject_name] = [];
+                    }
+                    if (!acc[subject_name][pair - 1]) {
+                        acc[subject_name][pair - 1] = [];
+                    }
+                    acc[subject_name][pair - 1].push(grade);
+                    return acc;
+                }, {});
+            }
+            console.log(formattedData)
+
             setMarks(formattedData);
             setUserMaxLength(formattedData.length)
         } catch (error) {
