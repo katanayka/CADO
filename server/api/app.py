@@ -4,6 +4,8 @@ from flask import Flask, jsonify, request
 from urllib.parse import unquote
 import sqlite3
 
+import numpy as np
+
 app = Flask(__name__)
 
 PROGRESS_FILE_PATH = "progress_data.json"
@@ -195,35 +197,42 @@ def register():
 
 @app.route('/api/getMarks', methods=['GET'])
 def get_marks():
-    username = request.args.get('username')  # Get username from query parameters
+    username = request.args.get('username')
     if not username:
         return {'message': 'Username is required'}, 400
     
-    # Get user_id from database by username
+    # Get user_id and user_type from database by username
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT id FROM users WHERE username = ?", (username,))
+    cursor.execute("SELECT id, role FROM users WHERE username = ?", (username,))
     result = cursor.fetchone()
     if result is None:
         conn.close()
         return {'message': 'User not found'}, 404
     
-    user_id = result[0]
+    user_id, user_type = result
     
-    # Get marks from database for the user and join with subjects to get subject_name
-    cursor.execute("""
-        SELECT grades.grade, grades.pair, subjects.name 
-        FROM grades 
-        JOIN subjects ON grades.subject_id = subjects.id 
-        WHERE grades.user_id = ?
-    """, (user_id,))
-    marks = cursor.fetchall()
-    conn.close()
-    
-    # Prepare the data in the format expected by the frontend
-    data = [{'grade': mark[0], 'pair': mark[1], 'subject_name': mark[2]} for mark in marks]
-    
-    return jsonify({'message': 'Marks retrieved successfully', 'data': data}), 200
+    if user_type == 'teacher':
+        # If the user is a teacher, return a list of subjects with empty marks
+        cursor.execute("SELECT name FROM subjects")
+        subjects = cursor.fetchall()
+        conn.close()
+        data = [{'subject_name': subject[0], 'marks': []} for subject in subjects]
+        return jsonify({'message': 'Subjects retrieved successfully', 'data': data}), 200
+    else:
+        # If the user is a student, get marks from the database
+        cursor.execute("""
+            SELECT grades.grade, grades.pair, subjects.name 
+            FROM grades 
+            JOIN subjects ON grades.subject_id = subjects.id 
+            WHERE grades.user_id = ?
+        """, (user_id,))
+        marks = cursor.fetchall()
+        conn.close()
+        
+        data = [{'grade': mark[0], 'pair': mark[1], 'subject_name': mark[2]} for mark in marks]
+        return jsonify({'message': 'Marks retrieved successfully', 'data': data}), 200
+
 
 @app.route('/api/getGroupMarks', methods=['GET'])
 def get_group_marks():
@@ -285,6 +294,114 @@ def get_group_marks():
 
     return jsonify({'message': 'Group marks retrieved successfully', 'data': average_marks}), 200
 
+# Add this function to your Flask application
+@app.route('/api/getGroupStudentTotalMarks', methods=['GET'])
+def get_group_student_total_marks():
+    username = request.args.get('username')
+    subject_name = request.args.get('subject_name')
+
+    if not username or not subject_name:
+        return {'message': 'Username and subject name are required'}, 400
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # Get user_id from database by username
+    cursor.execute("SELECT id FROM users WHERE username = ?", (username,))
+    result = cursor.fetchone()
+    if result is None:
+        conn.close()
+        return {'message': 'User not found'}, 404
+
+    user_id = result[0]
+
+    # Get group_id from database by user_id
+    cursor.execute("SELECT group_id FROM user_groups WHERE user_id = ?", (user_id,))
+    result = cursor.fetchone()
+    if result is None:
+        conn.close()
+        return {'message': 'Group not found for user'}, 404
+
+    group_id = result[0]
+
+    # Get subject_id from database by subject name
+    cursor.execute("SELECT id FROM subjects WHERE name = ?", (subject_name,))
+    result = cursor.fetchone()
+    if result is None:
+        conn.close()
+        return {'message': 'Subject not found'}, 404
+
+    subject_id = result[0]
+
+    # Get all marks from database for the group and subject
+    cursor.execute("""
+        SELECT SUM(grades.grade) as total_marks
+        FROM grades 
+        JOIN users ON grades.user_id = users.id
+        JOIN user_groups ON users.id = user_groups.user_id
+        WHERE user_groups.group_id = ? AND grades.subject_id = ?
+        GROUP BY users.username
+    """, (group_id, subject_id))
+    marks = cursor.fetchall()
+    conn.close()
+    total_marks_average = np.mean(marks)
+
+    return jsonify({'message': 'Total marks for each student in group retrieved successfully', 'data': total_marks_average}), 200
+
+@app.route('/api/getAllStudentMarks', methods=['GET'])
+def get_all_student_marks():
+    username = request.args.get('username')
+    subject_name = request.args.get('subject_name')
+
+    if not username or not subject_name:
+        return {'message': 'Username and subject name are required'}, 400
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # Get user_id from database by username
+    cursor.execute("SELECT id FROM users WHERE username = ?", (username,))
+    result = cursor.fetchone()
+    if result is None:
+        conn.close()
+        return {'message': 'User not found'}, 404
+
+    user_id = result[0]
+
+    # Check if user is a teacher
+    cursor.execute("SELECT user_type FROM users WHERE id = ?", (user_id,))
+    result = cursor.fetchone()
+    if result is None or result[0] != 'teacher':
+        conn.close()
+        return {'message': 'User is not a teacher'}, 403
+
+    # Get subject_id from database by subject name
+    cursor.execute("SELECT id FROM subjects WHERE name = ?", (subject_name,))
+    result = cursor.fetchone()
+    if result is None:
+        conn.close()
+        return {'message': 'Subject not found'}, 404
+
+    subject_id = result[0]
+
+    # Get marks for all students in the subject
+    cursor.execute("""
+        SELECT users.username, grades.grade, grades.pair 
+        FROM grades 
+        JOIN users ON grades.user_id = users.id
+        WHERE grades.subject_id = ?
+    """, (subject_id,))
+    marks = cursor.fetchall()
+    conn.close()
+
+    # Format the result
+    marks_by_student = {}
+    for username, grade, pair in marks:
+        if username not in marks_by_student:
+            marks_by_student[username] = []
+        marks_by_student[username].append({'grade': grade, 'pair': pair})
+
+    return jsonify({'message': 'Marks for all students retrieved successfully', 'data': marks_by_student}), 200
 
 
 UPLOAD_FOLDER = 'uploads/'
