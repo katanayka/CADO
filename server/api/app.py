@@ -225,6 +225,68 @@ def get_marks():
     
     return jsonify({'message': 'Marks retrieved successfully', 'data': data}), 200
 
+@app.route('/api/getGroupMarks', methods=['GET'])
+def get_group_marks():
+    username = request.args.get('username')
+    subject_name = request.args.get('subject_name')
+
+    if not username or not subject_name:
+        return {'message': 'Username and subject name are required'}, 400
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # Get user_id from database by username
+    cursor.execute("SELECT id FROM users WHERE username = ?", (username,))
+    result = cursor.fetchone()
+    if result is None:
+        conn.close()
+        return {'message': 'User not found'}, 404
+
+    user_id = result[0]
+
+    # Get group_id from database by user_id
+    cursor.execute("SELECT group_id FROM user_groups WHERE user_id = ?", (user_id,))
+    result = cursor.fetchone()
+    if result is None:
+        conn.close()
+        return {'message': 'Group not found for user'}, 404
+
+    group_id = result[0]
+
+    # Get subject_id from database by subject name
+    cursor.execute("SELECT id FROM subjects WHERE name = ?", (subject_name,))
+    result = cursor.fetchone()
+    if result is None:
+        conn.close()
+        return {'message': 'Subject not found'}, 404
+
+    subject_id = result[0]
+
+    # Get all marks from database for the group and subject
+    cursor.execute("""
+        SELECT grades.grade, grades.pair 
+        FROM grades 
+        JOIN user_groups ON grades.user_id = user_groups.user_id
+        WHERE user_groups.group_id = ? AND grades.subject_id = ?
+    """, (group_id, subject_id))
+    marks = cursor.fetchall()
+    conn.close()
+
+    # Calculate average marks per pair
+    marks_by_pair = {}
+    for grade, pair in marks:
+        if pair not in marks_by_pair:
+            marks_by_pair[pair] = []
+        marks_by_pair[pair].append(grade)
+    
+    average_marks = [{'grade': sum(grades) / len(grades), 'pair': pair, 'subject_name': subject_name} 
+                     for pair, grades in marks_by_pair.items()]
+
+    return jsonify({'message': 'Group marks retrieved successfully', 'data': average_marks}), 200
+
+
+
 UPLOAD_FOLDER = 'uploads/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 

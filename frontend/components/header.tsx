@@ -1,9 +1,9 @@
-'use client'
+"use client"
+import { Box, Typography } from '@mui/material';
 import { getCookie, setCookie } from 'cookies-next';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react'
-import { Button } from 'react-daisyui';
+import React from 'react'
 
 const Header = () => {
     const router = useRouter()
@@ -16,22 +16,22 @@ const Header = () => {
         router.refresh()
     }
     return (
-        <header className="bg-gray-700 p-2 flex items-center justify-end flex-row text-white">
+        <Box className="bg-gray-700 p-2 flex items-center justify-end flex-row text-white">
             {userId ?
-                <form className='flex gap-8'>
-                    <div className="">Здравствуйте, {userId}</div>
+                <Box className='flex gap-8'>
+                    Здравствуйте, {userId}
                     <button onClick={handleLogout} type='submit'>
-                        Выйти
+                        <Typography>Выйти</Typography>
                     </button>
-                </form>
+                </Box>
                 :
-                <div>
-                    <Link href={'/auth'}>
-                        Войти
-                    </Link>
-                </div>
+
+                <Link href={'/auth'}>
+                    Войти
+                </Link>
+
             }
-        </header>
+        </Box>
     )
 }
 

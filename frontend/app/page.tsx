@@ -1,3 +1,4 @@
+"use client"
 import Discipline from "../data/Disciplines";
 import Icon from "@/components/Icon";
 import dynamic from 'next/dynamic';
@@ -5,6 +6,7 @@ import discipline_card from "@/components/discipline_card";
 import { Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import Link from "next/link";
+import { getCookie } from "cookies-next";
 
 const DropdownType = dynamic(() => import('@/components/dropdown-user-type'), { ssr: false });
 const Header = dynamic(() => import('@/components/header'), { ssr: false });
@@ -45,7 +47,7 @@ export default function Home() {
                     <Divider />
                 </div>
                 <div className="about bg-orange-700 h-full w-5/6 min-h-screen">
-                    <Header />
+                    <Header/>
                     <div className="px-6 flex flex-col gap-4">
                         <h1> Предметные дисциплины </h1>
                         <div className="flex flex-wrap">

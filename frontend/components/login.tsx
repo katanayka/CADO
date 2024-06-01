@@ -66,9 +66,9 @@ const UserIdShowcase = () => {
                     <button onClick={handleLoginClick} className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 w-[80%] h-9">
                         Войти
                     </button>
-                    <button onClick={handleRegisterClick} className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 w-[80%] h-9">
+                    {/* <button onClick={handleRegisterClick} className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 w-[80%] h-9">
                         Зарегистрироваться
-                    </button>
+                    </button> */}
                 </div>
 
             </div>

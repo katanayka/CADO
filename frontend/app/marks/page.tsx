@@ -1,17 +1,14 @@
 'use client'
-import Discipline from "../../data/Disciplines";
-import Icon from "@/components/Icon";
-import dynamic from 'next/dynamic';
-import { Button, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Radio } from "@mui/material";
-import BookmarkIcon from '@mui/icons-material/Bookmark';
+
+const Header = dynamic(() => import('@/components/header'), { ssr: false });
+import { Divider, Icon, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Paper, Radio, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import axios from "axios";
+import { getCookie } from "cookies-next";
 import Link from "next/link";
 import { SetStateAction, useEffect, useState } from "react";
+import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { LineChart } from '@mui/x-charts/LineChart';
-import { getCookie } from "cookies-next";
-import axios from "axios";
-
-const DropdownType = dynamic(() => import('@/components/dropdown-user-type'), { ssr: false });
-const Header = dynamic(() => import('@/components/header'), { ssr: false });
+import dynamic from "next/dynamic";
 
 function createData(
     name: string,
@@ -21,60 +18,68 @@ function createData(
     return { name, link, marks };
 }
 
-const rows = [
-    createData('Основы программирования и алгоритмизации', 'http://localhost:3000/disciplines/%D0%9E%D0%9F%D0%B8%D0%90', [[0.5], [2, 0.5], [0.5, 1], [3, 1], [0.5, 1], [2, 1], [0.5, 1], [2, 1], [0.5, 1], [2, 1], [0.5, 1], [2, 1], [0.5, 1], [2, 1], [0.5, 1], [3, 1], [0.5, 1], [2, 1], [0.5, 1], [3, 1], [0.5, 1], [3, 1], [0.5, 1], [3, 1], [0.5, 1], [3, 1], [1, 1], [15], [0, 5, 5]]),
-    createData('Открытые технологии разработки программного обеспечения', 'http://localhost:3000/disciplines/%D0%9E%D0%A2%D0%A0%D0%9F%D0%9E', [[2], [1], [1], [2], [6], [3], [3], [2], [4], [5], [2], [6], [2], [0], [0], [0], [2], [6], [2], [2], [4], [2], [1], [2], [2]]),
-    createData('Алгоритмы и технологии параллельных и распределенных вычислений', 'http://localhost:3000/disciplines/%D0%90%D0%A2%D0%9F%D0%B8%D0%A0%D0%92', [[5], [3], [4], [7], [2], [6], [8], [1], [4], [7], [6], [9], [2], [1], [5], [3], [8]]),
-    createData('Компьютерное зрение', 'http://localhost:3000/disciplines/%D0%9A%D0%97', [[6], [8], [7], [5], [9], [4], [8], [7], [6], [5], [9], [4], [3], [8]])
-];
-
-const rows_teacher = [
-    createData('Основы программирования и алгоритмизации', 'http://localhost:3000/disciplines/%D0%9E%D0%9F%D0%B8%D0%90', [[0.5], [2, 0.5], [0.5, 1], [3, 1], [0.5, 1], [2, 1], [0.5, 1], [2, 1], [0.5, 1], [2, 1], [0.5, 1], [2, 1], [0.5, 1], [2, 1], [0.5, 1], [3, 1], [0.5, 1], [2, 1], [0.5, 1], [3, 1], [0.5, 1], [3, 1], [0.5, 1], [3, 1], [0.5, 1], [3, 1], [1, 1], [15], [0, 5, 5]]),
-    createData('Основы программирования и алгоритмизации', 'http://localhost:3000/disciplines/%D0%9E%D0%9F%D0%B8%D0%90', [[1], [2, 1], [1, 1], [2, 1], [1, 1], [2, 1], [1, 1], [2, 1], [1, 0.5], [2, 0.5], [0.5, 0.5], [2, 0.5], [0.5, 0.5], [2, 0.5], [0.5, 0.5], [2, 0.5], [0.5, 0.5], [2, 0.5], [0.5, 0.5], [2, 0.5], [1, 1], [2, 1], [1, 1], [2, 1], [1, 1], [2, 1], [1, 1], [15], [0, 5, 5]]),
-    createData('Основы программирования и алгоритмизации', 'http://localhost:3000/disciplines/%D0%9E%D0%9F%D0%B8%D0%90', [[3], [2, 3], [3, 1], [3, 1], [3, 1], [2, 1], [3, 1], [2, 1], [3, 1], [2, 1], [3, 1], [2, 1], [0.5, 1], [2, 1], [0.5, 1], [3, 1], [0.5, 1], [2, 1], [0.5, 1], [3, 1], [0.5, 1], [3, 1], [0.5, 1], [3, 1], [0.5, 1], [3, 1], [1, 1], [15], [0, 5, 5]]),
-    createData('Основы программирования и алгоритмизации', 'http://localhost:3000/disciplines/%D0%9E%D0%9F%D0%B8%D0%90', [[0.5], [2, 0.5], [0.5, 1], [3, 1], [2, 1], [2, 1], [2, 1], [2, 1], [2, 1], [2, 1], [2, 1], [2, 1], [2, 1], [2, 1], [0.5, 1], [3, 1], [0.5, 1], [2, 1], [0.5, 1], [3, 1], [0.5, 1], [3, 1], [0.5, 1], [3, 1], [0.5, 1], [3, 1], [1, 1], [15], [0, 5, 5]]),
-    createData('Основы программирования и алгоритмизации', 'http://localhost:3000/disciplines/%D0%9E%D0%9F%D0%B8%D0%90', [[0.5], [2, 0.5], [0.5, 1], [3, 1], [0.5, 1], [2, 3], [0.5, 3], [2, 3], [0.5, 3], [2, 3], [0.5, 3], [2, 3], [0.5, 3], [2, 3], [0.5, 3], [3, 3], [0.5, 3], [2, 3], [0.5, 3], [3, 3], [0.5, 1], [3, 1], [0.5, 1], [3, 1], [0.5, 1], [3, 1], [1, 1], [15], [0, 5, 5]]),
-    createData('Основы программирования и алгоритмизации', 'http://localhost:3000/disciplines/%D0%9E%D0%9F%D0%B8%D0%90', [[0.5], [2, 0.5], [0.5, 1], [3, 1], [0.5, 1], [2, 1], [1, 1], [2, 1], [1, 1], [2, 1], [1, 1], [2, 1], [1, 1], [2, 1], [1, 1], [3, 1], [1, 1], [2, 1], [0.5, 1], [3, 1], [0.5, 1], [3, 1], [0.5, 1], [3, 1], [0.5, 1], [3, 1], [1, 1], [15], [0, 5, 5]]),
-    createData('Открытые технологии разработки программного обеспечения', 'http://localhost:3000/disciplines/%D0%9E%D0%A2%D0%A0%D0%9F%D0%9E', [[2], [1], [1], [2], [6], [3], [3], [2], [4], [5], [2], [6], [2], [0], [0], [0], [2], [6], [2], [2], [4], [2], [1], [2], [2]]),
-    createData('Открытые технологии разработки программного обеспечения', 'http://localhost:3000/disciplines/%D0%9E%D0%A2%D0%A0%D0%9F%D0%9E', [[2], [1], [1], [2], [6], [3], [3], [2], [4], [5], [2], [6], [2], [0], [0], [0], [2], [6], [2], [2], [4], [2], [1], [2], [2]]),
-    createData('Открытые технологии разработки программного обеспечения', 'http://localhost:3000/disciplines/%D0%9E%D0%A2%D0%A0%D0%9F%D0%9E', [[2], [1], [1], [2], [6], [3], [3], [2], [4], [5], [2], [6], [2], [0], [0], [0], [2], [6], [2], [2], [4], [2], [1], [2], [2]]),
-    createData('Открытые технологии разработки программного обеспечения', 'http://localhost:3000/disciplines/%D0%9E%D0%A2%D0%A0%D0%9F%D0%9E', [[2], [1], [1], [2], [6], [3], [3], [2], [4], [5], [2], [6], [2], [0], [0], [0], [2], [6], [2], [2], [4], [2], [1], [2], [2]]),
-    createData('Открытые технологии разработки программного обеспечения', 'http://localhost:3000/disciplines/%D0%9E%D0%A2%D0%A0%D0%9F%D0%9E', [[2], [1], [1], [2], [6], [3], [3], [2], [4], [5], [2], [6], [2], [0], [0], [0], [2], [6], [2], [2], [4], [2], [1], [2], [2]]),
-    createData('Алгоритмы и технологии параллельных и распределенных вычислений', 'http://localhost:3000/disciplines/%D0%90%D0%A2%D0%9F%D0%B8%D0%A0%D0%92', [[5], [3], [4], [7], [2], [6], [8], [1], [4], [7], [6], [9], [2], [1], [5], [3], [8]]),
-    createData('Компьютерное зрение', 'http://localhost:3000/disciplines/%D0%9A%D0%97', [[6], [8], [7], [5], [9], [4], [8], [7], [6], [5], [9], [4], [3], [8]])
-]
-
-
-
-const maxMarksLength = Math.max(...rows.map(row => row.marks.length));
-
 export default function Home() {
     const isTeacher = getCookie("userType") === "teacher";
-    console.log(isTeacher)
+    const username = getCookie("userId");
     const [selectedName, setSelectedName] = useState(null);
+    const [marks, setMarks] = useState({});
+    const [groupMarks, setGroupMarks] = useState([]);
+    const [userMaxLength, setUserMaxLength] = useState(0);
 
     const handleRadioChange = (event: { target: { value: SetStateAction<null>; }; }) => {
         setSelectedName(event.target.value);
     };
 
-    // Select marks and lesson_id from /api/getMarks
-    const [marks, setMarks] = useState([]);
-    const [lesson_id, setLesson_id] = useState([]);
-    // Get marks (GET and send username)
     const getMarks = async () => {
         try {
             const response = await axios.get('/api/getMarks', {
                 params: {
-                    username: getCookie("userId")
+                    username: username
                 }
             });
             const data = response.data.data;
-            setMarks(data);
-            console.log(data)
-            // Assuming you will set lesson_id from another response or logic
-            // setLesson_id(someLessonId);
+            // Assuming data is in the format [{grade: 4, pair: 1, subject_name: 'Программирование и основы алгоритмизации'}, ...]
+            const formattedData = data.reduce((acc, curr) => {
+                const { subject_name, pair, grade } = curr;
+                if (!acc[subject_name]) {
+                    acc[subject_name] = [];
+                }
+                if (!acc[subject_name][pair - 1]) {
+                    acc[subject_name][pair - 1] = [];
+                }
+                acc[subject_name][pair - 1].push(grade);
+                return acc;
+            }, {});
+            setMarks(formattedData);
+            setUserMaxLength(formattedData.length)
+            console.log(formattedData);
         } catch (error) {
             console.error("There was an error fetching the marks!", error);
+        }
+    };
+
+    const getGroupMarks = async (subjectName: string) => {
+        try {
+            const response = await axios.get('/api/getGroupMarks', {
+                params: {
+                    username: username,
+                    subject_name: subjectName
+                }
+            });
+            const data = response.data.data;
+            // Assuming data is in the format [{grade: 4, pair: 1, subject_name: 'Программирование и основы алгоритмизации'}, ...]
+            const formattedData = data.reduce((acc, curr) => {
+                const { pair, grade } = curr;
+                if (!acc[pair - 1]) {
+                    acc[pair - 1] = [];
+                }
+                acc[pair - 1].push(grade);
+                return acc;
+            }, []);
+            setGroupMarks(formattedData);
+            console.log(formattedData);
+        } catch (error) {
+            console.error("There was an error fetching the group marks!", error);
         }
     };
 
@@ -82,25 +87,54 @@ export default function Home() {
         getMarks();
     }, []);
 
+    useEffect(() => {
+        if (selectedName) {
+            getGroupMarks(selectedName);
+        }
+    }, [selectedName]);
+
+    const rows = Object.keys(marks).map(subject_name => {
+        return createData(subject_name, `/disciplines/${encodeURIComponent(subject_name)}`, marks[subject_name]);
+    });
+
+    const maxMarksLength = Math.max(0, ...rows.map(row => row.marks.length));
+    const maxGroupMarksLength = Math.max(0, ...groupMarks.map(group => group.length));
+    let maxLength = Math.max(maxMarksLength, maxGroupMarksLength);
+
     const selectedRow = rows.find(row => row.name === selectedName);
-    const selectedMarks = selectedRow ? selectedRow.marks.map(group => group.reduce((a, b) => a + b, 0)) : [];
+
+    // Fill with zeros to make both series equal in length to maxLength
+    const fillArray = (arr, length) => {
+        if (length <= arr.length) return arr; // No need to fill if arr is longer
+        return arr.concat(Array(length - arr.length).fill(0));
+    };
+
+    const selectedMarks = selectedRow ? selectedRow.marks.map(group => group.reduce((a, b) => a + b, 0) / group.length) : [];
+    const groupAverageMarks = groupMarks.map(group => group.reduce((a, b) => a + b, 0) / group.length);
+
+    // Fill with zeros to make both series equal in length to maxLength
+    const filledSelectedMarks = fillArray(selectedMarks, maxLength);
+    const filledGroupAverageMarks = fillArray(groupAverageMarks, maxLength);
+
+    maxLength = Math.max(filledSelectedMarks.length, filledGroupAverageMarks.length)
+    let maxVal = 0
+    rows.forEach(row => {
+         console.log(row.marks.length)
+         if (row.marks.length > maxVal) maxVal = row.marks.length
+    });
+
 
     return (
         <div>
             <div className="content flex h-full min-h-screen">
                 <div className="bg-blue-500 flex-1">
-
                     <Icon />
-                    {/* <DropdownType /> */}
-                    {/* <UserIdShowcase /> */}
                     <Divider />
                     <List className="">
-                        <Link href={'/'} className="hidden">
+                        <Link href={'/'}>
                             <ListItem disablePadding className="">
                                 <ListItemButton>
-                                    <ListItemIcon>
-
-                                    </ListItemIcon>
+                                    <ListItemIcon></ListItemIcon>
                                     <ListItemText primary="Дисциплины" />
                                 </ListItemButton>
                             </ListItem>
@@ -117,7 +151,6 @@ export default function Home() {
                         </Link>
                     </List>
                     <Divider />
-
                 </div>
                 <div className="about bg-orange-700 h-full w-5/6 min-h-screen">
                     <Header />
@@ -128,7 +161,7 @@ export default function Home() {
                                     <TableRow>
                                         <TableCell>Выбрать</TableCell>
                                         <TableCell>Модуль</TableCell>
-                                        {Array.from({ length: maxMarksLength }).map((_, index) => (
+                                        {Array.from({ length: maxVal }).map((_, index) => (
                                             <TableCell key={index} align="right" className="whitespace-nowrap">Встреча {index + 1}</TableCell>
                                         ))}
                                         <TableCell align="right">Результат</TableCell>
@@ -136,10 +169,7 @@ export default function Home() {
                                 </TableHead>
                                 <TableBody>
                                     {rows.map((row) => (
-                                        <TableRow
-                                            key={row.name}
-                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                        >
+                                        <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                             <TableCell>
                                                 <Radio
                                                     checked={selectedName === row.name}
@@ -157,7 +187,7 @@ export default function Home() {
                                                     {markGroup.join(', ')}
                                                 </TableCell>
                                             ))}
-                                            {Array.from({ length: maxMarksLength - row.marks.length }).map((_, index) => (
+                                            {Array.from({ length: maxVal - row.marks.length }).map((_, index) => (
                                                 <TableCell key={row.marks.length + index} align="right"></TableCell>
                                             ))}
                                             <TableCell align="right">
@@ -171,20 +201,26 @@ export default function Home() {
                         {selectedName && (
                             <Paper className="mt-4 p-4">
                                 <h2>{selectedName} - Успеваемость</h2>
-                                {isTeacher ?
-                                    null
-                                    : <LineChart
-                                        xAxis={[{ data: selectedMarks.map((_, index) => index + 1) }]}
+                                {isTeacher ? null : (
+                                    <LineChart
+                                        xAxis={[{ data: Array.from({ length: maxLength }, (_, index) => index + 1) }]}
                                         series={[
                                             {
-                                                data: selectedMarks,
+                                                data: filledSelectedMarks,
                                                 valueFormatter: (value) => (value == null ? 'NaN' : value.toString()),
+                                                label: 'Ваши оценки'
+                                            },
+                                            {
+                                                data: filledGroupAverageMarks,
+                                                valueFormatter: (value) => (value == null ? 'NaN' : value.toString()),
+                                                label: 'Средние оценки группы'
                                             }
                                         ]}
                                         height={200}
                                         margin={{ top: 10, bottom: 20 }}
-                                    />}
+                                    />
 
+                                )}
                             </Paper>
                         )}
                     </div>
