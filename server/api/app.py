@@ -2,6 +2,7 @@ import os
 import json
 from flask import Flask, jsonify, request
 from urllib.parse import unquote
+import sqlite3
 
 app = Flask(__name__)
 
@@ -131,33 +132,36 @@ def save_progress():
 
 users = []
 
-USERS_FILE = 'users.json'
+DATABASE_FILE = 'students.db'
 
-def read_users():
-    try:
-        with open(USERS_FILE, 'r') as file:
-            users = json.load(file)
-    except FileNotFoundError:
-        users = []
-    return users
+def get_db_connection():
+    conn = sqlite3.connect(DATABASE_FILE)
+    conn.row_factory = sqlite3.Row
+    return conn
 
-def write_users(users):
-    with open(USERS_FILE, 'w') as file:
-        json.dump(users, file)
+def login(user_id, password):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM users WHERE name = ? AND password = ?", (user_id, password))
+    user = cursor.fetchone()
+
+    conn.close()
+
+    if user:
+        return {'message': 'Login successful!', 'userType': user['role']}, 200
+    else:
+        return {'message': 'Invalid credentials'}, 401
 
 @app.route('/api/login', methods=['POST'])
-def login():
+def login_route():
     data = request.get_json()
     user_id = data.get('userId')
     password = data.get('password')
 
-    users = read_users()
-
-    # Dummy authentication logic (replace this with actual authentication logic)
-    for user in users:
-        if user['userId'] == user_id and user['password'] == password:
-            return {'message': 'Login successful!', 'userType': user.get('userType')}, 200
-    return {'message': 'Invalid credentials'}, 401
+    response, status_code = login(user_id, password)
+    
+    return response, status_code
 
 @app.route('/api/register', methods=['POST'])
 def register():
@@ -165,14 +169,28 @@ def register():
     user_id = data.get('userId')
     password = data.get('password')
 
-    users = read_users()
+    # Проверяем, существует ли уже пользователь с таким user_id
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM users WHERE user_id = ?", (user_id,))
+    existing_user = cursor.fetchone()
 
-    for user in users:
-        if user['userId'] == user_id:
-            return 'User already exists', 400
+    # Если пользователь существует, возвращаем сообщение об ошибке
+    if existing_user:
+        conn.close()
+        return 'User already exists', 400
 
-    users.append({'userId': user_id, 'password': password})
-    write_users(users)
+    # Определяем роль пользователя на основе его user_id
+    if re.match(r'^stud', user_id):
+        role = 0
+    else:
+        role = 1
+
+    # Регистрируем нового пользователя
+    cursor.execute("INSERT INTO users (name, role, password) VALUES (?, ?, ?)", (user_id, role, password))
+    conn.commit()
+    conn.close()
+
     return 'User registered successfully!', 201
 
 UPLOAD_FOLDER = 'uploads/'
