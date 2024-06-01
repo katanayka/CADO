@@ -5,9 +5,10 @@ import dynamic from 'next/dynamic';
 import { Button, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Radio } from "@mui/material";
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import Link from "next/link";
-import { SetStateAction, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { LineChart } from '@mui/x-charts/LineChart';
 import { getCookie } from "cookies-next";
+import axios from "axios";
 
 const DropdownType = dynamic(() => import('@/components/dropdown-user-type'), { ssr: false });
 const Header = dynamic(() => import('@/components/header'), { ssr: false });
@@ -41,7 +42,6 @@ const rows_teacher = [
     createData('Открытые технологии разработки программного обеспечения', 'http://localhost:3000/disciplines/%D0%9E%D0%A2%D0%A0%D0%9F%D0%9E', [[2], [1], [1], [2], [6], [3], [3], [2], [4], [5], [2], [6], [2], [0], [0], [0], [2], [6], [2], [2], [4], [2], [1], [2], [2]]),
     createData('Алгоритмы и технологии параллельных и распределенных вычислений', 'http://localhost:3000/disciplines/%D0%90%D0%A2%D0%9F%D0%B8%D0%A0%D0%92', [[5], [3], [4], [7], [2], [6], [8], [1], [4], [7], [6], [9], [2], [1], [5], [3], [8]]),
     createData('Компьютерное зрение', 'http://localhost:3000/disciplines/%D0%9A%D0%97', [[6], [8], [7], [5], [9], [4], [8], [7], [6], [5], [9], [4], [3], [8]])
-
 ]
 
 
@@ -56,6 +56,31 @@ export default function Home() {
     const handleRadioChange = (event: { target: { value: SetStateAction<null>; }; }) => {
         setSelectedName(event.target.value);
     };
+
+    // Select marks and lesson_id from /api/getMarks
+    const [marks, setMarks] = useState([]);
+    const [lesson_id, setLesson_id] = useState([]);
+    // Get marks (GET and send username)
+    const getMarks = async () => {
+        try {
+            const response = await axios.get('/api/getMarks', {
+                params: {
+                    username: getCookie("userId")
+                }
+            });
+            const data = response.data.data;
+            setMarks(data);
+            console.log(data)
+            // Assuming you will set lesson_id from another response or logic
+            // setLesson_id(someLessonId);
+        } catch (error) {
+            console.error("There was an error fetching the marks!", error);
+        }
+    };
+
+    useEffect(() => {
+        getMarks();
+    }, []);
 
     const selectedRow = rows.find(row => row.name === selectedName);
     const selectedMarks = selectedRow ? selectedRow.marks.map(group => group.reduce((a, b) => a + b, 0)) : [];

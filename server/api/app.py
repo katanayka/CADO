@@ -143,7 +143,7 @@ def login(user_id, password):
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    cursor.execute("SELECT * FROM users WHERE name = ? AND password = ?", (user_id, password))
+    cursor.execute("SELECT * FROM users WHERE username = ? AND password = ?", (user_id, password))
     user = cursor.fetchone()
 
     conn.close()
@@ -192,6 +192,38 @@ def register():
     conn.close()
 
     return 'User registered successfully!', 201
+
+@app.route('/api/getMarks', methods=['GET'])
+def get_marks():
+    username = request.args.get('username')  # Get username from query parameters
+    if not username:
+        return {'message': 'Username is required'}, 400
+    
+    # Get user_id from database by username
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT id FROM users WHERE username = ?", (username,))
+    result = cursor.fetchone()
+    if result is None:
+        conn.close()
+        return {'message': 'User not found'}, 404
+    
+    user_id = result[0]
+    
+    # Get marks from database for the user and join with subjects to get subject_name
+    cursor.execute("""
+        SELECT grades.grade, grades.pair, subjects.name 
+        FROM grades 
+        JOIN subjects ON grades.subject_id = subjects.id 
+        WHERE grades.user_id = ?
+    """, (user_id,))
+    marks = cursor.fetchall()
+    conn.close()
+    
+    # Prepare the data in the format expected by the frontend
+    data = [{'grade': mark[0], 'pair': mark[1], 'subject_name': mark[2]} for mark in marks]
+    
+    return jsonify({'message': 'Marks retrieved successfully', 'data': data}), 200
 
 UPLOAD_FOLDER = 'uploads/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
