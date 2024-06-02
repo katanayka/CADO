@@ -111,8 +111,8 @@ const TeacherDashboard = () => {
     }, [chartData, alignChart]);
 
     return (
-        <div>
-            <div className="content flex h-full min-h-screen">
+        <div className='w-screen'>
+            <div className="content flex min-h-screen">
                 <div className="bg-blue-500 flex-1">
                     <Icon />
                     <Divider />
@@ -148,19 +148,19 @@ const TeacherDashboard = () => {
                                         label={<Typography>{subject.subject_name}</Typography>}
                                         className='mb-2'
                                     />
-                                    <div className='overflow-auto max-w-screen'>
+                                    <div className=''>
                                         <Accordion>
                                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                                                <Typography>{subject.subject_name}</Typography>
+                                                <Typography>{subject.subject_name} <Link onClick={(e) => { e.stopPropagation() }} href={`/disciplines/${subject.subject_name}`}>Перейти к предмету</Link></Typography>
                                             </AccordionSummary>
                                             <AccordionDetails>
                                                 <TableContainer>
-                                                    <Table>
+                                                    <Table >
                                                         <TableHead>
                                                             <TableRow>
                                                                 <TableCell>Студент</TableCell>
                                                                 {Array.from({ length: maxPairs }, (_, index) => (
-                                                                    <TableCell key={index}>Встреча {index + 1}</TableCell>
+                                                                    <TableCell key={index} className='whitespace-nowrap'>Встреча {index + 1}</TableCell>
                                                                 ))}
                                                                 <TableCell>Результат</TableCell>
                                                             </TableRow>
@@ -170,7 +170,7 @@ const TeacherDashboard = () => {
                                                                 const totalScore = _.sumBy(student.grades, 'grade');
                                                                 return (
                                                                     <TableRow key={student.username}>
-                                                                        <TableCell>{student.username}</TableCell>
+                                                                        <TableCell className='whitespace-nowrap'>{student.username}</TableCell>
                                                                         {Array.from({ length: maxPairs }, (_, index) => {
                                                                             const gradeObj = student.grades.find(g => g.pair === index + 1);
                                                                             return (
@@ -192,7 +192,7 @@ const TeacherDashboard = () => {
                         </RadioGroup>
                         <Divider />
                         {selectedSubject && (
-                            <>
+                            <div>
                                 <Typography variant="h5">Графики</Typography>
                                 <Divider />
                                 <Accordion>
@@ -215,32 +215,34 @@ const TeacherDashboard = () => {
                                         ))}
                                     </div>
                                 </Accordion>
-                                <Accordion>
-                                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                                        <Typography>График оценок</Typography>
-                                    </AccordionSummary>
-                                    <AccordionDetails>
-                                        <ToggleButtonGroup
-                                            value={alignChart}
-                                            exclusive
-                                            onChange={handleAlignment}
-                                            aria-label="text alignment"
-                                        >
-                                            <ToggleButton value="true" aria-label="Do not align charts">
-                                                <PersonOutlineIcon />
-                                            </ToggleButton>
-                                            <ToggleButton value="false" aria-label="Align charts">
-                                                <PeopleOutlineIcon />
-                                            </ToggleButton>
-                                        </ToggleButtonGroup>
-                                        <BarChart
-                                            series={sortedChartData}
-                                            xAxis={[{ scaleType: 'band', data: ['0', ...Array.from({ length: maxPairs }, (_, index) => (index + 1).toString())], categoryGapRatio: 0.7 }]}
-                                            height={400}
-                                            margin={{ top: 180, bottom: 20 }}
-                                        />
-                                    </AccordionDetails>
-                                </Accordion>
+                                {selectedStudents.length > 0 && (
+                                    <Accordion>
+                                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                                            <Typography>График оценок</Typography>
+                                        </AccordionSummary>
+                                        <AccordionDetails>
+                                            <ToggleButtonGroup
+                                                value={alignChart}
+                                                exclusive
+                                                onChange={handleAlignment}
+                                                aria-label="text alignment"
+                                            >
+                                                <ToggleButton value="true" aria-label="Do not align charts">
+                                                    <PersonOutlineIcon />
+                                                </ToggleButton>
+                                                <ToggleButton value="false" aria-label="Align charts">
+                                                    <PeopleOutlineIcon />
+                                                </ToggleButton>
+                                            </ToggleButtonGroup>
+                                            <BarChart
+                                                series={sortedChartData}
+                                                xAxis={[{ scaleType: 'band', data: ['0', ...Array.from({ length: maxPairs }, (_, index) => (index + 1).toString())], categoryGapRatio: 0.7 }]}
+                                                height={400}
+                                                margin={{ top: 180, bottom: 20 }}
+                                            />
+                                        </AccordionDetails>
+                                    </Accordion>
+                                )}
                                 {selectedStudents.length > 0 && (
                                     <Accordion>
                                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -260,7 +262,7 @@ const TeacherDashboard = () => {
                                         </AccordionDetails>
                                     </Accordion>
                                 )}
-                            </>
+                            </div>
                         )}
                     </div>
                 </div>

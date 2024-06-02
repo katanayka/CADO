@@ -13,7 +13,7 @@ const Header = () => {
             sameSite: 'none',
             secure: true
         });
-        router.refresh()
+        window.location.reload(); // Reload the page after logout
     }
     return (
         <Box className="bg-gray-700 p-2 flex items-center justify-end flex-row text-white">
