@@ -3,10 +3,13 @@ import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import axios from 'axios';
 import { getCookie } from 'cookies-next';
-import { Accordion, AccordionDetails, AccordionSummary, Divider, Icon, Link, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Radio, FormControlLabel, RadioGroup, Checkbox } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Divider, Icon, Link, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Radio, FormControlLabel, RadioGroup, Checkbox, ToggleButtonGroup, ToggleButton } from '@mui/material';
 import { BarChart } from '@mui/x-charts/BarChart';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
+
+import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 
 const Header = dynamic(() => import('@/components/header'), { ssr: false });
 
@@ -17,6 +20,7 @@ export default function TeacherDashboard() {
     const [maxPairs, setMaxPairs] = useState(0);
     const [selectedSubject, setSelectedSubject] = useState(null);
     const [selectedStudents, setSelectedStudents] = useState([]);
+    const [alignChart, setAlignChart] = useState("false");
 
     const getMarks = async () => {
         try {
@@ -113,6 +117,13 @@ export default function TeacherDashboard() {
     const getMaxNums = (marksList1, marksList2) => {
         return Math.max(marksList1.length, marksList2.length);
     };
+
+    const handleAlignment = (
+        event: React.MouseEvent<HTMLElement>,
+        newAlignment: boolean,
+      ) => {
+        setAlignChart(newAlignment);
+      };
 
     return (
         <div>
@@ -245,7 +256,43 @@ export default function TeacherDashboard() {
                                         <Typography>График оценок</Typography>
                                     </AccordionSummary>
                                     <AccordionDetails>
-                                        <BarChart
+                                        <ToggleButtonGroup
+                                            value={alignChart}
+                                            exclusive
+                                            onChange={handleAlignment}
+                                            aria-label="text alignment"
+                                        >
+                                            <ToggleButton value="true" aria-label="Do not align charts">
+                                                <PersonOutlineIcon />
+                                            </ToggleButton>
+                                            <ToggleButton value="false" aria-label="Align charts">
+                                                <PeopleOutlineIcon />
+                                            </ToggleButton>
+                                        </ToggleButtonGroup >
+                                        {alignChart=="true" ? <BarChart
+                                            series={marks
+                                                .find(subject => subject.subject_name === selectedSubject)
+                                                .students
+                                                .filter(student => selectedStudents.includes(student.username))
+                                                .map(student => {
+                                                    const grades = Array.from({ length: maxPairs }, (_, index) => {
+                                                        const gradeObj = student.grades.find(g => g.pair === index + 1);
+                                                        return gradeObj ? gradeObj.grade : 0;
+                                                    });
+                                                    const cumulativeGrades = createArrayCumulative(grades);
+                                                    return {
+                                                        data: [0].concat(cumulativeGrades),
+                                                        label: student.username,
+                                                        stack: 'total',  // Add stack attribute to enable stacking
+                                                        valueFormatter: (value) => (value == null ? 'NaN' : value.toString())
+                                                    };
+                                                })
+                                                .sort((a, b) => summarizeNums(a.data) - summarizeNums(b.data)) // Sort by total scores
+                                            }
+                                            xAxis={[{ scaleType: 'band', data: ['0'].concat(Array.from({ length: maxPairs }, (_, index) => (index + 1).toString())), categoryGapRatio: 0.7 }]}
+                                            height={400}
+                                            margin={{ top: 180, bottom: 20 }}
+                                        /> : <BarChart
                                             series={marks
                                                 .find(subject => subject.subject_name === selectedSubject)
                                                 .students
@@ -265,7 +312,8 @@ export default function TeacherDashboard() {
                                             xAxis={[{ scaleType: 'band', data: ['0'].concat(Array.from({ length: maxPairs }, (_, index) => (index + 1).toString())), categoryGapRatio: 0.2 }]}
                                             height={400}
                                             margin={{ top: 180, bottom: 20 }}
-                                        />
+                                        />}
+
                                     </AccordionDetails>
                                 </Accordion>
                                 {selectedStudents.length > 0 && (
