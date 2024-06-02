@@ -14,6 +14,8 @@ type nodeData = {
     id: string;
     type: string;
     data: {
+        theory: any;
+        practice: any;
         id: string;
         inside: string;
         label: string;

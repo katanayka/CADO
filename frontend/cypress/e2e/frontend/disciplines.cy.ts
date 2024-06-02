@@ -22,11 +22,11 @@ describe('Disciplines Page', () => {
             cy.get('div').find('svg').should('have.length', 3);
             cy.get('div').find('a').should('have.length', 2);
             cy.get('div').find('a').first().should('have.text', 'Home');
-            cy.get('div').find('a').last().should('have.text', 'ОПиА');
+            cy.get('div').find('a').last().should('have.text', 'ПиОА');
         });
 
         it('displays discipline title', () => {
-            const disciplineId = 'ОПиА';
+            const disciplineId = 'ПиОА';
             cy.get('h1').should('contain', decodeURIComponent(disciplineId));
         });
 
@@ -69,11 +69,11 @@ describe('Disciplines Page', () => {
             cy.get('div').find('svg').should('have.length', 3);
             cy.get('div').find('a').should('have.length', 2);
             cy.get('div').find('a').first().should('have.text', 'Home');
-            cy.get('div').find('a').last().should('have.text', 'ОПиА');
+            cy.get('div').find('a').last().should('have.text', 'ПиОА');
         });
 
         it('displays discipline title', () => {
-            const disciplineId = 'ОПиА';
+            const disciplineId = 'ПиОА';
             cy.get('h1').should('contain', decodeURIComponent(disciplineId));
         });
 

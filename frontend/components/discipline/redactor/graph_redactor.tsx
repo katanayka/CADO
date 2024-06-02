@@ -254,6 +254,12 @@ const GraphRedactor = ({ setSharedData, dataTree }: { setSharedData: any, dataTr
   const fullTreeInfoArray: Tree<string> = new Tree<string>();
   fullTreeInfoArray.addNode("Python", "Описание по Python");
 
+  fullTreeInfoArray.addNode("Основы Python", "А", "Python");
+  fullTreeInfoArray.addNode("Переменные и типы данных", "Описание переменных и типов данных", "Основы Python");
+  fullTreeInfoArray.addNode("Операции с переменными", "Описание операций с переменными", "Переменные и типы данных");
+  fullTreeInfoArray.addNode("Конвертация типов", "Описание конвертации типов данных", "Переменные и типы данных");
+  fullTreeInfoArray.addNode("Основные операторы", "Описание арифметических, логических и сравнительных операторов", "Основы Python");
+  
   fullTreeInfoArray.addNode("Синтаксис", "Описание синтаксиса Python", "Python");
   fullTreeInfoArray.addNode("Условные операторы", "Описание условных операторов", "Синтаксис");
   fullTreeInfoArray.addNode("if", "Описание if-оператора", "Условные операторы");
@@ -263,28 +269,34 @@ const GraphRedactor = ({ setSharedData, dataTree }: { setSharedData: any, dataTr
   fullTreeInfoArray.addNode("Циклы", "Описание циклов", "Синтаксис");
   fullTreeInfoArray.addNode("for", "Описание for-цикла", "Циклы");
   fullTreeInfoArray.addNode("while", "Описание while-цикла", "Циклы");
-  
-  fullTreeInfoArray.addNode("Классы", "Описание классов в Python", "Python");
-  fullTreeInfoArray.addNode("Определение класса", "Описание определения класса", "Классы");
-  fullTreeInfoArray.addNode("Методы", "Описание методов класса", "Классы");
-  fullTreeInfoArray.addNode("Наследование", "Описание наследования классов", "Классы");
+  fullTreeInfoArray.addNode("Вложенные циклы", "Описание вложенных циклов", "Циклы");
+  fullTreeInfoArray.addNode("break и continue", "Описание операторов break и continue", "Циклы");
   
   fullTreeInfoArray.addNode("Функции", "Описание функций в Python", "Python");
   fullTreeInfoArray.addNode("Определение функции", "Описание определения функции", "Функции");
   fullTreeInfoArray.addNode("Аргументы функции", "Описание аргументов функции", "Функции");
   fullTreeInfoArray.addNode("Возвращаемые значения", "Описание возвращаемых значений функции", "Функции");
+  fullTreeInfoArray.addNode("Рекурсия", "Описание рекурсии", "Функции");
   
-  fullTreeInfoArray.addNode("Встроенные типы данных", "Описание встроенных типов данных в Python", "Python");
-  fullTreeInfoArray.addNode("Числа", "Описание числовых типов данных", "Встроенные типы данных");
-  fullTreeInfoArray.addNode("Строки", "Описание строк в Python", "Встроенные типы данных");
-  fullTreeInfoArray.addNode("Списки", "Описание списков в Python", "Встроенные типы данных");
-  fullTreeInfoArray.addNode("Кортежи", "Описание кортежей в Python", "Встроенные типы данных");
-  fullTreeInfoArray.addNode("Множества", "Описание множеств в Python", "Встроенные типы данных");
-  fullTreeInfoArray.addNode("Словари", "Описание словарей в Python", "Встроенные типы данных");
+  fullTreeInfoArray.addNode("Работа со строками", "Описание работы со строками в Python", "Python");
+  fullTreeInfoArray.addNode("Методы строк", "Описание методов строк", "Работа со строками");
+  fullTreeInfoArray.addNode("Форматирование строк", "Описание форматирования строк", "Работа со строками");
+  fullTreeInfoArray.addNode("Регулярные выражения", "Описание регулярных выражений в Python", "Работа со строками");
+  
+  fullTreeInfoArray.addNode("Коллекции", "Описание коллекций данных в Python", "Python");
+  fullTreeInfoArray.addNode("Списки", "Описание списков в Python", "Коллекции");
+  fullTreeInfoArray.addNode("Кортежи", "Описание кортежей в Python", "Коллекции");
+  fullTreeInfoArray.addNode("Множества", "Описание множеств в Python", "Коллекции");
+  fullTreeInfoArray.addNode("Словари", "Описание словарей в Python", "Коллекции");
   
   fullTreeInfoArray.addNode("Работа с файлами", "Описание работы с файлами в Python", "Python");
   fullTreeInfoArray.addNode("Чтение файла", "Описание чтения файла", "Работа с файлами");
   fullTreeInfoArray.addNode("Запись в файл", "Описание записи в файл", "Работа с файлами");
+  
+  fullTreeInfoArray.addNode("Элементы функционального программирования", "Описание функционального программирования в Python", "Python");
+  fullTreeInfoArray.addNode("Lambda-функции", "Описание lambda-функций в Python", "Элементы функционального программирования");
+  fullTreeInfoArray.addNode("Функции высшего порядка", "Описание функций высшего порядка (map, filter, reduce)", "Элементы функционального программирования");
+  fullTreeInfoArray.addNode("List Comprehensions", "Описание генераторов списков", "Элементы функционального программирования");
   
   fullTreeInfoArray.addNode("Обработка исключений", "Описание обработки исключений в Python", "Python");
   fullTreeInfoArray.addNode("try-except", "Описание блока try-except", "Обработка исключений");
@@ -294,16 +306,10 @@ const GraphRedactor = ({ setSharedData, dataTree }: { setSharedData: any, dataTr
   fullTreeInfoArray.addNode("Импорт модулей", "Описание импорта модулей", "Модули и пакеты");
   fullTreeInfoArray.addNode("Создание модулей", "Описание создания собственных модулей", "Модули и пакеты");
   
-  fullTreeInfoArray.addNode("Регулярные выражения", "Описание регулярных выражений в Python", "Python");
-  fullTreeInfoArray.addNode("Lambda-функции", "Описание lambda-функций в Python", "Python");
-  fullTreeInfoArray.addNode("List Comprehensions", "Описание генераторов списков", "Python");
   fullTreeInfoArray.addNode("Работа с библиотеками", "Описание работы с внешними библиотеками", "Python");
   fullTreeInfoArray.addNode("Пример: NumPy", "Описание работы с библиотекой NumPy", "Работа с библиотеками");
   fullTreeInfoArray.addNode("Пример: Pandas", "Описание работы с библиотекой Pandas", "Работа с библиотеками");
   
-  fullTreeInfoArray.addNode("Заключение", "Итоговая информация по курсу", "Python");
-  
-
   const getTree = (node: any) => {
     const flextree = require('d3-flextree').flextree;
     const layout = flextree();
