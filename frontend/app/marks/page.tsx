@@ -36,6 +36,8 @@ export default function Home() {
     const [groupMarks, setGroupMarks] = useState([]);
     const [groupAverageScore, setGroupAverageScore] = useState(0)
     const [allStudentMarks, setAllStudentMarks] = useState({});
+    const [cumulativeMarksGroup, setCumulativeMarksGroup] = useState([]);
+    const [cumulativeMarksGroup_, setCumulativeMarksGroup_] = useState([]);
 
     const handleRadioChange = (event: { target: { value: SetStateAction<null>; }; }) => {
         setSelectedName(event.target.value);
@@ -50,9 +52,8 @@ export default function Home() {
             });
             const data = response.data.data;
             let formattedData;
-            console.log(isTeacher)
             if (!isTeacher) {
-                
+
                 formattedData = data.reduce((acc, curr) => {
                     const { subject_name, pair, grade } = curr;
                     if (!acc[subject_name]) {
@@ -65,10 +66,8 @@ export default function Home() {
                     return acc;
                 }, {});
             }
-            console.log(formattedData)
 
             setMarks(formattedData);
-            setUserMaxLength(formattedData.length)
         } catch (error) {
             console.error("There was an error fetching the marks!", error);
         }
@@ -96,6 +95,21 @@ export default function Home() {
             console.error("There was an error fetching the group marks!", error);
         }
     };
+
+    const getGroupCumulative = async (subjectName: string) => {
+        try {
+            const response = await axios.get('/api/getCumulativeGroupMarks', {
+                params: {
+                    username: username,
+                    subject_name: subjectName
+                }
+            });
+            const data = response.data.data;
+            setCumulativeMarksGroup(data)
+        } catch (error) {
+
+        }
+    }
 
     const getGroupMarksSum = async (subjectName: string) => {
         try {
@@ -135,6 +149,7 @@ export default function Home() {
         if (selectedName) {
             getGroupMarks(selectedName);
             getGroupMarksSum(selectedName);
+            getGroupCumulative(selectedName);
             if (isTeacher) {
                 getAllStudentMarks(selectedName);
             }
@@ -151,16 +166,50 @@ export default function Home() {
 
     const selectedRow = rows.find(row => row.name === selectedName);
 
+
+
     const fillArray = (arr, length) => {
         if (length <= arr.length) return arr; // No need to fill if arr is longer
         return arr.concat(Array(length - arr.length).fill(0));
     };
 
+    const summarizeNums = (array: number[]) => {
+        var sum = array.reduce((accumulator, currentValue) => {
+            return accumulator + currentValue
+        }, 0);
+        return sum
+    }
+
+    const infillArray = (arr: number[], length: number) => {
+        for (let i = 0; i < length - arr.length; i++) {
+            arr.push(0)
+        }
+        return arr
+    }
+
+    const createArrayCumulative = (marksList: number[]) => {
+        let marksCumulativeList = [...marksList];
+        for (let i = 1; i < maxNums; i++) {
+            const sliceOfNums = marksCumulativeList.slice(i - 1, i + 1)
+            marksCumulativeList[i] = summarizeNums(sliceOfNums)
+        }
+        return marksCumulativeList
+    }
+
+    const getMaxNums = (marksList1: number[], marksList2: number[]) => {
+        return Math.max(marksList1.length, marksList2.length);
+    }
+
     const selectedMarks = selectedRow ? selectedRow.marks.map(group => group.reduce((a, b) => a + b, 0) / group.length) : [];
     const groupAverageMarks = groupMarks.map(group => group.reduce((a, b) => a + b, 0) / group.length);
 
-    const filledSelectedMarks = fillArray(selectedMarks, maxLength);
-    const filledGroupAverageMarks = fillArray(groupAverageMarks, maxLength);
+    const filledSelectedMarks_ = fillArray(selectedMarks, maxLength);
+    const filledGroupAverageMarks_ = fillArray(groupAverageMarks, maxLength);
+    const maxNums = getMaxNums(filledSelectedMarks_, filledGroupAverageMarks_)
+    const filledSelectedMarks__ = infillArray(selectedMarks, maxNums);
+    const filledGroupAverageMarks__ = infillArray(groupAverageMarks, maxNums);
+    const filledSelectedMarks = createArrayCumulative(filledSelectedMarks__)
+    const filledGroupAverageMarks = createArrayCumulative(filledGroupAverageMarks__)
 
     maxLength = Math.max(filledSelectedMarks.length, filledGroupAverageMarks.length);
     let maxVal = 0;
@@ -171,6 +220,11 @@ export default function Home() {
     const totalSelectedMarks = selectedRow ? selectedRow.marks.flat().reduce((a, b) => a + b, 0) : 0;
     const totalGroupGrades = groupMarks.flat();
     const totalGroupMarks = totalGroupGrades.length > 0 ? totalGroupGrades.reduce((a, b) => a + b, 0) / totalGroupGrades.length : 0;
+    let newCumulutiveMarks = [...cumulativeMarksGroup]
+    const lastCumulutiveValue = newCumulutiveMarks[newCumulutiveMarks.length-1]
+    for (let i = cumulativeMarksGroup.length; i < filledSelectedMarks.length; i++) {
+        newCumulutiveMarks.push(lastCumulutiveValue)
+    }
 
     return (
         <div>
@@ -251,16 +305,15 @@ export default function Home() {
                                 <h2>{selectedName} - Успеваемость</h2>
                                 {!isTeacher ? (
                                     <>
-                                        <LineChart
-                                            xAxis={[{ data: Array.from({ length: maxLength }, (_, index) => index + 1) }]}
+                                        <BarChart
                                             series={[
                                                 {
-                                                    data: filledSelectedMarks,
+                                                    data: [0].concat(filledSelectedMarks),
                                                     valueFormatter: (value) => (value == null ? 'NaN' : value.toString()),
                                                     label: 'Ваши оценки'
                                                 },
                                                 {
-                                                    data: filledGroupAverageMarks,
+                                                    data: [0].concat(newCumulutiveMarks),
                                                     valueFormatter: (value) => (value == null ? 'NaN' : value.toString()),
                                                     label: 'Средние оценки группы'
                                                 }

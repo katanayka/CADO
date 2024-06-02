@@ -4,10 +4,9 @@ import dynamic from 'next/dynamic';
 import axios from 'axios';
 import { getCookie } from 'cookies-next';
 import { Accordion, AccordionDetails, AccordionSummary, Divider, Icon, Link, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Radio, FormControlLabel, RadioGroup, Checkbox } from '@mui/material';
-import { LineChart } from '@mui/x-charts/LineChart';
+import { BarChart } from '@mui/x-charts/BarChart';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
-import { BarChart } from '@mui/x-charts/BarChart';
 
 const Header = dynamic(() => import('@/components/header'), { ssr: false });
 
@@ -74,20 +73,45 @@ export default function TeacherDashboard() {
         getMarks();
     }, []);
 
-    // Define a function to calculate the total score for a student
     const calculateTotalScore = (studentUsername) => {
-        // Find the student object from the marks array
         const selectedStudent = marks
             .find(subject => subject.subject_name === selectedSubject)
             .students.find(student => student.username === studentUsername);
 
-        // If the student is found, calculate their total score
         if (selectedStudent) {
             return selectedStudent.grades.reduce((sum, grade) => sum + grade.grade, 0);
         }
 
-        // Return 0 if the student is not found or has no grades
         return 0;
+    };
+
+    const fillArray = (arr, length) => {
+        if (length <= arr.length) return arr;
+        return arr.concat(Array(length - arr.length).fill(0));
+    };
+
+    const summarizeNums = (array) => {
+        return array.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+    };
+
+    const infillArray = (arr, length) => {
+        for (let i = 0; i < length - arr.length; i++) {
+            arr.push(0);
+        }
+        return arr;
+    };
+
+    const createArrayCumulative = (marksList) => {
+        let marksCumulativeList = [...marksList];
+        for (let i = 1; i < marksList.length; i++) {
+            const sliceOfNums = marksCumulativeList.slice(i - 1, i + 1);
+            marksCumulativeList[i] = summarizeNums(sliceOfNums);
+        }
+        return marksCumulativeList;
+    };
+
+    const getMaxNums = (marksList1, marksList2) => {
+        return Math.max(marksList1.length, marksList2.length);
     };
 
     return (
@@ -174,15 +198,11 @@ export default function TeacherDashboard() {
                                         </Accordion>
                                     </div>
                                 </div>
-
-
                             ))}
                         </RadioGroup>
                         <Divider />
 
                         {selectedSubject && (
-                            /* Create here checkbox to show/hide students */
-                            // First - generate checkbox for each student
                             <>
                                 <Typography variant="h5">Графики</Typography>
                                 <Divider />
@@ -225,24 +245,26 @@ export default function TeacherDashboard() {
                                         <Typography>График оценок</Typography>
                                     </AccordionSummary>
                                     <AccordionDetails>
-                                        <LineChart
-                                            xAxis={[{ data: Array.from({ length: maxPairs }, (_, index) => index + 1) }]}
+                                        <BarChart
                                             series={marks
                                                 .find(subject => subject.subject_name === selectedSubject)
                                                 .students
                                                 .filter(student => selectedStudents.includes(student.username))
-                                                .map(student => ({
-                                                    data: Array.from({ length: maxPairs }, (_, index) => {
+                                                .map(student => {
+                                                    const grades = Array.from({ length: maxPairs }, (_, index) => {
                                                         const gradeObj = student.grades.find(g => g.pair === index + 1);
                                                         return gradeObj ? gradeObj.grade : 0;
-                                                    }),
-                                                    label: student.username,
-                                                    showMark: false,
-                                                    valueFormatter: (value) => (value == null ? 'NaN' : value.toString())
-                                                }))
-                                            }
+                                                    });
+                                                    const cumulativeGrades = createArrayCumulative(grades);
+                                                    return {
+                                                        data: [0].concat(cumulativeGrades),
+                                                        label: student.username,
+                                                        valueFormatter: (value) => (value == null ? 'NaN' : value.toString())
+                                                    };
+                                                })}
+                                            xAxis={[{ scaleType: 'band', data: ['0'].concat(Array.from({ length: maxPairs }, (_, index) => (index + 1).toString())), categoryGapRatio: 0.2 }]}
                                             height={400}
-                                            margin={{ top: 80, bottom: 20 }}
+                                            margin={{ top: 180, bottom: 20 }}
                                         />
                                     </AccordionDetails>
                                 </Accordion>
@@ -263,10 +285,8 @@ export default function TeacherDashboard() {
                                                 }))}
                                                 height={400}
                                                 margin={{ top: 180, bottom: 20 }}
-                                            // Add other props as needed
                                             />
                                         </AccordionDetails>
-
                                     </Accordion>
                                 )}
                             </>

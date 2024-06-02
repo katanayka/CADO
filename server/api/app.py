@@ -354,8 +354,87 @@ def get_group_student_total_marks():
     marks = cursor.fetchall()
     conn.close()
     total_marks_average = np.mean(marks)
+    print(total_marks_average)
 
     return jsonify({'message': 'Total marks for each student in group retrieved successfully', 'data': total_marks_average}), 200
+
+@app.route('/api/getCumulativeGroupMarks', methods=['GET'])
+def get_cumulative_marks_for_group():
+    # Get group_id from database by user_id
+
+    username = request.args.get('username')
+    subject_name = request.args.get('subject_name')
+    
+    if not username or not subject_name:
+        return {'message': 'Username and subject name are required'}, 400
+    
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # Get user_id from database by username
+    cursor.execute("SELECT id FROM users WHERE username = ?", (username,))
+    result = cursor.fetchone()
+    if result is None:
+        conn.close()
+        return {'message': 'User not found'}, 404
+
+    user_id = result[0]
+
+    # Get group_id from database by user_id
+    cursor.execute("SELECT group_id FROM user_groups WHERE user_id = ?", (user_id,))
+    result = cursor.fetchone()
+    if result is None:
+        conn.close()
+        return {'message': 'Group not found for user'}, 404
+
+    group_id = result[0]
+
+    # Get subject_id from database by subject name
+    cursor.execute("SELECT id FROM subjects WHERE name = ?", (subject_name,))
+    result = cursor.fetchone()
+    if result is None:
+        conn.close()
+        return {'message': 'Subject not found'}, 404
+
+    subject_id = result[0]
+
+    # Get all marks for students in the specified group
+    cursor.execute("""
+        SELECT users.username, grades.grade
+        FROM grades
+        JOIN users ON grades.user_id = users.id
+        JOIN user_groups ON users.id = user_groups.user_id
+        WHERE user_groups.group_id = ? AND grades.subject_id = ?
+        ORDER BY users.username, grades.id
+    """, (group_id,subject_id))
+    result = cursor.fetchall()
+    conn.close()
+
+    if not result:
+        return {'message': 'No marks found for the specified group'}, 404
+
+    # Organize the marks by student
+    student_marks = {}
+    for username, grade in result:
+        if username not in student_marks:
+            student_marks[username] = []
+        student_marks[username].append(grade)
+
+    # Find the maximum number of marks any student has
+    max_marks_len = max(len(marks) for marks in student_marks.values())
+
+    # Pad the marks arrays with zeros to the maximum length
+    for username in student_marks:
+        student_marks[username] += [0] * (max_marks_len - len(student_marks[username]))
+
+    # Calculate cumulative marks for each student
+    cumulative_marks = {username: np.cumsum(marks) for username, marks in student_marks.items()}
+
+    # Calculate the average cumulative marks across all students
+    all_cumulative_marks = np.array(list(cumulative_marks.values()))
+    average_cumulative_marks = np.mean(all_cumulative_marks, axis=0)
+
+    return jsonify({'message': 'Cumulative marks for the group retrieved successfully', 'data': average_cumulative_marks.tolist()}), 200
 
 @app.route('/api/getAllStudentMarks', methods=['GET'])
 def get_all_student_marks():
