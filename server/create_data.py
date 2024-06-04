@@ -195,5 +195,41 @@ for i in range(len(usernames)):
         conn.close()
         
         
-        
-        
+
+clear_table("user_progress")
+
+num_entries = 100  # Количество записей для генерации
+connection = sqlite3.connect(file_path)
+cursor = connection.cursor()
+
+cursor.execute('''CREATE TABLE user_progress (
+                        user_id INTEGER,
+                        progress_id INTEGER,
+                        result INTEGER,
+                        FOREIGN KEY (user_id) REFERENCES users (id),
+                        FOREIGN KEY (progress_id) REFERENCES progress (id),
+                        UNIQUE(user_id, progress_id));''')
+
+
+cursor.execute('SELECT username FROM users')
+users = cursor.fetchall()
+cursor.execute('SELECT id FROM subjects')
+disciplines = cursor.fetchall()
+cursor.execute('SELECT progress_id FROM progress')
+progresses = cursor.fetchall()
+
+for _ in range(num_entries):
+    user_id = random.choice(users)[0]
+    discipline_id = random.choice(disciplines)[0]
+    progress_id = random.choice(progresses)[0]
+
+    result = random.randint(0, 1)
+
+    cursor.execute('''SELECT 1 FROM user_progress WHERE user_id = ? AND progress_id = ?''', (user_id, progress_id))
+    if cursor.fetchone() is None:
+        cursor.execute('''INSERT INTO user_progress (user_id, progress_id, result)
+                            VALUES (?, ?, ?)''', (user_id, progress_id, result))
+
+connection.commit()
+connection.close()
+

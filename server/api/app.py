@@ -103,35 +103,6 @@ def get_progress():
     
     return {'message': 'Progress retrieved successfully', 'data': user_progress}, 200
 
-@app.route('/api/discipline/progress/save', methods=['POST'])
-def save_progress():
-    data = request.get_json()
-    print(data) # {'discipline_id': '%D0%9E%D0%9F%D0%B8%D0%90', 'node_id': 'Должен знать что такое абоба', 'user_id': '123', 'checked': False}
-    discipline_id = unquote(data.get("discipline_id", ''))
-    node_id = unquote(data.get("node_id", ''))
-    question_text = unquote(data.get("questionText", ''))
-    user_id = unquote(data.get("user_id", ''))
-    checked = data.get("checked", False)
-    json_file = open_json(PROGRESS_FILE_PATH)
-
-    # Create discipline if it doesn't exist
-    if discipline_id not in json_file:
-        json_file[discipline_id] = {}
-    # Create user if it doesn't exist
-    if user_id not in json_file[discipline_id]:
-        json_file[discipline_id][user_id] = {}
-    # Create node if it doesn't exist
-    if node_id not in json_file[discipline_id][user_id]:
-        json_file[discipline_id][user_id][node_id] = {}
-    # Create question if it doesn't exist
-    if question_text not in json_file[discipline_id][user_id][node_id]:
-        json_file[discipline_id][user_id][node_id][question_text] = {}
-    # Save progress
-    json_file[discipline_id][user_id][node_id][question_text] = checked
-
-    save_json(json_file,PROGRESS_FILE_PATH)
-    return {'message': 'Progress saved successfully', 'data': data}, 200
-
 users = []
 
 DATABASE_FILE = 'students.db'
@@ -194,6 +165,44 @@ def register():
     conn.close()
 
     return 'User registered successfully!', 201
+
+
+@app.route('/api/discipline/progress/save', methods=['POST'])
+def save_progress():
+    data = request.json
+    user_id = data.get('user_id')
+    question_type = data.get('question_type')
+    checked = data.get('checked')
+    item_id = data.get('item_id')
+    discipline_id = data.get('discipline_id')
+
+    connection = get_db_connection()
+    cursor = connection.cursor()
+
+    question_type = 1 if question_type == "lecture" else 0
+    print(question_type)
+    cursor.execute('SELECT id FROM users WHERE username = ?', (user_id,))
+    student = cursor.fetchone()
+    if not student:
+        return jsonify({'error': 'User not found'}), 404
+
+    cursor.execute('SELECT progress_id FROM progress WHERE question_text = ?', (item_id,))
+    progress = cursor.fetchone()
+    if not progress:
+        cursor.execute('''INSERT INTO progress (subject_id, pair, question_type, question_text) VALUES (?, ?, ?, ?)''', 
+                       (discipline_id, 0, question_type, item_id))
+        progress_id = cursor.lastrowid
+    else:
+        progress_id = progress[0]
+
+    cursor.execute('''INSERT INTO user_progress (user_id, progress_id, result)
+                      VALUES (?, ?, ?)''', (user_id, progress_id, checked))
+
+    connection.commit()
+    connection.close()
+
+    return jsonify({'message': 'Progress saved successfully'})
+
 
 @app.route('/api/getMarks', methods=['GET'])
 def get_marks():

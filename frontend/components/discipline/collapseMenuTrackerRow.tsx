@@ -19,19 +19,19 @@ function CollapseMenuTrackerRow({ item, ndt, checkedValue, onCheckboxChange }: t
         console.log(item)
         setChecked(!checked)
         onCheckboxChange(!checked) // Call the callback with the new checkbox value
-        axios.post('/api/discipline/progress/save', {
-            discipline_id: disciplineId,
-            node_id: ndt,
-            questionText: item,
-            user_id: userId,
-            checked: !checked
-        })
-            .then((response) => {
-                console.log(response)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+        // axios.post('/api/discipline/progress/save', {
+        //     discipline_id: disciplineId,
+        //     node_id: ndt,
+        //     questionText: item,
+        //     user_id: userId,
+        //     checked: !checked
+        // })
+        //     .then((response) => {
+        //         console.log(response)
+        //     })
+        //     .catch((error) => {
+        //         console.log(error)
+        //     })
     }
     return (
         <div className='p-1 flex gap-2'>
