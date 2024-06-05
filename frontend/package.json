@@ -33,6 +33,7 @@
 		"react-select": "^5.8.0",
 		"reactflow": "^11.10.1",
 		"recharts": "^2.12.7",
+		"rsuite": "^5.64.0",
 		"sqlite": "^5.1.1",
 		"sqlite3": "^5.1.7",
 		"uuid": "^9.0.1"

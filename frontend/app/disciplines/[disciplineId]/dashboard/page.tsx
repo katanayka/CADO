@@ -2,6 +2,9 @@ import React from 'react'
 
 export default function Dashboard() {
   return (
-    <div>Dashboard</div>
+    <div>
+      <h1>Dashboard</h1>
+      {/* Show there */}
+    </div>
   )
 }

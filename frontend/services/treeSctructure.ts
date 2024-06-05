@@ -145,6 +145,7 @@ function convertDataToTree(
       id: string;
       data: any;
       position: Position;
+      books: any;
       type: string;
     }[];
     edges: { source: string; target: string }[]
