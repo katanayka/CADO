@@ -39,6 +39,9 @@ export default function Home() {
     const [cumulativeMarksGroup, setCumulativeMarksGroup] = useState([]);
     const [cumulativeMarksGroup_, setCumulativeMarksGroup_] = useState([]);
 
+    const completedTasksTheory = [0, 2, 1, 3, 1, 0, 2, 1, 0, 0, 0, 2, 0, 1, 3, 0, 0, 0]
+    const completedTasksPracti = [0, 0, 0, 3, 2, 1, 0, 0, 2, 0, 0, 1, 0, 2, 1, 0, 1, 0]
+
     const handleRadioChange = (event: { target: { value: SetStateAction<null>; }; }) => {
         setSelectedName(event.target.value);
     };
@@ -157,8 +160,19 @@ export default function Home() {
     }, [selectedName]);
 
     const rows = Object.keys(marks).map(subject_name => {
-        return createData(subject_name, `/disciplines/${encodeURIComponent(subject_name)}`, marks[subject_name]);
+        // Получаем первые буквы каждого слова в subject_name и преобразуем их в верхний регистр,
+        // если слово состоит больше чем из одной буквы
+        const initials = subject_name.split(' ').map(word =>
+            word.length > 1 ? word[0].toUpperCase() : word[0]
+        ).join('');
+        // Создаем URL на основе этих букв
+        const url = `/disciplines/${encodeURIComponent(initials)}`;
+        return createData(subject_name, url, marks[subject_name]);
     });
+
+
+
+    console.log(rows)
 
     const maxMarksLength = Math.max(0, ...rows.map(row => row.marks.length));
     const maxGroupMarksLength = Math.max(0, ...groupMarks.map(group => group.length));
@@ -221,7 +235,7 @@ export default function Home() {
     const totalGroupGrades = groupMarks.flat();
     const totalGroupMarks = totalGroupGrades.length > 0 ? totalGroupGrades.reduce((a, b) => a + b, 0) / totalGroupGrades.length : 0;
     let newCumulutiveMarks = [...cumulativeMarksGroup]
-    const lastCumulutiveValue = newCumulutiveMarks[newCumulutiveMarks.length-1]
+    const lastCumulutiveValue = newCumulutiveMarks[newCumulutiveMarks.length - 1]
     for (let i = cumulativeMarksGroup.length; i < filledSelectedMarks.length; i++) {
         newCumulutiveMarks.push(lastCumulutiveValue)
     }
@@ -337,6 +351,24 @@ export default function Home() {
                                                 height={200}
                                                 width={500}
                                                 margin={{ top: 50, bottom: 20 }}
+                                                {...chartSetting}
+                                            />
+                                        </div>
+                                        <div className="flex items-start justify-start">
+                                            <BarChart
+                                                xAxis={[{ data: Array.from({ length: maxVal }, (_, index) => index + 1), scaleType: 'band', categoryGapRatio: 0.1 }]}  // Add scaleType: 'band' here
+                                                series={[
+                                                    {
+                                                        data: completedTasksTheory,
+                                                        label: 'Theory',
+                                                    },
+                                                    {
+                                                        data: completedTasksPracti,
+                                                        label: 'Practical',
+                                                    },
+                                                ]}
+                                                height={200}
+                                                margin={{ top: 10, bottom: 20 }}
                                                 {...chartSetting}
                                             />
                                         </div>

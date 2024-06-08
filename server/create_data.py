@@ -232,4 +232,3 @@ for _ in range(num_entries):
 
 connection.commit()
 connection.close()
-

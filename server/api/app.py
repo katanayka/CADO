@@ -181,15 +181,18 @@ def save_progress():
 
     question_type = 1 if question_type == "lecture" else 0
     print(question_type)
+    
     cursor.execute('SELECT id FROM users WHERE username = ?', (user_id,))
     student = cursor.fetchone()
     if not student:
+        connection.close()
         return jsonify({'error': 'User not found'}), 404
 
     cursor.execute('SELECT progress_id FROM progress WHERE question_text = ?', (item_id,))
     progress = cursor.fetchone()
     if not progress:
-        cursor.execute('''INSERT INTO progress (subject_id, pair, question_type, question_text) VALUES (?, ?, ?, ?)''', 
+        cursor.execute('''INSERT INTO progress (subject_id, pair, question_type, question_text) 
+                          VALUES (?, ?, ?, ?)''', 
                        (discipline_id, 0, question_type, item_id))
         progress_id = cursor.lastrowid
     else:
@@ -202,6 +205,7 @@ def save_progress():
     connection.close()
 
     return jsonify({'message': 'Progress saved successfully'})
+
 
 
 @app.route('/api/getMarks', methods=['GET'])
